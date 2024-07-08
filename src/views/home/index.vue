@@ -1,32 +1,82 @@
 <script setup>
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import router from '@/router';
-import { onMounted, onUnmounted, ref } from "vue";
+import router from "@/router";
+import { onMounted, onUnmounted, reactive, ref } from "vue";
 
+const techInfo = reactive({
+  title: "创新技术，算无止境",
+  list: [
+    {
+      icon: `/home/se2-icon1.png`,
+      t1: "机器视觉算法引擎™",
+      t2: "完全自主研发解码算法 IP，性能强劲、解码稳定",
+      hover: false,
+    },
+    {
+      icon: `/home/se2-icon2.png`,
+      t1: "一键调试 OneClick",
+      t2: "不止是调光，更是自适应算法调参，达到最优解码",
+      hover: false,
+    },
+    {
+      icon: `/home/se2-icon3.png`,
+      t1: "全新光学系统",
+      t2: "多种镜头规格、光源颜色及光源类型，灵活组合以高可配置性应对不同场景需求",
+      hover: false,
+    },
+  ],
+});
 const carouselInfo = [
   {
     img: "/home/carousel1.png",
     title: "紧凑型 R 系列读码器",
-    xh: ["R275-A", "R270-A"],
+    xh: ["R172 E/S", "R170 E/S"],
+    type: "R",
   },
   {
     img: "/home/carousel2.png",
     title: "紧凑型 R 系列读码器",
-    xh: ["R172 E/S", "R170 E/S"],
+    xh: ["R275-A", "R270-A"],
+    type: "R",
   },
   {
     img: "/home/carousel3.png",
     title: "双航插 RS 系列读码器",
-    xh: ["RS100", "RS200", "RS2000"],
+    xh: ["RS100", "RS300"],
+    type: "RS",
   },
   {
-    img: "/home/carousel4.png",
+    img: "/home/carousel4.webp",
     title: "手持式 H 系列读码器",
     xh: ["H920", "H930", "H620"],
+    type: "H",
+  },
+];
+const dtList = [
+  {
+    time: "2024-04-15",
+    title: "专注先进工业传感器，「宁波新算」完成Pre-A轮融资｜早起看早期",
+    link: "/detail/1",
+  },
+  {
+    time: "2024-04-23",
+    title:
+      "「新算科技」获数千万元天使轮融资，由红杉中国种子基金独家投资 | 早起看早期",
+    link: "/detail/2",
+  },
+  {
+    time: "2024-06-19",
+    title: "VSDC Innovators Awards 2024 创新奖揭晓！新算技术获行业权威认可",
+    link: "/detail/3",
   },
 ];
 const carouselAct = ref(carouselInfo[0]);
+
+const toDetail = (key) => {
+  console.log(`output->carouselAct.value`, key);
+  router.push({ path: "/goods", query: { type: key } });
+};
 
 const carouselChange = (v) => {
   console.log(`output->v`, v);
@@ -41,117 +91,193 @@ const toGd = (key) => {
     .then(() => {
       window.scrollTo(0, 0);
     });
-}
+};
 
 const openDialog = () => {
   addDialog({
-    title: '',
-    width: '480px',
+    title: "",
+    width: "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config)
+      console.log("回调函数", config);
       if (config) {
-        console.log(`output->config------`, config)
+        console.log(`output->config------`, config);
       }
-    }
-  })
-}
-onMounted(() => { });
+    },
+  });
+};
+const goDetail = (value) => {
+  if (!value) return;
+  router.push({ path: value });
+};
+onMounted(() => {});
 
-onUnmounted(() => { });
+onUnmounted(() => {});
 </script>
 
 <template>
   <div class="pg-container">
     <section class="section-wrapper banner1">
       <div class="pg1_frame-wrapper pt-30 center">
-        <div class="pg1_frame-text-wrapper ">
+        <div
+          class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
+        >
           <li class="gd-type">R275-A</li>
           <h2 class="gd-name">紧凑型 R 系列读码器</h2>
           <li class="gd-ts">强大稳定解码力 · 一键调试 · 超小尺寸</li>
-          <el-button class="btn-white" @click="toGd('R275A')">了解更多</el-button>
+          <el-button class="btn-white" @click="toGd('R275A')"
+            >了解更多</el-button
+          >
           <el-button class="btn-black" @click="openDialog()">试用</el-button>
         </div>
       </div>
     </section>
     <section class="section-wrapper banner2">
       <div class="pg1_frame-wrapper center">
-        <div class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp">
-          <li class="gd-type">RS300</li>
+        <div
+          class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
+        >
+          <li class="gd-type">RS100</li>
           <h2 class="gd-name">双航插 RS 系列读码器</h2>
           <li class="gd-ts">
             全新光学系统
             <span class="italic skew-x-6">X</span>
             -Tech™ · 一键调试+ · 精准无极调焦
           </li>
-          <el-button class="btn-white" @click="toGd('RS300')">了解更多</el-button>
+          <el-button class="btn-white" @click="toGd('RS100')"
+            >了解更多</el-button
+          >
           <el-button class="btn-black" @click="openDialog()">试用</el-button>
         </div>
       </div>
     </section>
     <section class="section-wrapper banner3">
       <div class="pg1_frame-wrapper center">
-        <div class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp">
-          <li class="gd-type">H92</li>
+        <div
+          class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
+        >
+          <li class="gd-type">H920</li>
           <h2 class="gd-name">手持式 H 系列读码器</h2>
           <li class="gd-ts">强大稳定解码力 · 同轴瞄准 · 训练功能</li>
-          <el-button class="btn-white">了解更多</el-button>
+          <el-button class="btn-white" @click="toGd('H920')"
+            >了解更多</el-button
+          >
           <el-button class="btn-black" @click="openDialog()">试用</el-button>
         </div>
       </div>
     </section>
-    <section class="section-text-wrapper py-32 text-center bg-white w-full h100">
-      <li class="title wow animate__animated animate__fadeInUp">创新技术，算无止境</li>
+    <section
+      class="section-text-wrapper py-32 text-center bg-white w-full h100"
+    >
+      <li class="title wow animate__animated animate__fadeInUp">
+        {{ techInfo.title }}
+      </li>
       <div class="card py-32 flex justify-center flex-wrap">
-        <div class="card-box bg-se2-1 flex flex-col justify-between text-left wow animate__animated animate__fadeInUp">
-          <img class="max-w-24" src="/home/se2-icon1.png" alt="" />
-          <li class="default-txt animate__animated animate__fadeInUp">机器视觉算法引擎™</li>
-          <li class="hover-txt animate__animated animate__fadeInUp">完全自主研发解码算法 IP，性能强劲、解码稳定</li>
+        <div
+          @mouseenter="item.hover = true"
+          @mouseleave="item.hover = false"
+          v-for="(item, index) in techInfo.list"
+          :key="index"
+          :class="'bg-se2-' + index"
+          class="card-box flex flex-col justify-between text-left wow animate__animated animate__fadeInUp"
+        >
+          <img class="max-w-24" :src="item.icon" alt="" />
+          <li
+            v-if="!item.hover"
+            class="default-txt animate__animated animate__fadeInUp"
+          >
+            {{ item.t1 }}
+          </li>
+          <li v-else class="hover-txt animate__animated animate__fadeInUp">
+            {{ item.t2 }}
+          </li>
         </div>
-        <div class="card-box bg-se2-2 flex flex-col justify-between text-left wow animate__animated animate__fadeInUp">
+        <!-- <div
+          class="card-box bg-se2-2 flex flex-col justify-between text-left wow animate__animated animate__fadeInUp"
+        >
           <img class="max-w-24" src="/home/se2-icon2.png" alt="" />
           <li class="default-txt">一键调试 OneClick</li>
-          <li class="hover-txt">不止是调光，更是自适应算法调参，达到最优解码</li>
+          <li class="hover-txt">
+            不止是调光，更是自适应算法调参，达到最优解码
+          </li>
         </div>
-        <div class="card-box bg-se2-3 flex flex-col justify-between text-left wow animate__animated animate__fadeInUp">
+        <div
+          class="card-box bg-se2-3 flex flex-col justify-between text-left wow animate__animated animate__fadeInUp"
+        >
           <img class="max-w-24" src="/home/se2-icon3.png" alt="" />
           <li class="default-txt">
-            全新光学系统 <span class="italic skew-x-6">X</span>-Tech™ ·
+            全新光学系统 <span class="italic skew-x-6">X</span>-Tech™
           </li>
-          <li class="hover-txt">多种镜头规格、光源颜色及光源类型，灵活组合以高可配置性应对不同场景需求</li>
-        </div>
+          <li class="hover-txt">
+            多种镜头规格、光源颜色及光源类型，灵活组合以高可配置性应对不同场景需求
+          </li>
+        </div> -->
       </div>
-      <el-button class="btn-white wow animate__animated animate__fadeInUp">了解更多</el-button>
+      <el-button class="btn-white wow animate__animated animate__fadeInUp"
+        >了解更多</el-button
+      >
     </section>
-    <section class="section-text-wrapper container-pg4 bg-color2 text-center bg-white w-full">
-      <li class="title wow animate__animated animate__fadeInUp">业务出发，场景覆盖</li>
-      <li class="text wow animate__animated animate__fadeInUp">充足的设备储备，适配不同业务需求</li>
-      <el-carousel style="background: inherit" class="mt-10 mb-25 px-16 wow animate__animated animate__fadeInUp"
-        :interval="5000" type="card" height="520px" indicator-position="none" motion-blur @change="carouselChange">
+    <section
+      class="section-text-wrapper container-pg4 bg-color2 text-center bg-white w-full"
+    >
+      <li class="title wow animate__animated animate__fadeInUp">
+        业务出发，场景覆盖
+      </li>
+      <li class="text wow animate__animated animate__fadeInUp">
+        多矩阵的产品储备，适配不同业务需求
+      </li>
+      <el-carousel
+        style="background: inherit"
+        class="mt-10 mb-25 px-16 wow animate__animated animate__fadeInUp"
+        :interval="5000"
+        type="card"
+        height="520px"
+        indicator-position="none"
+        motion-blur
+        @change="carouselChange"
+      >
         <el-carousel-item v-for="item in carouselInfo" :key="item">
           <img class="carousel-img" :src="item.img" alt="" srcset="" />
         </el-carousel-item>
       </el-carousel>
-      <li class="text font-600 wow animate__animated animate__fadeInUp">{{ carouselAct.title }}</li>
+      <li class="text font-600 wow animate__animated animate__fadeInUp">
+        {{ carouselAct.title }}
+      </li>
       <li class="my-4 space-x-8 wow animate__animated animate__fadeInUp">
-        <span class="text-4 leading-5" v-for="(item, index) in carouselAct.xh" :key="index">
+        <span
+          class="text-4 leading-5"
+          v-for="(item, index) in carouselAct.xh"
+          :key="index"
+        >
           {{ item }}
         </span>
       </li>
-      <el-button class="btn-black wow animate__animated animate__fadeInUp">了解详情</el-button>
+      <el-button
+        class="btn-black wow animate__animated animate__fadeInUp"
+        @click="toDetail(carouselAct.type)"
+        >了解详情</el-button
+      >
     </section>
-    <section class="section-text-wrapper container-pg5 text-center bg-white w-full">
-      <li class="title wow animate__animated animate__fadeInUp">新算动态，关于我们</li>
+    <section
+      class="section-text-wrapper container-pg5 text-center bg-white w-full"
+    >
+      <li class="title wow animate__animated animate__fadeInUp">
+        新算动态，关于我们
+      </li>
       <div class="card-news flex justify-center flex-wrap">
-        <div class="card-new-item wow animate__animated animate__fadeInUp" v-for="i in 3" :key="i">
-          <li class="txt">2024-04-15</li>
+        <div
+          class="card-new-item wow animate__animated animate__fadeInUp"
+          v-for="(item, index) in dtList"
+          :key="index"
+        >
+          <li class="txt">{{ item.time }}</li>
           <li class="title">
-            专注先进工业传感器，「宁波新算」完成Pre-A轮融资｜早起看早期
+            {{ item.title }}
           </li>
-          <li class="txt more">阅读更多</li>
+          <li class="txt more" @click="goDetail(item.link)">阅读更多</li>
         </div>
       </div>
       <el-button class="btn-white">查看更多</el-button>
@@ -241,12 +367,12 @@ onUnmounted(() => { });
 
   .banner2 {
     // background-attachment: fixed;
-    background-image: url("/home/rs300.webp");
+    background-image: url("/home/rs100.webp");
   }
 
   .banner3 {
     // background-attachment: fixed;
-    // background-image: url("/home/banner3.webp");
+    background-image: url("/home/h920.webp");
   }
 
   .section-text-wrapper {
@@ -297,7 +423,7 @@ onUnmounted(() => { });
         }
       }
 
-      .bg-se2-1 {
+      .bg-se2-0 {
         transition: all 0.5s ease-in-out;
         background-size: cover;
         background-position: center center;
@@ -308,7 +434,7 @@ onUnmounted(() => { });
         }
       }
 
-      .bg-se2-2 {
+      .bg-se2-1 {
         transition: all 0.5s ease-in-out;
         background-size: cover;
         background-position: center center;
@@ -319,7 +445,7 @@ onUnmounted(() => { });
         }
       }
 
-      .bg-se2-3 {
+      .bg-se2-2 {
         transition: all 0.5s ease-in-out;
         background-size: cover;
         background-position: center center;
@@ -370,7 +496,7 @@ onUnmounted(() => { });
   .container-pg4 {
     height: 1080px;
     padding: 128px;
-    background: #F4F4F4;
+    background: #f4f4f4;
   }
 
   .container-pg5 {
@@ -387,12 +513,13 @@ onUnmounted(() => { });
         height: 244px;
         padding: 24px 16px;
         border-top: 1px solid #3d4448;
-        background: #F4F4F4;
+        background: #f4f4f4;
         text-wrap: wrap;
 
         .txt {
           font-size: 14px;
           line-height: 20px;
+          margin-bottom: 12px;
         }
 
         .title {
@@ -400,18 +527,20 @@ onUnmounted(() => { });
           font-weight: 500;
           line-height: 32px;
           letter-spacing: 0;
-          padding: 24px 0;
+          min-height: 132px;
+          // padding: 24px 0;
         }
 
         .more {
-          padding-top: 24px;
+          cursor: pointer;
+          // padding-top: 24px;
         }
       }
     }
   }
 
   .bg-color2 {
-    background-color: #F4F4F4;
+    background-color: #f4f4f4;
   }
 
   :deep(.el-button) {

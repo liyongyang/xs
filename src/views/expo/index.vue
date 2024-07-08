@@ -36,7 +36,7 @@
 									}}</li>
 								<li class="time wow animate__animated animate__fadeInUp">{{ card.time }}</li>
 							</div>
-							<li class="detail wow animate__animated animate__fadeInUp">查看详情</li>
+							<li class="detail wow animate__animated animate__fadeInUp" @click="goDetail(card.link)">查看详情</li>
 						</div>
 					</div>
 				</el-collapse-item>
@@ -48,7 +48,8 @@
 
 <script setup lang='ts'>
 import { onMounted, ref } from "vue";
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 const activeNames = ref([0])
 
 const bannerInfo1 = {
@@ -66,24 +67,29 @@ const list = [
 		cards: [
 			{
 				img: `/aboutUs/news/news-0.png`,
-				title: '专注先进工业传感器，「宁波新算」完成Pre-A轮融资｜早起看早期',
+				title: 'VSDC Innovators Awards 2024 创新奖揭晓！新算技术获行业权威认可',
 				tip: [
-					'本轮融资资金将用于投入进一步提升工业读码器等核心产品的量产产能，并加大在先进工业视觉传感器领域的多品类研发。'
+					'2024 年 6 月 19 日，深圳——全球知名工业视觉领域权威奖项《视觉系统设计》创新奖 2024 (VSDC Innovators Awards 2024) 隆重揭晓，新算凭借旗舰款 R275-A 紧凑型工业读码器一举获奖。这一荣誉不仅是对新算产品卓越性能的肯定，更是对新算在工业机器视觉领域不断创新、追求卓越的高度认可。'
 				],
-				time: '2023-07-10 08:18'
+				time: '2023-07-10 08:18',
+				link: '/detail/3'
 			},
 			{
 				img: '',
 				title: '专注先进工业传感器，「宁波新算」完成Pre-A轮融资｜早起看早期',
 				tip: [
-					'本轮融资资金将用于投入进一步提升工业读码器等核心产品的量产产能，并加大在先进工业视觉传感器领域的多品类研发。',
-					'「新算科技」成立于2019年，主要专注于图像处理算法的研发与读码产品的设计，面向3C、新能源、汽车、仓储、高速高性能工业读码器和高性价比读码模组。'
+					'2024 年 6 月 19 日，深圳——全球知名工业视觉领域权威奖项《视觉系统设计》创新奖 2024 (VSDC Innovators Awards 2024) 隆重揭晓，新算凭借旗舰款 R275-A 紧凑型工业读码器一举获奖。这一荣誉不仅是对新算产品卓越性能的肯定，更是对新算在工业机器视觉领域不断创新、追求卓越的高度认可。'
 				],
-				time: '2023-07-10 08:18'
+				time: '2023-07-10 08:18',
+				link: '/detail/3'
 			}
 		]
 	}
 ]
+const goDetail = (value) => {
+	if (!value) return
+	router.push({ path: value });
+}
 onMounted(() => { });
 </script>
 <style lang='scss' scoped>

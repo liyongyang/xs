@@ -1,25 +1,45 @@
 <template>
   <section class="section-text-wrapper container-pg6 bg-color2 text-left">
-    <li class="title wow animate__animated animate__fadeInUp">联系我们获取更多产品信息与合作细节</li>
+    <li class="title wow animate__animated animate__fadeInUp">
+      联系我们获取更多产品信息与合作细节
+    </li>
     <div class="flex items-center info">
-      <el-button class="btn-black wow animate__animated animate__fadeInUp">样机试用/演示</el-button>
-      <li class="call wow animate__animated animate__fadeInUp">咨询热线：15381991195</li>
+      <el-button
+        class="btn-black wow animate__animated animate__fadeInUp"
+        @click="openDialog()"
+        >样机试用/演示</el-button
+      >
+      <li class="call wow animate__animated animate__fadeInUp">
+        咨询热线：15381991195
+      </li>
     </div>
   </section>
   <div class="footer">
     <div class="main">
       <div class="cont">
         <div class="conf">
-          <img class="logo-img wow animate__animated animate__fadeInUp" src="/common/logo2.png" alt="" />
-          <li class="text-l text-color wow animate__animated animate__fadeInUp">专注工业机器视觉，以读码产品开启智能制造</li>
+          <img
+            class="logo-img wow animate__animated animate__fadeInUp"
+            src="/common/logo2.png"
+            alt=""
+          />
+          <li class="text-l text-color wow animate__animated animate__fadeInUp">
+            专注工业机器视觉，以读码产品开启智能制造
+          </li>
         </div>
         <div class="conf goods-box flex justify-between">
           <div v-for="(items, index) in goodMenus" :key="index">
-            <li class="type wow animate__animated animate__fadeInUp">{{ items.name }}</li>
+            <li class="type wow animate__animated animate__fadeInUp">
+              {{ items.name }}
+            </li>
             <div class="space-y-4 wow animate__animated animate__fadeInUp">
-              <li v-for="item in items.child" :key="item.path" class="text-color cursor-pointer" @click="toPage(item)">
-                {{
-            item.name }}
+              <li
+                v-for="item in items.child"
+                :key="item.path"
+                class="text-color cursor-pointer"
+                @click="toPage(item)"
+              >
+                {{ item.name }}
               </li>
             </div>
           </div>
@@ -41,94 +61,109 @@
         <li>备案信息</li>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup lang='ts'>
-import icon0 from '@/assets/footer-icon0.svg';
-import icon1 from '@/assets/footer-icon1.svg';
-import icon2 from '@/assets/footer-icon2.svg';
-import icon3 from '@/assets/footer-icon3.svg';
-import icon4 from '@/assets/footer-icon4.svg';
+import icon0 from "@/assets/footer-icon0.svg";
+import icon1 from "@/assets/footer-icon1.svg";
+import icon2 from "@/assets/footer-icon2.svg";
+import icon3 from "@/assets/footer-icon3.svg";
+import icon4 from "@/assets/footer-icon4.svg";
+import { addDialog } from "@/components/Dialog/index";
+import * as popModules from "@/components/Dialog/modulesIdex";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
 
 const goodMenus = [
   {
-    name: '紧凑型R系列',
+    name: "紧凑型R系列",
     child: [
       {
-        name: 'R275-A',
-        path: 'R275A',
+        name: "R275-A",
+        path: "R275A",
       },
       {
-        name: 'R270-A',
-        path: 'R270A',
+        name: "R270-A",
+        path: "R275A",
       },
       {
-        name: 'R172 E/S',
-        path: 'R172',
+        name: "R172-E/S",
+        path: "R17",
       },
       {
-        name: 'R170 E/S',
-        path: 'R17',
+        name: "R170-E/S",
+        path: "R17",
       },
-    ]
+    ],
   },
   {
-    name: '双航插RS系列',
+    name: "双航插RS系列",
     child: [
       {
-        name: 'RS 100',
-        path: 'RS100',
+        name: "RS 100",
+        path: "RS100",
       },
-      {
-        name: 'RS 300',
-        path: 'RS300',
-      },
-      {
-        name: 'RS 20000',
-        path: 'RS20000',
-      },
-    ]
+      // {
+      //   name: "RS 300",
+      //   path: "RS300",
+      // },
+      // {
+      //   name: "RS 20000",
+      //   path: "RS20000",
+      // },
+    ],
   },
   {
-    name: '手持式H系列',
+    name: "手持式H系列",
     child: [
       {
-        name: 'H920',
-        path: 'H920',
+        name: "H920",
+        path: "H920",
       },
-      {
-        name: 'H930',
-        path: 'H930',
-      },
-      {
-        name: 'H620',
-        path: 'H620',
-      },
-    ]
+      // {
+      //   name: "H930",
+      //   path: "H930",
+      // },
+      // {
+      //   name: "H620",
+      //   path: "H620",
+      // },
+    ],
   },
-  {
-    name: '读码模组'
-  }
 ];
+
+const openDialog = () => {
+  addDialog({
+    title: "",
+    width: "480px",
+    props: {},
+    footer: false,
+    component: popModules.SY,
+    callBack: (config) => {
+      //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
+      console.log("回调函数", config);
+      if (config) {
+        console.log(`output->config------`, config);
+      }
+    },
+  });
+};
 
 const toPage = (item: any) => {
   router.push({
     path: `/goods/${item.path}`,
   });
-}
-onMounted(() => { });
+};
+onMounted(() => {});
 </script>
 <style lang='scss' scoped>
 .section-text-wrapper {
   color: #1d1c23;
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
   padding: 64px;
+  border-top: 1px solid #dfe1e2;
 
   .title {
     font-size: 48px;
@@ -221,7 +256,7 @@ onMounted(() => { });
 
       .goods-box {
         flex: 0 0 auto;
-        width: 648px;
+        width: 484px;
       }
     }
 
@@ -230,10 +265,9 @@ onMounted(() => { });
       font-size: 14px;
       font-weight: 400;
       line-height: 20px;
-      color: #A3A8AB;
+      color: #a3a8ab;
     }
   }
-
 }
 
 // @media (max-width: 576px) {
@@ -275,4 +309,5 @@ onMounted(() => { });
 //       }
 //     }
 //   }
-// }</style>
+// }
+</style>

@@ -1,42 +1,58 @@
 <template>
-	<div class="slider-container">
-		<img class="hvr-wobble-horizontal cursor-pointer" src="/common/affix-icon1.png" alt="" srcset="">
-		<img class="hvr-wobble-horizontal cursor-pointer" src="/common/affix-icon2.png" alt="" srcset="">
-		<img @click="toTop()" class="hvr-wobble-horizontal cursor-pointer" src="/common/affix-icon3.png" alt="" srcset="">
-	</div>
+  <div class="slider-container">
+    <img
+      class="hvr-wobble-horizontal cursor-pointer"
+      src="/common/affix-icon1.png"
+      alt=""
+      srcset=""
+      @click="toContactUs()"
+    />
+    <img
+      class="hvr-wobble-horizontal cursor-pointer"
+      src="/common/affix-icon2.png"
+      alt=""
+      srcset=""
+      @click="toContactUs()"
+    />
+    <img
+      @click="toTop()"
+      class="hvr-wobble-horizontal cursor-pointer"
+      src="/common/affix-icon3.png"
+      alt=""
+      srcset=""
+    />
+  </div>
 </template>
 
 <script setup lang='ts'>
-import { computed, onMounted, ref, watch } from 'vue';
-
-const A = ref()
-
-const B = computed(() => { A.value * 2; });
-
-watch(A, (Old, New) => { }, { immediate: true, deep: true });
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const toTop = () => {
-	window.scrollTo({
-		top: 0,
-		behavior: 'smooth'
-	})
-}
-onMounted(() => {
-});
-
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+const toContactUs = () => {
+  router.push({
+    path: "/contactUs",
+  });
+};
+onMounted(() => {});
 </script>
 <style lang='scss' scoped>
 .slider-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 153px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 153px;
 
-
-	>*:hover {
-		border-radius: 100%;
-		background-color: #fff;
-		transition: background-color 0.5s;
-	}
+  > *:hover {
+    border-radius: 100%;
+    background-color: #fff;
+    transition: background-color 0.5s;
+  }
 }
 </style>

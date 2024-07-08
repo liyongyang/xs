@@ -1,36 +1,79 @@
 <template>
   <div class="head-container">
-    <div ref="headRef" class="head-box" @mouseenter="isShowChild(true)" @mouseleave="isShowChild(false)">
+    <div
+      ref="headRef"
+      class="head-box"
+      @mouseenter="isShowChild(true)"
+      @mouseleave="isShowChild(false)"
+    >
       <div class="head">
-        <img class="cursor-pointer" src="/common/logo.png" alt="" @click="reload" />
+        <img
+          class="cursor-pointer"
+          src="/common/logo.png"
+          alt=""
+          @click="reload"
+        />
         <div>
           <div class="menus">
-            <div v-for="(item, index) in menus" :key="index" class="" @click="changePage(item, i)">
-              <li class="menu hvr-underline-from-center"
-                :class="activeRoute === item.path ? 'active-bg' : 'default-bg'">
-                {{ item.name }}</li>
+            <div
+              v-for="(item, index) in menus"
+              :key="index"
+              class=""
+              @click="changePage(item, i)"
+            >
+              <li
+                class="menu hvr-underline-from-center"
+                :class="activeRoute === item.path ? 'active-bg' : 'default-bg'"
+              >
+                {{ item.name }}
+              </li>
             </div>
           </div>
           <div class="head-child">
             <div class="good-tabs" v-show="activeRoute === 'goods'">
               <el-tabs tabPosition="left">
-                <el-tab-pane v-for="(t, index) in goodMenus" :key="index" :label="t.name">
-                  <li class="hover:font-500" v-for="(v, i) in t.child" :key="i" @click="toPage(v)">{{ v.name }}</li>
+                <el-tab-pane
+                  v-for="(t, index) in goodMenus"
+                  :key="index"
+                  :label="t.name"
+                >
+                  <li
+                    class="hover:font-500"
+                    v-for="(v, i) in t.child"
+                    :key="i"
+                    @click="toPage(v)"
+                  >
+                    {{ v.name }}
+                  </li>
                 </el-tab-pane>
               </el-tabs>
             </div>
             <div class="about-tabs" v-show="activeRoute === 'aboutUs'">
-              <li class="my-4 cursor-pointer hover:font-500" v-for="(v, i) in aboutUsMenus" :key="i"
-                @click="toPage1(v)">{{ v.name }}</li>
+              <li
+                class="my-4 cursor-pointer hover:font-500"
+                v-for="(v, i) in aboutUsMenus"
+                :key="i"
+                @click="toPage1(v)"
+              >
+                {{ v.name }}
+              </li>
             </div>
           </div>
         </div>
         <div class="head-left">
-          <div :class="activeRoute === '-1' ? 'active-bg' : 'default-bg'" class="btn-black mr-8" @click="toContact">
+          <div
+            :class="activeRoute === '-1' ? 'active-bg' : 'default-bg'"
+            class="btn-black mr-8 cursor-pointer"
+            @click="toContact"
+          >
             {{ t("Email") }}
           </div>
           <div class="lang">
-            <el-select v-model="locale" placeholder="Select" @change="changeLang(v)">
+            <el-select
+              v-model="locale"
+              placeholder="Select"
+              @change="changeLang(v)"
+            >
               <el-option label="中文" value="zh" />
               <el-option label="English" value="en" />
             </el-select>
@@ -49,9 +92,9 @@ import { useRoute, useRouter } from "vue-router";
 const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
-const headRef = ref()
+const headRef = ref();
 const isSmallSize = ref(window.innerWidth < 576);
-const activeRoute = ref('goods');
+const activeRoute = ref("goods");
 const showMenu = ref(true);
 const menus = [
   {
@@ -59,11 +102,11 @@ const menus = [
     name: t("common.routes.menu1"),
     id: 0,
   },
-  {
-    path: "service",
-    name: t("common.routes.menu2"),
-    id: 1,
-  },
+  // {
+  //   path: "service",
+  //   name: t("common.routes.menu2"),
+  //   id: 1,
+  // },
   {
     path: "technical",
     name: t("common.routes.menu3"),
@@ -82,81 +125,81 @@ const menus = [
 ];
 const goodMenus = [
   {
-    name: '紧凑型R系列',
+    name: "紧凑型R系列",
     child: [
       {
-        name: 'R275-A',
-        path: 'R275A',
+        name: "R275-A",
+        path: "R275A",
       },
       {
-        name: 'R270-A',
-        path: 'R270A',
+        name: "R270-A",
+        path: "R275A",
       },
       {
-        name: 'R172 E/S',
-        path: 'R17',
+        name: "R172-E/S",
+        path: "R17",
       },
       {
-        name: 'R170 E/S',
-        path: 'R17',
+        name: "R170-E/S",
+        path: "R17",
       },
-    ]
+    ],
   },
   {
-    name: '双航插RS系列',
+    name: "双航插RS系列",
     child: [
       {
-        name: 'RS 100',
-        path: 'RS100',
+        name: "RS 100",
+        path: "RS100",
       },
-      {
-        name: 'RS 300',
-        path: 'RS300',
-      },
-      {
-        name: 'RS 20000',
-        path: 'RS20000',
-      },
-    ]
+      // {
+      //   name: "RS 300",
+      //   path: "RS300",
+      // },
+      // {
+      //   name: "RS 20000",
+      //   path: "RS20000",
+      // },
+    ],
   },
   {
-    name: '手持式H系列',
+    name: "手持式H系列",
     child: [
       {
-        name: 'H920',
-        path: 'H920',
+        name: "H920",
+        path: "H920",
       },
-      {
-        name: 'H930',
-        path: 'H930',
-      },
-      {
-        name: 'H620',
-        path: 'H620',
-      },
-    ]
+      // {
+      //   name: "H930",
+      //   path: "H930",
+      // },
+      // {
+      //   name: "H620",
+      //   path: "H620",
+      // },
+    ],
   },
 ];
 
 const aboutUsMenus = [
   {
-    name: '新闻资讯',
-    path: 'news',
+    name: "新闻资讯",
+    path: "news",
   },
   {
-    name: '展会动态',
-    path: 'expo',
+    name: "展会动态",
+    path: "expo",
   },
   {
-    name: '联系我们',
-    path: 'contactUs',
+    name: "联系我们",
+    path: "contactUs",
   },
-]
+];
 
 watch(route, (v) => {
   document.body.style.overflow = "auto";
   if (v.path === "/contact") {
-    activeRoute.value = '-1';
+    activeRoute.value = "contact";
   } else {
     const temp = menus.find((l) => l.path === v.meta.title);
     activeRoute.value = temp?.path;
@@ -174,12 +217,12 @@ const reload = () => {
     });
 };
 const isShowChild = (open: boolean) => {
-  console.log(`output->activeRoute.value`, activeRoute.value)
-  if (activeRoute.value === 'goods' || activeRoute.value === 'aboutUs') {
+  console.log(`output->activeRoute.value`, activeRoute.value, open);
+  if (activeRoute.value === "goods" || activeRoute.value === "aboutUs") {
     if (open) {
-      headRef.value.style.height = '240px'
+      headRef.value.style.height = "240px";
     } else {
-      headRef.value.style.height = '88px'
+      headRef.value.style.height = "88px";
     }
   }
 };
@@ -187,17 +230,18 @@ const toPage = (item: any) => {
   router.push({
     path: `/goods/${item.path}`,
   });
-}
+};
 const toPage1 = (v: any) => {
   router.push({
     path: `/${v.path}`,
   });
-}
+};
 
 const toContact = () => {
-  activeRoute.value = '-1';
+  activeRoute.value = "contact";
   showMenu.value = false;
-  router.push("/contact");
+  router.push("/contactUs");
+  headRef.value.style.height = "88px";
 };
 const changeLang = () => {
   localStorage.setItem("locale", locale.value);
@@ -205,19 +249,17 @@ const changeLang = () => {
 };
 const changePage = (item: any, i: number) => {
   activeRoute.value = item.path;
-  if (activeRoute.value === 'goods' || activeRoute.value === 'aboutUs') {
-    headRef.value.style.height = '240px'
-  }
-  else {
-    headRef.value.style.height = '88px'
+  if (activeRoute.value === "goods" || activeRoute.value === "aboutUs") {
+    headRef.value.style.height = "240px";
+  } else {
+    headRef.value.style.height = "88px";
   }
   router.push({
     path: `/${item.path}`,
   });
 };
 
-onMounted(() => { });
-
+onMounted(() => {});
 </script>
 
 <style lang='scss' scoped>
@@ -230,8 +272,9 @@ onMounted(() => { });
   background: #ffffff;
 
   .head-box {
+    width: 1384px;
+    padding: 24px 0;
     height: 88px;
-    padding: 32px 64px 8px 64px;
     margin: 0 auto;
     overflow: hidden;
     transition: height 0.8s;
@@ -276,10 +319,9 @@ onMounted(() => { });
       font-weight: 500;
       padding-top: 12px;
       background: #ffffff;
-      color: #1D1C23CC;
+      color: #1d1c23cc;
 
       .good-tabs {
-
         :deep(.el-tabs__item) {
           text-align: left;
           height: 32px !important;
@@ -290,7 +332,7 @@ onMounted(() => { });
           justify-content: flex-start;
 
           &:hover {
-            color: #1D1C23;
+            color: #1d1c23;
           }
         }
 
@@ -300,13 +342,13 @@ onMounted(() => { });
 
         :deep(.el-tabs__item.is-active) {
           font-weight: 500;
-          color: #1D1C23;
+          color: #1d1c23;
         }
 
         :deep(.el-tab-pane) {
           li {
             cursor: pointer;
-            color: #1D1C23CC;
+            color: #1d1c23cc;
             height: 32px;
             line-height: 32px;
           }
@@ -320,7 +362,6 @@ onMounted(() => { });
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
-
       }
 
       .chil-item {
@@ -329,7 +370,7 @@ onMounted(() => { });
         font-weight: 400;
         line-height: 20px;
         text-align: left;
-        color: #1D1C23CC;
+        color: #1d1c23cc;
       }
     }
   }
@@ -349,7 +390,7 @@ onMounted(() => { });
     }
 
     :deep(.el-select__placeholder) {
-      color: #1D1C23;
+      color: #1d1c23;
     }
 
     :deep(.el-input) {
@@ -357,7 +398,7 @@ onMounted(() => { });
     }
 
     :deep(.el-input__inner) {
-      color: #1D1C23;
+      color: #1d1c23;
       font-weight: 500;
     }
 
@@ -374,7 +415,7 @@ onMounted(() => { });
 
       svg {
         font-weight: 500;
-        color: #1D1C23;
+        color: #1d1c23;
       }
     }
   }

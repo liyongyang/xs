@@ -1,42 +1,59 @@
 <template>
   <div class="pg-container">
     <section class="banner flex items-center justify-center">
-      <li class="title wow animate__animated animate__fadeInUp">全栈软硬件自研，强大性能表现</li>
+      <li class="title wow animate__animated animate__fadeInUp">
+        全栈软硬件自研，强大性能表现
+      </li>
     </section>
     <section class="section-wrapper text-center">
       <div class="tit-bg1 h57">
-        <li class="title pt-32 wow animate__animated animate__fadeInUp">视觉机器算法引擎™</li>
-        <li class="text wow animate__animated animate__fadeInUp">完全自主研发解码算法 IP，性能强劲、解码稳定</li>
+        <li class="title pt-32 wow animate__animated animate__fadeInUp">
+          视觉机器算法引擎™
+        </li>
+        <li class="text wow animate__animated animate__fadeInUp">
+          完全自主研发解码算法 IP，性能强劲、解码稳定
+        </li>
       </div>
-      <div class="cont-box px-16" @mouseenter="SEC1_ACT = true" @mouseleave="SEC1_ACT = false">
-        <!-- <SEC1 class="animate__animated animate__fadeIn" v-if="!SEC1_ACT"></SEC1> -->
-        <!-- <SEC1_hover class="animate__animated animate__fadeIn" v-else></SEC1_hover> -->
-        <!-- <img src="/technical/sec1_default.png" alt=""> -->
+      <div
+        class="cont-box"
+        @mouseenter="SEC1_ACT = true"
+        @mouseleave="SEC1_ACT = false"
+      >
         <div class="card flex items-center justify-between">
-          <div class="w70 text-wrap text-left">
-            <li class="text-10 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">超分辨率算法™️</li>
-            <li class="wow animate__animated animate__fadeInUp">
+          <div class="left text-wrap text-left">
+            <li
+              class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            >
+              超分辨率算法™️
+            </li>
+            <li class="txt wow animate__animated animate__fadeInUp">
               等效3MP镜头读码效果，支持读取最小尺寸单元 1mil 的一维码，1.5mil
               的二维码1MP镜头=3MP镜头成像效果，3倍成像质量提升
             </li>
           </div>
           <div class="card1-img"></div>
-          <!-- <img src="/technical/se1-card1.png" alt="" /> -->
         </div>
         <div class="card flex items-center justify-between">
           <div class="card3-img"></div>
-          <div class="w97 text-wrap text-left">
-            <li class="text-10 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">专利 SPL 技术™️</li>
-            <li class="wow animate__animated animate__fadeInUp">
-              专利亚像素定位技术精度可达 0.02
-              Pixel，即使定位器（L角）缺陷达30%也能轻松读取
+          <div class="left text-wrap text-left">
+            <li
+              class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            >
+              专利 SPL 技术™️
+            </li>
+            <li class="txt wow animate__animated animate__fadeInUp">
+              专利亚像素定位技术精度可达0.02Pixel，即使定位器（L角）缺陷达30%也能轻松读取
             </li>
           </div>
         </div>
         <div class="card flex items-center justify-between">
-          <div class="w70 text-wrap text-left">
-            <li class="text-10 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">自研增强算法</li>
-            <li class="wow animate__animated animate__fadeInUp">
+          <div class="left text-wrap text-left">
+            <li
+              class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            >
+              自研增强算法
+            </li>
+            <li class="txt wow animate__animated animate__fadeInUp">
               ⾃研增加算法，即使对⽐度低⾄ 2%
               的条码也能够稳定读取，⼀个近乎看不尽的DM码（2%对⽐度），通过算法实现增强⾄明显看到，并成功解码
             </li>
@@ -47,15 +64,30 @@
     </section>
     <section class="section-wrapper text-center">
       <div class="tit-bg2 py-32">
-        <li class="title wow animate__animated animate__fadeInUp">一键调试 OneClick</li>
-        <li class="text wow animate__animated animate__fadeInUp">不止是调光，更是自适应算法调参，达到最优解码</li>
+        <li class="title wow animate__animated animate__fadeInUp">
+          一键调试 OneClick
+        </li>
+        <li class="text wow animate__animated animate__fadeInUp">
+          不止是调光，更是自适应算法调参，达到最优解码
+        </li>
       </div>
       <div class="flex justify-center flex-wrap">
-        <div class="card2 flex flex-col justify-between m1 p8 text-left text-wrap"
-          v-for="(item, index) in oneClickCards" :key="index">
-          <img class="wow animate__animated animate__fadeIn" :src="item.img" alt="" />
-          <li class="txt-default wow animate__animated animate__fadeInUp">{{ item.txt }}</li>
-          <li class="txt-hover wow animate__animated animate__fadeInUp">{{ item.txt2 }}</li>
+        <div
+          class="card2 flex flex-col justify-between m1 p8 text-left text-wrap"
+          v-for="(item, index) in oneClickCards"
+          :key="index"
+        >
+          <img
+            class="wow animate__animated animate__fadeIn"
+            :src="item.img"
+            alt=""
+          />
+          <li class="txt-default wow animate__animated animate__fadeInUp">
+            {{ item.txt }}
+          </li>
+          <li class="txt-hover wow animate__animated animate__fadeInUp">
+            {{ item.txt2 }}
+          </li>
         </div>
       </div>
       <li class="pt8 pb-32 text-left wow animate__animated animate__fadeInUp">
@@ -64,31 +96,53 @@
     </section>
     <section class="section-wrapper space-y-40">
       <div class="card flex items-center justify-between">
-        <div class="w70 text-wrap text-left">
-          <li class="text-10 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">极致易用</li>
-          <li class="wow animate__animated animate__fadeInUp">仅需通过机身按钮或软件按钮，OneClick 即可实现解码</li>
+        <div class="left text-wrap text-left">
+          <li
+            class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+          >
+            极致易用
+          </li>
+          <li class="txt wow animate__animated animate__fadeInUp">
+            仅需通过机身按钮或软件按钮，OneClick 即可实现解码
+          </li>
         </div>
-        <div class="se-bg" :style="{ backgroundImage: `url(${bannerImg1})` }">
-        </div>
+        <div
+          class="se-bg"
+          :style="{ backgroundImage: `url(${bannerImg1})` }"
+        ></div>
         <!-- <img class="animate__animated animate__fadeIn" :src="bannerImg1" alt="" /> -->
       </div>
       <div class="card flex items-center justify-between">
-        <div class="se-bg" :style="{ backgroundImage: `url(${bannerImg2})` }"></div>
-        <div class="w70 text-wrap text-left">
-          <li class="text-10 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">极致性能</li>
-          <li class="wow animate__animated animate__fadeInUp">
+        <div
+          class="se-bg"
+          :style="{ backgroundImage: `url(${bannerImg2})` }"
+        ></div>
+        <div class="left text-wrap text-left">
+          <li
+            class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+          >
+            极致性能
+          </li>
+          <li class="txt wow animate__animated animate__fadeInUp">
             对于C级以上条码，⼀键调试 Max 单码平均解码耗时为
             20ms，相⽐同级产品速度提升 2 倍
           </li>
-          <li class="wow animate__animated animate__fadeInUp">
+          <li class="txt wow animate__animated animate__fadeInUp">
             对于条形码，⼀键调试 Max 单码平均解码耗时为
-            10ms，相⽐同级产品速度提升 3 倍 即可实现解码
+            10ms，相⽐同级产品速度提升 3 倍
           </li>
         </div>
       </div>
     </section>
-    <section class="section-wrapper text-center py-32">
-      <img class="table wow animate__animated animate__fadeInUp" src="/technical/table.png" alt="" />
+    <section class="section-wrapper text-center">
+      <li class="title pt-32 pb-16 wow animate__animated animate__fadeInUp">
+        对比表格
+      </li>
+      <img
+        class="table wow animate__animated animate__fadeInUp"
+        src="/technical/table.webp"
+        alt=""
+      />
     </section>
     <section class="section-wrapper sec2 text-center">
       <div class="tit-bg3 py-32">
@@ -102,39 +156,107 @@
     </section>
     <section class="section-wrapper">
       <div class="se3-bg relative flex justify-between items-center">
-        <img class="base-img wow animate__animated animate__fadeIn" src="/technical/camera/base.png" alt="">
-        <img class="add-img wow animate__animated animate__fadeIn" :src="'/technical/camera/' + XList[0].act + '.png'"
-          alt="">
-        <img class="add-img wow animate__animated animate__fadeIn" :src="'/technical/camera/' + light + '.png'" alt="">
+        <img
+          class="base-img wow animate__animated animate__fadeIn"
+          src="/technical/camera/base.png"
+          alt=""
+        />
+        <img
+          class="add-img wow animate__animated animate__fadeIn"
+          :src="'/technical/camera/' + XList[0].act + '.png'"
+          alt=""
+        />
+        <img
+          class="add-img wow animate__animated animate__fadeIn"
+          :src="'/technical/camera/' + light[0] + '.png'"
+          alt=""
+        />
+        <img
+          v-if="light.length > 1"
+          class="add-img wow animate__animated animate__fadeIn"
+          :src="'/technical/camera/' + light[1] + '.png'"
+          alt=""
+        />
         <div class="w80 text-wrap text-left z-29">
-          <li class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">灵活配置</li>
-          <li wow animate__animated animate__fadeInUp>多种镜头焦段、光源颜色、光源类型，满足多样化需求</li>
+          <li
+            class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+          >
+            灵活配置
+          </li>
+          <li wow animate__animated animate__fadeInUp>
+            多种镜头焦段、光源颜色、光源类型，满足多样化需求
+          </li>
         </div>
         <div class="w80 text-wrap text-left px-8 z-29">
           <li class="checked wow animate__animated animate__fadeIn">
-            {{ XList[0].act }} × {{ XList[1].act }} × {{ XList[2].act }}
+            3 × 3 × 3 灵活配置
           </li>
           <div class="flex justify-between">
-            <div class="flex flex-col text-center" v-for="(item, index) in XList" :key="index">
-              <li class="opts-tit wow animate__animated animate__fadeInUp">{{ item.title }}</li>
-              <li class="wow animate__animated animate__fadeInUp"
-                :class="item.act === t ? 'active-check' : 'default-check'" v-for="t in item.opts" :key="t"
-                @click="checkBox(index, t)">
+            <div class="flex flex-col text-center">
+              <li class="opts-tit wow animate__animated animate__fadeInUp">
+                {{ XList[0].title }}
+              </li>
+              <li
+                class="wow animate__animated animate__fadeInUp"
+                :class="XList[0].act === t ? 'active-check' : 'default-check'"
+                v-for="t in XList[0].opts"
+                :key="t"
+                @click="checkBox(0, t)"
+              >
                 {{ t }}
+              </li>
+            </div>
+            <div class="flex flex-col text-center">
+              <li class="opts-tit wow animate__animated animate__fadeInUp">
+                {{ XList[1].title }}
+              </li>
+              <li
+                class="wow animate__animated animate__fadeInUp"
+                :class="
+                  XList[1].act === t.name ? 'active-check' : 'default-check'
+                "
+                v-for="t in XList[1].opts"
+                :key="t.key"
+                @click="checkBox(1, t.name)"
+              >
+                {{ t.name }}
+              </li>
+            </div>
+            <div class="flex flex-col text-center">
+              <li class="opts-tit wow animate__animated animate__fadeInUp">
+                {{ XList[2].title }}
+              </li>
+              <li
+                class="wow animate__animated animate__fadeInUp"
+                :class="
+                  XList[2].opts[index].act ? 'active-check' : 'default-check'
+                "
+                v-for="(t, index) in XList[2].opts"
+                :key="index.key"
+                @click="checkBox2(index)"
+              >
+                {{ t.name }}
               </li>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- :style="{ backgroundImage: `url(${lightInfo[actLightInfo].img})` }"> -->
     <section class="section-wrapper">
-      <div class="se4-bg relative flex justify-between items-center"
-        :style="{ backgroundImage: `url(${lightInfo[actLightInfo].img})` }">
+      <div
+        class="se4-bg relative flex justify-between items-center"
+        :style="{ backgroundImage: `url(${lightInfo[actLightInfo].img})` }"
+      >
         <div class="w88 text-wrap text-left">
-          <li class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">无限组合光源技术</li>
-          <img src="/technical/txt.png" alt="">
-          <li class="text-5 font-600 leading-7 mb-4 wow animate__animated animate__fadeInUp">
+          <li
+            class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+          >
+            无限组合光源技术
+          </li>
+          <img src="/technical/txt.png" alt="" />
+          <li
+            class="text-5 font-600 leading-7 mb-4 wow animate__animated animate__fadeInUp"
+          >
             首创技术极大提升解码稳定性和性能
           </li>
           <li class="wow animate__animated animate__fadeInUp">
@@ -150,9 +272,19 @@
     <section class="section-wrapper">
       <div class="se5-bg relative flex justify-between items-center">
         <div class="w88 text-wrap text-left">
-          <li class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp">同轴瞄准</li>
-          <li class="text-5 font-600 leading-7 mb-3 wow animate__animated animate__fadeInUp">指哪读哪，所见即所扫</li>
-          <li class="wow animate__animated animate__fadeInUp">旗舰级瞄准技术，全面改善手持式读码器瞄准偏移现象，不用再担心漏扫情况</li>
+          <li
+            class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+          >
+            同轴瞄准
+          </li>
+          <li
+            class="text-5 font-600 leading-7 mb-3 wow animate__animated animate__fadeInUp"
+          >
+            指哪读哪，所见即所扫
+          </li>
+          <li class="wow animate__animated animate__fadeInUp">
+            旗舰级瞄准技术，全面改善手持式读码器瞄准偏移现象，不再担心漏扫情况
+          </li>
         </div>
       </div>
     </section>
@@ -195,7 +327,7 @@ const oneClickCards = [
   },
 ];
 
-const SEC1_ACT = ref(false)
+const SEC1_ACT = ref(false);
 const timer = ref();
 const actLightInfo = ref(0);
 const lightInfo = [
@@ -214,8 +346,8 @@ const lightInfo = [
 ];
 
 const timer1_num = ref(true);
-const bannerImg1 = ref(`/technical/oneClick1.png`)
-const bannerImg2 = ref(`/technical/speed1.png`)
+const bannerImg1 = ref(`/technical/oneClick1.png`);
+const bannerImg2 = ref(`/technical/speed1.png`);
 
 const XList = reactive([
   {
@@ -225,13 +357,37 @@ const XList = reactive([
   },
   {
     title: "光源颜色",
-    opts: ["红色", "蓝色"],
+    opts: [
+      {
+        name: "红色",
+        key: "red",
+      },
+      {
+        name: "蓝色",
+        key: "blue",
+      },
+    ],
     act: "红色",
   },
   {
     title: "光源类型",
-    opts: ["直射光", "偏振光", "均匀光"],
-    act: "直射光",
+    opts: [
+      {
+        name: "直射光",
+        key: "zs",
+        act: true,
+      },
+      {
+        name: "偏振光",
+        key: "pz",
+        act: false,
+      },
+      {
+        name: "均匀光",
+        key: "jy",
+        act: false,
+      },
+    ],
   },
 ]);
 const A = ref();
@@ -247,29 +403,52 @@ watch(
   },
   { immediate: true, deep: true }
 );
-const light = ref('zs-red')
+let light = reactive(["zs-red"]);
 const checkBox = (index: number, t: string) => {
-  XList[index].act = t
-  if (XList[1].act === '红色') {
-    light.value = XList[2].act === '直射光' ? 'zs-red' : XList[2].act === '偏振光' ? 'pz-red' : 'jy'
-  } else {
-    light.value = XList[2].act === '直射光' ? 'zs-blue' : XList[2].act === '偏振光' ? 'pz-blue' : 'jy'
+  XList[index].act = t;
+  if (index === 1) {
+    light = [];
+    XList[2].opts[0].act = XList[2].opts[1].act = false;
   }
-}
+};
+const checkBox2 = (i: number) => {
+  if (i === 2) {
+    XList[2].opts[2].act = !XList[2].opts[2].act;
+    XList[2].opts[0].act = XList[2].opts[1].act = false;
+    light = XList[2].opts[2].act ? ["jy"] : [];
+  } else {
+    light = XList[2].opts[2].act ? [] : light;
+    XList[2].opts[2].act = false;
+    XList[2].opts[i].act = !XList[2].opts[i].act;
+    if (XList[1].act === "红色") {
+      XList[2].opts[i].act
+        ? light.push(XList[2].opts[i].key + "-red")
+        : light.pop();
+    }
+    if (XList[1].act === "蓝色") {
+      XList[2].opts[i].act
+        ? light.push(XList[2].opts[i].key + "-blue")
+        : light.pop();
+    }
+  }
+};
 onMounted(() => {
   timer.value = setInterval(() => {
-    bannerImg1.value = timer1_num.value ? `/technical/oneClick1.png` : `/technical/oneClick2.png`
-    bannerImg2.value = timer1_num.value ? `/technical/speed1.png` : `/technical/speed2.png`
+    bannerImg1.value = timer1_num.value
+      ? `/technical/oneClick1.png`
+      : `/technical/oneClick2.png`;
+    bannerImg2.value = timer1_num.value
+      ? `/technical/speed1.png`
+      : `/technical/speed2.png`;
     nextTick(() => {
-      timer1_num.value = !timer1_num.value
-    })
+      timer1_num.value = !timer1_num.value;
+    });
 
     if (actLightInfo.value < 2) {
       actLightInfo.value++;
     } else {
       actLightInfo.value = 0;
     }
-
   }, 3000);
 });
 </script>
@@ -318,7 +497,11 @@ onMounted(() => {
         left: 0;
         width: 100%;
         height: 228px;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.4),
+          rgba(0, 0, 0, 0.8)
+        );
         pointer-events: none;
       }
     }
@@ -336,7 +519,11 @@ onMounted(() => {
         left: 0;
         width: 100%;
         height: 355px;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 1)
+        );
         pointer-events: none;
       }
     }
@@ -354,7 +541,11 @@ onMounted(() => {
         left: 0;
         width: 100%;
         height: 355px;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 1)
+        );
         pointer-events: none;
       }
     }
@@ -429,7 +620,7 @@ onMounted(() => {
 
     .se5-bg {
       height: 910px;
-      background-image: url('/public/technical/sec5-bg.webp');
+      background-image: url("/public/technical/sec5-bg.webp");
       background-repeat: no-repeat;
       background-size: 80%;
       background-position: center right;
@@ -446,7 +637,6 @@ onMounted(() => {
       line-height: normal;
       letter-spacing: 3.84px;
       z-index: 9;
-
     }
 
     .text {
@@ -463,43 +653,58 @@ onMounted(() => {
 
     .card {
       height: 475px;
+      .left {
+        flex: 0 0 auto;
+        width: 368px;
+        .title {
+          font-size: 40px;
+          font-weight: 600;
+        }
+        .txt {
+          color: #a3a8ab;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 28px;
+        }
+      }
 
       .card1-img {
         width: 922px;
         height: 475px;
-        background-image: url('/technical/se1-card1.webp');
+        background-image: url("/technical/se1-card1.webp");
         background-size: cover;
         background-position: center center;
-        transition: all 0.5s ease-in-out;
+        transition: all 0.3s ease-in-out;
 
         &:hover {
-          background-image: url('/technical/se1-card1-hover.webp');
+          background-image: url("/technical/se1-card1-hover.webp");
         }
       }
 
       .card3-img {
         width: 922px;
         height: 475px;
-        background-image: url('/technical/se1-card3.webp');
+        background-image: url("/technical/se1-card3.webp");
         background-size: cover;
         background-position: center center;
         transition: all 0.5s ease-in-out;
 
         &:hover {
-          background-image: url('/technical/se1-card3-hover.webp');
+          background-image: url("/technical/se1-card3-hover.webp");
         }
       }
 
       .card4-img {
         width: 922px;
         height: 475px;
-        background-image: url('/technical/se1-card4.webp');
+        background-image: url("/technical/se1-card4.webp");
         background-size: cover;
         background-position: center center;
         transition: all 0.5s ease-in-out;
 
         &:hover {
-          background-image: url('/technical/se1-card4-hover.webp');
+          background-image: url("/technical/se1-card4-hover.webp");
         }
       }
     }
