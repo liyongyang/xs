@@ -93,6 +93,10 @@ const toGd = (key) => {
     });
 };
 
+const toTechnical = () => {
+  router.push({ path: "/technical" });
+};
+
 const openDialog = () => {
   addDialog({
     title: "",
@@ -216,7 +220,9 @@ onUnmounted(() => {});
           </li>
         </div> -->
       </div>
-      <el-button class="btn-white wow animate__animated animate__fadeInUp"
+      <el-button
+        class="btn-white wow animate__animated animate__fadeInUp"
+        @click="toTechnical()"
         >了解更多</el-button
       >
     </section>

@@ -24,16 +24,20 @@
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
+const route = useRoute();
 
 const toTop = () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
   });
+  if (route.path === "/goods/R275A") {
+    window.location.reload();
+  }
 };
 const toContactUs = () => {
   router.push({
@@ -42,7 +46,7 @@ const toContactUs = () => {
 };
 onMounted(() => {});
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .slider-container {
   display: flex;
   flex-direction: column;

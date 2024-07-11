@@ -1,20 +1,12 @@
 <script setup>
+import tableSvg from "@/assets/r275a_table.svg";
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import {
-  nextTick,
-  onBeforeUnmount,
-  onMounted,
-  onUnmounted,
-  reactive,
-  ref,
-} from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-
-import tableSvg from "@/assets/r275a_table.svg";
 
 const showGd = ref(true);
 const chilMenu = ref(false);
@@ -22,9 +14,9 @@ const gdRef = ref();
 const videoRef = ref();
 const videoRef2 = ref();
 const pg1Act = ref(0);
-let bgArr = reactive([]);
-let bgImgArr1 = [`/R275A/webp/`];
 const currentVideo = ref(0);
+let imgUrls = ref([]);
+
 const A275A_INFO = {
   detailInfo: {
     title: "设计细节",
@@ -132,40 +124,6 @@ const goBack = () => {
   router.push({ path: "/goods", query: { type: "R" } });
 };
 
-const loadImage = (src) => {
-  let p = new Promise((resolve, reject) => {
-    let img = new Image();
-    img.onload = () => {
-      resolve(img);
-    };
-    img.onerror = function () {
-      reject(src);
-    };
-    img.src = src;
-  });
-  return p;
-};
-const loadBgArr = async () => {
-  let arr = [];
-  for (let i = 500000; i <= 500087; i++) {
-    await loadImage(`${bgImgArr1}${i}-imageonline.co.webp`).then((img) => {
-      arr.push(img);
-    });
-  }
-  return arr;
-};
-
-const setBgImgPg1 = () => {
-  nextTick(() => {
-    // gdRef.value.classList.add("bg-transition");
-    gdRef.value.style.backgroundImage = `url(${bgArr[pg1Act.value].src})`;
-  });
-  gdRef.value.style.opacity = 1;
-  if (pg1Act.value === 87) {
-    gdRef.value.style.opacity = 0;
-  }
-};
-
 const playNextVideo = () => {
   const videos = document.querySelectorAll("video");
   console.log(`output->videos`, videos);
@@ -177,79 +135,57 @@ const playNextVideo = () => {
 
 const step = ref(0);
 const handleScroll = (event) => {
-  if (bgArr.length > 0) {
-    if (event.deltaY > 0) {
-      // 向下滚动
-      chilMenu.value = true;
-      showGd.value = false;
-      if (
-        window.scrollY > 0 &&
-        window.scrollY < 20 &&
-        videoRef.value.style.display === "none"
-      ) {
-        videoRef2.value.style.display = "none";
-
-        videoRef.value.style.display = "block";
-        videoRef.value.play();
-      }
-      if (
-        window.scrollY > 20 &&
-        window.scrollY < 40 &&
-        videoRef2.value.style.display === "none"
-      ) {
-        videoRef.value.style.display = "none";
-
-        videoRef2.value.style.display = "block";
-        videoRef2.value.play();
-      }
-      if (pg1Act.value < 87) {
-        pg1Act.value++;
-        event.preventDefault();
-      }
+  console.log(`scrollY`, pg1Act.value, window.scrollY);
+  if (event.deltaY > 0) {
+    // 向下滚动
+    chilMenu.value = true;
+    showGd.value = false;
+    if (pg1Act.value < 190) {
+      pg1Act.value = pg1Act.value + 1;
+      event.preventDefault();
+      console.log("stop");
     } else {
-      chilMenu.value = false;
-      if (window.scrollY > 20 && window.scrollY < 40) {
-        videoRef2.value.style.display = "block";
-        videoRef2.value.play();
-      }
-      if (window.scrollY > 0 && window.scrollY < 20) {
-        videoRef2.value.style.display = "none";
-
-        videoRef.value.style.display = "block";
-        videoRef.value.play();
-      }
-      if (window.scrollY === 0) {
-        videoRef.value.style.display = "none";
-        step.value = 0;
-        // 向上滚动
-        if (pg1Act.value > 1) {
-          pg1Act.value--;
-        } else {
-          pg1Act.value = 0;
-          showGd.value = true;
-        }
+      videoRef2.value.style.display = "block";
+      videoRef2.value.play();
+    }
+  } else {
+    chilMenu.value = false;
+    if (window.scrollY > 0 && window.scrollY < 60) {
+      videoRef2.value.style.display = "block";
+      videoRef2.value.play();
+    }
+    if (window.scrollY === 0) {
+      videoRef2.value.style.display = "none";
+      step.value = 0;
+      // 向上滚动
+      if (pg1Act.value > 1) {
+        pg1Act.value--;
+      } else {
+        pg1Act.value = 0;
+        showGd.value = true;
       }
     }
-    setBgImgPg1();
-    console.log(`scrollY`, window.scrollY, step.value);
   }
 };
-const preventScroll = (event) => {
-  event.preventDefault();
+const preloadImages = async () => {
+  await Promise.all(
+    imgUrls.value.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve;
+      });
+    })
+  );
 };
 
 onMounted(() => {
-  // document.body.addEventListener("wheel", preventScroll, { passive: false });
-  loadBgArr().then((list) => {
-    bgArr = list;
-    console.log(`output->list`, list);
-    setBgImgPg1();
-    // document.body.removeEventListener("wheel", preventScroll);
-    document.body.addEventListener("wheel", handleScroll, { passive: false });
-  });
+  for (let index = 0; index < 190; index++) {
+    imgUrls.value.push(`/R275A/webp2/${index}.webp`);
+  }
+  preloadImages();
 });
 
-onUnmounted(() => {});
 onBeforeUnmount(() => {
   document.body.removeEventListener("wheel", handleScroll);
 });
@@ -257,43 +193,52 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="pg-container">
-    <section class="section-banner">
-      <div class="header">
-        <div
-          class="head animate__animated animate__fadeInDown flex justify-between items-center mx-auto"
-          v-show="chilMenu"
-        >
-          <li class="good-name">R275-A</li>
-          <div class="flex justify-between items-center text-slate-900">
-            <router-link
-              :to="{ path: '/goods/R275A/product-params' }"
-              class="py-2 px-3 mr-4 cursor-pointer"
-            >
-              产品参数
-            </router-link>
-            <router-link
-              :to="{ path: '/goods/R275A/download' }"
-              class="py-2 px-3 mr-4 cursor-pointer"
-              >下载
-            </router-link>
-            <router-link
-              :to="{ path: '/goods/R275A/qa' }"
-              class="py-2 px-3 mr-4 cursor-pointer"
-              >常见问题
-            </router-link>
-            <router-link
-              :to="{ path: '/contactUs' }"
-              class="btn-black py-2 px-3 mr-4 cursor-pointer"
-              >联系我们
-            </router-link>
-          </div>
+    <div class="header">
+      <div
+        class="head z-9 animate__animated animate__fadeInDown flex justify-between items-center mx-auto"
+        v-show="chilMenu"
+      >
+        <li class="good-name">R275-A</li>
+        <div class="flex justify-between items-center text-slate-900">
+          <router-link
+            :to="{ path: '/goods/R275A/product-params' }"
+            class="py-2 px-3 mr-4 cursor-pointer"
+          >
+            产品参数
+          </router-link>
+          <router-link
+            :to="{ path: '/goods/R275A/download' }"
+            class="py-2 px-3 mr-4 cursor-pointer"
+            >下载
+          </router-link>
+          <router-link
+            :to="{ path: '/goods/R275A/qa' }"
+            class="py-2 px-3 mr-4 cursor-pointer"
+            >常见问题
+          </router-link>
+          <router-link
+            :to="{ path: '/contactUs' }"
+            class="btn-black py-2 px-3 mr-4 cursor-pointer"
+            >联系我们
+          </router-link>
         </div>
       </div>
+    </div>
+    <section class="section-banner relative">
       <div
         ref="gdRef"
         class="pg1_frame-wrapper panel center column gradient-blue text-dark"
         @wheel="handleScroll"
       >
+        <div
+          class="img-item absolute top-0 left-0"
+          v-for="(item, index) in imgUrls"
+          :key="index"
+          :style="{
+            backgroundImage: `url(${item})`,
+            opacity: `${pg1Act === index ? 1 : 0}`,
+          }"
+        ></div>
         <li
           class="go-back flex items-center py-2 px-3 cursor-pointer wow animate__animated animate__fadeInUp"
           v-show="showGd"
@@ -305,7 +250,7 @@ onBeforeUnmount(() => {
           <span class="text-3.5 px-3">返回</span>
         </li>
         <div
-          class="pg1_frame-text-wrapper animate__animated animate__fadeInUp"
+          class="pg1_frame-text-wrapper animate__animated animate__fadeInUp z-10"
           v-show="showGd"
         >
           <li class="gd-type">R275-A</li>
@@ -316,23 +261,10 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </section>
-    <section class="video-wrapper" v-if="bgArr">
-      <div class="pg1_video-wrapper animate__animated animate__fadeIn">
-        <video ref="videoRef" class="bgvideo" muted>
-          <source
-            type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"'
-            data-layzr-src="/R275A/video1.mp4"
-            src="/R275A/video1.mp4"
-          />
-        </video>
-      </div>
-      <div class="pg1_video-wrapper animate__animated animate__fadeIn">
+    <section class="video-wrapper relative">
+      <div class="pg1_video-wrapper absolute top-0 left-0">
         <video ref="videoRef2" class="bgvideo" muted>
-          <source
-            type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"'
-            data-layzr-src="/R275A/video2.mp4"
-            src="/R275A/video2.mp4"
-          />
+          <source src="/R275A/video2.mp4" />
         </video>
       </div>
     </section>
@@ -413,37 +345,38 @@ onBeforeUnmount(() => {
   position: relative;
   width: 100vw;
   height: 100%;
+  min-height: 100vh;
   background-color: #000;
   overflow-x: hidden;
+
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background-color: #f4f4f4;
+    text-align: center;
+    z-index: 29;
+
+    .head {
+      max-width: 1512px;
+      padding: 16px 64px;
+      align-items: center;
+    }
+
+    .good-name {
+      color: #1d1c23;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 32px;
+    }
+  }
 
   .section-banner {
     position: absolute;
     background-size: cover;
     background-position: center;
     z-index: 19;
-
-    .header {
-      position: fixed;
-      top: 0;
-      width: 100vw;
-      background-color: #f4f4f4;
-      text-align: center;
-      z-index: 29;
-
-      .head {
-        max-width: 1512px;
-        padding: 16px 64px;
-        align-items: center;
-      }
-
-      .good-name {
-        color: #1d1c23;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 32px;
-      }
-    }
 
     .bg-transition {
       transition: background-image 0.5s ease-in-out;
@@ -457,8 +390,13 @@ onBeforeUnmount(() => {
       background-position: center;
       z-index: 3;
       color: #fff;
-      background-image: url("/R275A/webp/500000-imageonline.co.webp");
-      // transition: background-image 0.3s ease-in-out;
+      .img-item {
+        height: 100vh;
+        width: 100vw;
+        background-size: cover;
+        background-position: center;
+        background-color: #000;
+      }
 
       .go-back {
         position: absolute;
