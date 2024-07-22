@@ -1,5 +1,5 @@
 <template>
-  <div class="slider-container">
+  <div class="slider-container slider">
     <img
       class="hvr-wobble-horizontal cursor-pointer"
       src="/common/affix-icon1.png"
@@ -57,6 +57,20 @@ onMounted(() => {});
     border-radius: 100%;
     background-color: #fff;
     transition: background-color 0.5s;
+  }
+}
+.slider {
+  position: fixed;
+  bottom: 70px;
+  right: 48px;
+  z-index: 999;
+}
+@media (max-width: 576px) {
+  .slider {
+    position: fixed;
+    bottom: 64px;
+    right: 28px;
+    z-index: 999;
   }
 }
 </style>

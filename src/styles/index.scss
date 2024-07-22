@@ -142,8 +142,7 @@ div:focus {
 
 // common.less
 *::-webkit-scrollbar {
-  padding-left: 10px;
-  width: 10px;
+  width: 20px;
   height: 10px;
 }
 
@@ -161,15 +160,16 @@ li {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  background-color: inherit;
+  display: none;
+  width: 6px;
+  height: 8px;
+  background-color: #1e1e1e9f;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 6px;
   -webkit-box-shadow: none;
-  background: #939393;
+  background: #111112;
   -webkit-box-shadow: none;
 }
 

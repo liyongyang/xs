@@ -20,11 +20,9 @@
             class="py-2 px-3 mr-4 cursor-pointer"
             >常见问题
           </router-link>
-          <router-link
-            :to="{ path: '/contactUs' }"
-            class="btn-black py-2 px-3 mr-4 cursor-pointer"
-            >联系我们
-          </router-link>
+          <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
+            联系我们
+          </li>
         </div>
       </div>
     </div>
@@ -229,7 +227,7 @@
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import { onMounted, ref } from "vue";
@@ -315,7 +313,7 @@ const goBack = () => {
 
 onMounted(() => {});
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .good-container {
   width: 100vw;
   margin-top: 89px;
@@ -466,6 +464,9 @@ onMounted(() => {});
   padding: 10px 32px;
   border-radius: 99px;
   background-color: #fff;
+  &:hover {
+    background-color: #f4f4f4;
+  }
 }
 
 .btn-black {
@@ -473,9 +474,13 @@ onMounted(() => {});
   font-size: 14px;
   line-height: 20px;
   border-radius: 99px;
+  padding: 10px 32px;
   color: #fff;
   background-color: #000;
   border: 1px solid #fefefe;
+  &:hover {
+    background-color: #414344;
+  }
 }
 
 :deep(.el-collapse-item) {

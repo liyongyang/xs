@@ -88,6 +88,9 @@ import SubHeader from "@/components/head/subHeader.vue";
   color: #fff;
   background-color: #000;
   border: 1px solid #fefefe;
+  &:hover {
+    background-color: #414344;
+  }
 }
 
 h2,

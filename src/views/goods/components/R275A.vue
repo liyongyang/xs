@@ -2,7 +2,7 @@
 import tableSvg from "@/assets/r275a_table.svg";
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
@@ -21,81 +21,93 @@ const A275A_INFO = {
   detailInfo: {
     title: "设计细节",
     slider: [
-      {
-        img: "/R275A/detail/slider0.webp",
-        tit: "全透型钢化视窗",
-        txt: "光学镀膜 + 钢化视窗 = 清晰读取，坚固耐用",
-      },
-      {
-        img: "/R275A/detail/slider1.webp",
-        tit: "全新几何光学设计",
-        txt: "专业设计的镀银抛物面反射器，读码更加稳定",
-      },
-      {
-        img: "/R275A/detail/slider2.webp",
-        tit: "专研偏光滤镜照明",
-        txt: "减少光干扰，稳定读码",
-      },
-      {
-        img: "/R275A/detail/slider3.webp",
-        tit: "多ROI配置功能",
-        txt: "多码环境下也能稳定读取",
-      },
-      {
-        img: "/R275A/detail/slider4.webp",
-        tit: "先进异构处理系统",
-        txt: "提高解码性能、降低功耗",
-      },
-      {
-        img: "/R275A/detail/slider5.webp",
-        tit: "先进异构处理系统",
-        txt: "光专为解决难读码而优化的 DSP",
-      },
+      [
+        {
+          img: "/R275A/detail/slider0.webp",
+          tit: "全透型钢化视窗",
+          txt: "光学镀膜 + 钢化视窗 = 清晰读取，坚固耐用",
+        },
+        {
+          img: "/R275A/detail/slider1.webp",
+          tit: "全新几何光学设计",
+          txt: "专业设计的镀银抛物面反射器，读码更加稳定",
+        },
+        {
+          img: "/R275A/detail/slider2.webp",
+          tit: "专研偏光滤镜照明",
+          txt: "减少光干扰，稳定读码",
+        },
+      ],
+      [
+        {
+          img: "/R275A/detail/slider3.webp",
+          tit: "多ROI配置功能",
+          txt: "多码环境下也能稳定读取",
+        },
+        {
+          img: "/R275A/detail/slider4.webp",
+          tit: "先进异构处理系统",
+          txt: "提高解码性能、降低功耗",
+        },
+        {
+          img: "/R275A/detail/slider5.webp",
+          tit: "先进异构处理系统",
+          txt: "光专为解决难读码而优化的 DSP",
+        },
+      ],
     ],
   },
   yyInfo: {
     title: "丰富的应用场景",
     slider: [
-      {
-        img: "/R275A/yy/slider0.webp",
-        tit: "0.5mm超小码",
-        txt: "电子零部件的条码越来越小。采用超分辨率算法™的 R275-A，能够稳定读取超小码",
-      },
-      {
-        img: "/R275A/yy/slider1.webp",
-        tit: "L角破损30%",
-        txt: "即使关键定位器（L角）破损达30%，SPL技术TM都能够轻松解决",
-      },
-      {
-        img: "/R275A/yy/slider2.webp",
-        tit: "撞针深浅不一",
-        txt: "金属铸件的撞针打标工艺会影响条码质量，利用新算强 大的图像处理能力可以实现稳定读取",
-      },
-      {
-        img: "/R275A/yy/slider3.webp",
-        tit: "弧面反光",
-        txt: "金属弧面的DPM码容易造成反光干扰解码，通过偏光滤 镜降低反射可稳定解码",
-      },
-      {
-        img: "/R275A/yy/slider4.webp",
-        tit: "金属拉丝",
-        txt: "条码会因为黑色金属拉丝基底而难以读取，R275-A增强 算法能够实现稳定读取",
-      },
-      {
-        img: "/R275A/yy/slider5.webp",
-        tit: "塑料膜遮挡",
-        txt: "物流包裹覆膜会造成读码无法读取，强大的算法引擎能 够解决该问题",
-      },
-      {
-        img: "/R275A/yy/slider6.webp",
-        tit: "透过玻璃读取",
-        txt: "精密设备有时要求读码器透过玻璃窗读取，通过偏光滤 镜能够减少玻璃反光，从而读取条码",
-      },
-      {
-        img: "/R275A/yy/slider7.webp",
-        tit: "多码同时读取",
-        txt: "SMT料盘往往有多个类型的条码，R275-A支持多种码制， 能够实现同时读取多个不同的条码",
-      },
+      [
+        {
+          img: "/R275A/yy/slider0.webp",
+          tit: "0.5mm超小码",
+          txt: "电子零部件的条码越来越小。采用超分辨率算法™的 R275-A，能够稳定读取超小码",
+        },
+        {
+          img: "/R275A/yy/slider1.webp",
+          tit: "L角破损30%",
+          txt: "即使关键定位器（L角）破损达30%，SPL技术TM都能够轻松解决",
+        },
+      ],
+      [
+        {
+          img: "/R275A/yy/slider2.webp",
+          tit: "撞针深浅不一",
+          txt: "金属铸件的撞针打标工艺会影响条码质量，利用新算强 大的图像处理能力可以实现稳定读取",
+        },
+        {
+          img: "/R275A/yy/slider3.webp",
+          tit: "弧面反光",
+          txt: "金属弧面的DPM码容易造成反光干扰解码，通过偏光滤 镜降低反射可稳定解码",
+        },
+      ],
+      [
+        {
+          img: "/R275A/yy/slider4.webp",
+          tit: "金属拉丝",
+          txt: "条码会因为黑色金属拉丝基底而难以读取，R275-A增强 算法能够实现稳定读取",
+        },
+        {
+          img: "/R275A/yy/slider5.webp",
+          tit: "塑料膜遮挡",
+          txt: "物流包裹覆膜会造成读码无法读取，强大的算法引擎能 够解决该问题",
+        },
+      ],
+      [
+        {
+          img: "/R275A/yy/slider6.webp",
+          tit: "透过玻璃读取",
+          txt: "精密设备有时要求读码器透过玻璃窗读取，通过偏光滤 镜能够减少玻璃反光，从而读取条码",
+        },
+        {
+          img: "/R275A/yy/slider7.webp",
+          tit: "多码同时读取",
+          txt: "SMT料盘往往有多个类型的条码，R275-A支持多种码制， 能够实现同时读取多个不同的条码",
+        },
+      ],
     ],
   },
   dbInfo: {
@@ -104,6 +116,19 @@ const A275A_INFO = {
   },
 };
 
+watch(
+  videoRef2.value,
+  (Old, New) => {
+    console.log("=======", Old, New);
+    // if (New === 190) {
+    //   pg1Act.value++;
+    //   document.body.style.overflow = "hidden";
+    // } else {
+    //   document.body.style.overflow = "auto";
+    // }
+  },
+  { immediate: true, deep: true }
+);
 const openDialog = () => {
   addDialog({
     title: "",
@@ -133,30 +158,39 @@ const playNextVideo = () => {
   setTimeout(playNextVideo, videos[currentVideo.value].duration * 1000); // 在当前视频播放完后切换到下一个视频
 };
 
-const step = ref(0);
 const handleScroll = (event) => {
-  console.log(`scrollY`, pg1Act.value, window.scrollY);
+  console.log(
+    `scrollY`,
+    pg1Act.value,
+    window.scrollY,
+    videoRef2.value.style.display
+  );
+
   if (event.deltaY > 0) {
     // 向下滚动
+    if (!videoRef2.value.paused) {
+      event.preventDefault();
+    }
     chilMenu.value = true;
     showGd.value = false;
     if (pg1Act.value < 190) {
-      pg1Act.value = pg1Act.value + 1;
+      pg1Act.value++;
       event.preventDefault();
-      console.log("stop");
     } else {
-      videoRef2.value.style.display = "block";
-      videoRef2.value.play();
+      if (videoRef2.value.style.display === "none") {
+        videoRef2.value.style.display = "block";
+        videoRef2.value.play();
+      }
     }
   } else {
     chilMenu.value = false;
-    if (window.scrollY > 0 && window.scrollY < 60) {
-      videoRef2.value.style.display = "block";
+    if (pg1Act.value < 190) {
+      videoRef2.value.style.display = "none";
+    }
+    if (window.scrollY > 0 && window.scrollY < 20) {
       videoRef2.value.play();
     }
     if (window.scrollY === 0) {
-      videoRef2.value.style.display = "none";
-      step.value = 0;
       // 向上滚动
       if (pg1Act.value > 1) {
         pg1Act.value--;
@@ -184,6 +218,7 @@ onMounted(() => {
     imgUrls.value.push(`/R275A/webp2/${index}.webp`);
   }
   preloadImages();
+  videoRef2.value.style.display = "none";
 });
 
 onBeforeUnmount(() => {
@@ -216,11 +251,9 @@ onBeforeUnmount(() => {
             class="py-2 px-3 mr-4 cursor-pointer"
             >常见问题
           </router-link>
-          <router-link
-            :to="{ path: '/contactUs' }"
-            class="btn-black py-2 px-3 mr-4 cursor-pointer"
-            >联系我们
-          </router-link>
+          <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
+            联系我们
+          </li>
         </div>
       </div>
     </div>
@@ -275,25 +308,31 @@ onBeforeUnmount(() => {
         >
           {{ A275A_INFO.detailInfo.title }}
         </li>
-        <div class="detail-slider flex overflow-x-scroll">
-          <div
-            class="slider-item"
-            v-for="(item, index) in A275A_INFO.detailInfo.slider"
+        <el-carousel
+          :interval="3000"
+          height="420px"
+          class="detail-slider"
+          indicator-position="none"
+        >
+          <el-carousel-item
+            v-for="(items, index) in A275A_INFO.detailInfo.slider"
             :key="index"
           >
-            <img
-              class="wow animate__animated animate__fadeIn"
-              :src="item.img"
-              alt=""
-            />
-            <li class="tit wow animate__animated animate__fadeInUp">
-              {{ item.tit }}
-            </li>
-            <li class="txt wow animate__animated animate__fadeInUp">
-              {{ item.txt }}
-            </li>
-          </div>
-        </div>
+            <div class="slider-item" v-for="(item, i) in items" :key="i">
+              <img
+                class="wow animate__animated animate__fadeIn"
+                :src="item.img"
+                alt=""
+              />
+              <li class="tit wow animate__animated animate__fadeInUp">
+                {{ item.tit }}
+              </li>
+              <li class="txt wow animate__animated animate__fadeInUp">
+                {{ item.txt }}
+              </li>
+            </div>
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </section>
     <section class="pg bg-white">
@@ -301,25 +340,26 @@ onBeforeUnmount(() => {
         <li class="title text-center wow animate__animated animate__fadeInUp">
           {{ A275A_INFO.yyInfo.title }}
         </li>
-        <div class="yy-slider flex overflow-x-scroll">
-          <div
-            class="slider-item"
-            v-for="(item, index) in A275A_INFO.yyInfo.slider"
+        <el-carousel :interval="3000" height="480px" class="yy-slider">
+          <el-carousel-item
+            v-for="(items, index) in A275A_INFO.yyInfo.slider"
             :key="index"
           >
-            <img
-              class="wow animate__animated animate__fadeIn"
-              :src="item.img"
-              alt=""
-            />
-            <li class="tit wow animate__animated animate__fadeInUp">
-              {{ item.tit }}
-            </li>
-            <li class="txt wow animate__animated animate__fadeInUp">
-              {{ item.txt }}
-            </li>
-          </div>
-        </div>
+            <div class="slider-item" v-for="(item, i) in items" :key="i">
+              <img
+                class="wow animate__animated animate__fadeIn"
+                :src="item.img"
+                alt=""
+              />
+              <li class="tit wow animate__animated animate__fadeInUp">
+                {{ item.tit }}
+              </li>
+              <li class="txt wow animate__animated animate__fadeInUp">
+                {{ item.txt }}
+              </li>
+            </div>
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </section>
     <section class="pg bg-white">
@@ -331,9 +371,13 @@ onBeforeUnmount(() => {
           <tableSvg></tableSvg>
         </div>
         <div class="text-center more wow animate__animated animate__fadeInUp">
-          <el-button class="btn-white mx-auto">{{
-            A275A_INFO.dbInfo.more
-          }}</el-button>
+          <!-- <el-button class="btn-white more-btn mx-auto">{{}}</el-button> -->
+          <router-link
+            :to="{ path: '/goods/R275A/product-params' }"
+            class="btn-white more-btn cursor-pointer"
+          >
+            {{ A275A_INFO.dbInfo.more }}
+          </router-link>
         </div>
       </div>
     </section>
@@ -408,11 +452,11 @@ onBeforeUnmount(() => {
       .pg1_frame-text-wrapper {
         color: #fff;
         margin: 0 auto;
-        padding-top: 120px;
+        padding-top: 160px;
         text-align: center;
-
         .gd-type {
           font-size: 48px;
+          font-style: normal;
           font-weight: 600;
           line-height: normal;
           letter-spacing: 3.84px;
@@ -420,6 +464,8 @@ onBeforeUnmount(() => {
 
         .gd-name {
           font-size: 24px;
+          font-style: normal;
+          font-weight: 400;
           line-height: 32px;
         }
 
@@ -427,6 +473,7 @@ onBeforeUnmount(() => {
           color: #9eaab0;
           font-size: 18px;
           line-height: 24px;
+          margin: 16px auto;
         }
       }
 
@@ -481,7 +528,7 @@ onBeforeUnmount(() => {
 
         .slider-item {
           flex: 0 0 auto;
-          width: 400px;
+          width: 450px;
           margin-right: 6px;
 
           img {
@@ -497,7 +544,7 @@ onBeforeUnmount(() => {
 
         .slider-item {
           flex: 0 0 auto;
-          width: 688px;
+          width: 686px;
           margin-right: 6px;
 
           img {
@@ -505,9 +552,16 @@ onBeforeUnmount(() => {
           }
         }
       }
-
+      :deep(.el-carousel__item) {
+        display: flex;
+        justify-content: space-between;
+        overflow-x: scroll;
+      }
       .more {
         margin-top: 64px;
+        .more-btn {
+          border: 1px solid #1d1c23;
+        }
       }
     }
 
@@ -547,14 +601,18 @@ onBeforeUnmount(() => {
     font-weight: 600;
     color: #fff;
   }
-
   .btn-white {
+    height: auto;
     font-size: 14px;
     line-height: 20px;
     color: #1d1c23;
     padding: 10px 32px;
     border-radius: 99px;
     background-color: #fff;
+    border: 1px solid #fefefe;
+    &:hover {
+      background-color: #f4f4f4;
+    }
   }
 
   .btn-black {
@@ -564,10 +622,12 @@ onBeforeUnmount(() => {
     padding: 10px 32px;
     border-radius: 99px;
     color: #fff;
-    background-color: #1d1c23;
+    background-color: #111112;
     border: 1px solid #fefefe;
+    &:hover {
+      background-color: #414344;
+    }
   }
-
   .bgvideo {
     width: 100vw;
     height: 100vh;

@@ -113,7 +113,7 @@
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
 
@@ -208,7 +208,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 };
 onMounted(() => {});
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .pg-container {
   color: #fff;
   position: relative;
@@ -378,6 +378,10 @@ onMounted(() => {});
     color: #fff;
     background-color: #111112;
     border: 1px solid #111112;
+    &:hover {
+      background-color: #414344;
+      border: 1px solid #414344;
+    }
   }
 
   .btn-white {
@@ -387,6 +391,9 @@ onMounted(() => {});
     padding: 10px 32px;
     border-radius: 99px;
     background-color: #fff;
+    &:hover {
+      background-color: #f4f4f4;
+    }
   }
 }
 </style>

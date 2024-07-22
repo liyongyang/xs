@@ -1,0 +1,100 @@
+projectNeedNum客户报备
+新增客户报备
+http://47.121.114.133:19057/t-customer-report/addReport
+请求参数：
+company	公司名称
+address 地址
+business 主营业务
+contactName 客户对接人姓名
+contactPost 客户对接人职位
+contactPhone 客户对接人电话
+projectName 项目名称
+projectScene 项目使用场景
+projectStage 项目阶段
+suggestProduct 推荐产品型号
+projectNeedNum	项目需求数量
+needTotal 公司全年需求数量
+reportName 报备人姓名
+reportPhone 报备人联系方式
+reportCompany 所在公司
+reportTime 报备日期
+remark 备注
+userId 用户ID
+
+请求示例：
+{
+    "company":"新算",
+    "address":"泰山大道",
+    "business":"系能源",
+    "contactName":"test",
+    "contactPost":"系能源",
+    "contactPhone":"02363215555",
+    "projectName":"test07",
+    "projectScene":"cj",
+    "projectStage":"2",
+    "projectNeedNum":"10",
+    "needTotal":"100",
+    "reportName":"test",
+    "reportPhone":"0231234",
+    "reportCompany":"test",
+    "reportTime":"2024-07-21 21:14:00",
+    "userId":1
+}
+
+更新状态
+http://47.121.114.133:19057/t-customer-report/updateStatus
+请求参数：
+id
+status 状态1审核中2审核完成3客户报备已通过4客户报备未通过
+请求示例：
+{
+    "id":1,
+    "status":"3"
+}
+
+客户报备分页查询
+http://47.121.114.133:19057/t-customer-report/page
+请求参数：
+current 当前页
+size 数量
+
+返回列表：
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "total": 1,
+        "list": [
+            {
+                "id": 2,
+                "company": "新算",
+                "address": "泰山大道",
+                "business": "系能源",
+                "contactName": "test",
+                "contactPost": "系能源",
+                "contactPhone": "02363215555",
+                "projectName": "test07",
+                "projectScene": "cj",
+                "projectStage": "2",
+                "projectNeedNum": "10",
+                "needTotal": "100",
+                "reportName": "test",
+                "reportPhone": "0231234",
+                "reportCompany": "test",
+                "reportTime": "2024-07-21 21:14:00",
+                "remark": null,
+                "status": "1",
+                "userId": 1,
+                "createBy": null,
+                "createTime": "2024-07-21 13:58:44",
+                "updateBy": null,
+                "updateTime": null
+            }
+        ]
+    }
+}
+
+删除客户报备
+http://47.121.114.133:19057/t-customer-report/delByIds
+请求参数：
+[1,2]

@@ -1,19 +1,35 @@
 <template>
   <div class="head-container">
+    <!-- mobile -->
+    <div class="head flex items-center justify-between" v-if="isSmallSize">
+      <logo @click="reload"></logo>
+      <div class="flex justify-between items-center">
+        <div class="lang">
+          <el-select
+            v-model="locale"
+            placeholder="Select"
+            @change="changeLang()"
+            :teleported-="false"
+          >
+            <el-option label="中文" value="zh" />
+            <el-option label="English" value="en" />
+          </el-select>
+        </div>
+        <menuSvg></menuSvg>
+      </div>
+    </div>
+    <!-- pc -->
     <div
       ref="headRef"
       class="head-box"
       @mouseenter="isShowChild(true)"
       @mouseleave="isShowChild(false)"
+      v-else
     >
       <div class="head">
-        <img
-          class="cursor-pointer"
-          src="/common/logo.png"
-          alt=""
-          @click="reload"
-        />
-        <div>
+        <!-- <img src="/public/common/logo.png" alt="" srcset="" /> -->
+        <logo class="cursor-pointer mt-2" @click="reload"></logo>
+        <section>
           <div class="menus">
             <div
               v-for="(item, index) in menus"
@@ -59,7 +75,7 @@
               </li>
             </div>
           </div>
-        </div>
+        </section>
         <div class="head-left">
           <div
             :class="activeRoute === '-1' ? 'active-bg' : 'default-bg'"
@@ -69,11 +85,7 @@
             {{ t("Email") }}
           </div>
           <div class="lang">
-            <el-select
-              v-model="locale"
-              placeholder="Select"
-              @change="changeLang(v)"
-            >
+            <el-select v-model="locale" placeholder="" @change="changeLang()">
               <el-option label="中文" value="zh" />
               <el-option label="English" value="en" />
             </el-select>
@@ -82,13 +94,49 @@
       </div>
     </div>
   </div>
+  <el-dialog
+    class="modal-comp"
+    v-model="showDialog"
+    title="Warning"
+    width="490"
+    align-center
+  >
+    <div class="flex flex-col justify-center items-center space-y-10">
+      <logo></logo>
+      <el-form
+        ref="ruleFormRef"
+        style="width: 400px"
+        :model="ruleForm"
+        label-width="left"
+      >
+        <el-form-item prop="name">
+          <template #label>
+            <div class="">账号</div>
+          </template>
+          <el-input v-model="ruleForm.name" />
+        </el-form-item>
+        <el-form-item prop="company">
+          <template #label>
+            <div class="">密码</div>
+          </template>
+          <el-input v-model="ruleForm.pwd" type="password" show-password />
+        </el-form-item>
+        <div class="text-center mt-12">
+          <el-button class="btn-black2" type="primary" @click="submitForm()">
+            登录
+          </el-button>
+        </div>
+      </el-form>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import logo from "@/assets/logo1.svg";
+import menuSvg from "@/assets/menu.svg";
+import { onMounted, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
-
 const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
@@ -96,6 +144,10 @@ const headRef = ref();
 const isSmallSize = ref(window.innerWidth < 576);
 const activeRoute = ref("goods");
 const showMenu = ref(true);
+const ruleForm = reactive({
+  name: "",
+  pwd: "",
+});
 const menus = [
   {
     path: "goods",
@@ -149,7 +201,7 @@ const goodMenus = [
     name: "双航插RS系列",
     child: [
       {
-        name: "RS 100",
+        name: "RS100",
         path: "RS100",
       },
       // {
@@ -182,6 +234,10 @@ const goodMenus = [
 ];
 
 const aboutUsMenus = [
+  {
+    name: "关于新算",
+    path: "aboutUs",
+  },
   {
     name: "新闻资讯",
     path: "news",
@@ -236,11 +292,21 @@ const toPage1 = (v: any) => {
     path: `/${v.path}`,
   });
 };
-
+const showDialog = ref(false);
 const toContact = () => {
-  activeRoute.value = "contact";
+  ruleForm.name = "";
+  ruleForm.pwd = "";
+  showDialog.value = true;
+  // activeRoute.value = "report";
+  // showMenu.value = false;
+  // router.push("/report");
+  // headRef.value.style.height = "88px";
+};
+const submitForm = () => {
+  showDialog.value = false;
+  activeRoute.value = "report";
   showMenu.value = false;
-  router.push("/contactUs");
+  router.push("/report");
   headRef.value.style.height = "88px";
 };
 const changeLang = () => {
@@ -376,13 +442,17 @@ onMounted(() => {});
   }
 
   .lang {
+    margin-left: 20px;
     :deep(.el-select) {
-      width: 104px !important;
+      width: 110px !important;
       background-color: inherit;
 
       &:hover:not(.el-select--disabled) .el-input__wrapper {
         box-shadow: none !important;
       }
+    }
+    :deep(.el-select__wrapper) {
+      box-shadow: none !important;
     }
 
     :deep(.el-select .el-input.is-focus .el-input__wrapper) {
@@ -398,23 +468,30 @@ onMounted(() => {});
     }
 
     :deep(.el-input__inner) {
+      padding: 0;
       color: #1d1c23;
       font-weight: 500;
     }
-
     :deep(.el-input__wrapper) {
       position: relative;
-      border-radius: 12px;
-      padding-left: 8px;
+      // padding-left: 8px;
       box-shadow: 0 0 0 1px #b0a7a700 inset;
+      .is-focus {
+        color: #1d1c23;
+      }
+    }
+    :deep(.el-select-dropdown__item.selected) {
+      color: #111112 !important;
+      background-color: #2e2e3840;
     }
 
     :deep(.el-input__suffix) {
-      position: absolute;
-      right: 20px;
+      // position: absolute;
+      // right: 20px;
 
+      .el-input__suffix-inner {
+      }
       svg {
-        font-weight: 500;
         color: #1d1c23;
       }
     }
@@ -429,6 +506,71 @@ onMounted(() => {});
     color: #fff;
     background-color: #1d1c23;
     border: 1px solid #fefefe;
+    &:hover {
+      background-color: #414344;
+    }
+  }
+}
+.btn-black2 {
+  width: 314px;
+  height: auto;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 32px;
+  border-radius: 99px;
+  color: #fff;
+  background-color: #111112;
+  border: 1px solid #111112;
+  &:hover {
+    background-color: #414344;
+  }
+}
+:deep(.el-form-item) {
+  margin: 0 auto;
+  display: block;
+  text-align: left;
+  margin-bottom: 24px;
+
+  .el-form-item__label {
+    color: #1d1c23;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 4px;
+  }
+
+  .el-form-item__content {
+    width: 100%;
+  }
+  .el-input__wrapper {
+    font-size: 14px;
+    height: 44px;
+    line-height: 44px;
+    font-weight: 500;
+  }
+  .el-input__inner {
+    text-align: center;
+    padding: 0 16px;
+  }
+  .el-input .el-input__icon {
+    font-size: 18px;
+  }
+}
+.btn-white {
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d1c23;
+  padding: 10px 32px;
+  border-radius: 99px;
+  background-color: #fff;
+  &:hover {
+    background-color: #f4f4f4;
+  }
+}
+@media (max-width: 576px) {
+  .head-container {
+    .head {
+      padding: 28px 16px 12px 16px;
+    }
   }
 }
 </style>

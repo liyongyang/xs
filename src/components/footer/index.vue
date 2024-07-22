@@ -1,80 +1,84 @@
 <template>
-  <section class="section-text-wrapper container-pg6 bg-color2 text-left">
-    <li class="title wow animate__animated animate__fadeInUp">
-      联系我们获取更多产品信息与合作细节
-    </li>
-    <div class="flex items-center info">
-      <el-button
-        class="btn-black wow animate__animated animate__fadeInUp"
-        @click="openDialog()"
-        >样机试用/演示</el-button
-      >
-      <li class="call wow animate__animated animate__fadeInUp">
-        咨询热线：15381991195
+  <div class="pg-wrapper">
+    <div v-if="route.meta.title != 'report'" class="contact text-left">
+      <li class="title wow animate__animated animate__fadeInUp">
+        联系我们获取更多产品信息与合作细节
       </li>
+      <div class="items-center info">
+        <el-button
+          class="btn-black wow animate__animated animate__fadeInUp"
+          @click="openDialog()"
+          >样机试用/演示</el-button
+        >
+        <li class="call wow animate__animated animate__fadeInUp">
+          咨询热线：15381991195
+        </li>
+      </div>
     </div>
-  </section>
-  <div class="footer">
-    <div class="main">
-      <div class="cont">
-        <div class="conf">
-          <img
-            class="logo-img wow animate__animated animate__fadeInUp"
-            src="/common/logo2.png"
-            alt=""
-          />
-          <li class="text-l text-color wow animate__animated animate__fadeInUp">
-            专注工业机器视觉，以读码产品开启智能制造
-          </li>
-        </div>
-        <div class="conf goods-box flex justify-between">
-          <div v-for="(items, index) in goodMenus" :key="index">
-            <li class="type wow animate__animated animate__fadeInUp">
-              {{ items.name }}
+    <div class="footer">
+      <div class="main">
+        <div class="cont">
+          <div class="conf">
+            <logo></logo>
+            <li
+              class="text-l text-color wow animate__animated animate__fadeInUp"
+            >
+              专注工业机器视觉，以读码产品开启智能制造
             </li>
-            <div class="space-y-4 wow animate__animated animate__fadeInUp">
-              <li
-                v-for="item in items.child"
-                :key="item.path"
-                class="text-color cursor-pointer"
-                @click="toPage(item)"
-              >
-                {{ item.name }}
+          </div>
+          <div class="conf goods-box flex flex-wrap justify-between">
+            <div v-for="(items, index) in goodMenus" :key="index">
+              <li class="type wow animate__animated animate__fadeInUp">
+                {{ items.name }}
               </li>
+              <div class="space-y-4 wow animate__animated animate__fadeInUp">
+                <li
+                  v-for="item in items.child"
+                  :key="item.path"
+                  class="text-color cursor-pointer"
+                  @click="toPage(item)"
+                >
+                  {{ item.name }}
+                </li>
+              </div>
+            </div>
+          </div>
+          <div class="conf space-y-6">
+            <li>关注我们</li>
+            <div class="space-x-6">
+              <icon0></icon0>
+              <icon1></icon1>
+              <icon2></icon2>
+              <icon3></icon3>
+              <icon4></icon4>
             </div>
           </div>
         </div>
-        <div class="conf space-y-6">
-          <li>关注我们</li>
-          <div class="space-x-6">
-            <icon0></icon0>
-            <icon1></icon1>
-            <icon2></icon2>
-            <icon3></icon3>
-            <icon4></icon4>
-          </div>
+        <div class="zc flex justify-start space-x-8">
+          <li>隐私政策</li>
+          <li>Cookies政策</li>
+          <li>备案信息</li>
         </div>
-      </div>
-      <div class="zc flex justify-start space-x-8">
-        <li>隐私政策</li>
-        <li>Cookies政策</li>
-        <li>备案信息</li>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import icon0 from "@/assets/footer-icon0.svg";
 import icon1 from "@/assets/footer-icon1.svg";
 import icon2 from "@/assets/footer-icon2.svg";
 import icon3 from "@/assets/footer-icon3.svg";
 import icon4 from "@/assets/footer-icon4.svg";
+import logo from "@/assets/logo2.svg";
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
+const route = useRoute();
+
+const isSmallSize = ref(window.innerWidth < 900);
 
 const goodMenus = [
   {
@@ -102,7 +106,7 @@ const goodMenus = [
     name: "双航插RS系列",
     child: [
       {
-        name: "RS 100",
+        name: "RS100",
         path: "RS100",
       },
       // {
@@ -119,7 +123,7 @@ const goodMenus = [
     name: "手持式H系列",
     child: [
       {
-        name: "H920",
+        name: "H920 无线/有线",
         path: "H920",
       },
       // {
@@ -133,6 +137,10 @@ const goodMenus = [
     ],
   },
 ];
+
+watch(route, (v) => {
+  console.log(`output->v`, route.meta.title);
+});
 
 const openDialog = () => {
   addDialog({
@@ -158,12 +166,17 @@ const toPage = (item: any) => {
 };
 onMounted(() => {});
 </script>
-<style lang='scss' scoped>
-.section-text-wrapper {
+<style lang="scss" scoped>
+.pg-wrapper {
   color: #1d1c23;
   background-color: #f4f4f4;
-  padding: 64px;
   border-top: 1px solid #dfe1e2;
+  text-wrap: wrap;
+  .contact {
+    width: 1384px;
+    margin: 0 auto;
+    padding: 64px 0;
+  }
 
   .title {
     font-size: 48px;
@@ -178,6 +191,7 @@ onMounted(() => {});
   }
 
   .info {
+    display: flex;
     margin-top: 32px;
 
     .call {
@@ -193,6 +207,9 @@ onMounted(() => {});
     color: #1d1c23;
     background-color: #fff;
     border: 1px solid #1d1c23;
+    &:hover {
+      background-color: #f4f4f4;
+    }
   }
 
   .btn-black {
@@ -205,6 +222,9 @@ onMounted(() => {});
     color: #fff;
     background-color: #1d1c23;
     border: 1px solid #fefefe;
+    &:hover {
+      background-color: #414344;
+    }
   }
 }
 
@@ -270,44 +290,50 @@ onMounted(() => {});
   }
 }
 
-// @media (max-width: 576px) {
-//   .footer {
-//     color: #fff;
-//     margin-top: 24px;
-//     width: 100%;
-//     height: 560px;
-//     background: #231c1e;
-//     text-align: -webkit-center;
+@media (max-width: 576px) {
+  .pg-wrapper {
+    text-align: center;
+    .title {
+      width: 290px;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: normal;
+    }
 
-//     .cont {
-//       width: 358px;
-//       height: 100%;
-//       margin: 0 auto;
-//       padding: 24px;
-//       display: block;
+    .text {
+      font-size: 24px;
+      line-height: 32px;
+    }
 
-//       .img {
-//         width: 180px;
-//         display: flex;
-//         flex-direction: row;
-//         justify-content: space-between;
-//         margin-bottom: 32px;
+    .info {
+      display: block;
+      margin-top: 32px;
 
-//         img {
-//           width: 79px;
-//           height: 79px;
-//         }
-//       }
+      .call {
+        margin: 16px 0;
+      }
+    }
+  }
+  .footer {
+    padding: 32px 24px;
+    .main {
+      width: 358px;
+      margin: 0 auto;
+      .cont {
+        flex-direction: column;
 
-//       .conf {
-//         text-align: left;
-//         width: auto;
-//         font-size: 12px;
-//         line-height: 24px;
-//         text-align: -webkit-center;
-//         margin: 12px;
-//       }
-//     }
-//   }
-// }
+        .text-l {
+          margin-bottom: 48px;
+        }
+        .goods-box {
+          flex: 0 0 auto;
+          width: 252px;
+          & > div {
+            margin-bottom: 32px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

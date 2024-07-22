@@ -1,6 +1,6 @@
 /** 统一处理 Cookie */
 
-import CacheKey from "@/constants/cacheKey";
+import CacheKey from "@/constans/cacheKey";
 import Cookies from "js-cookie";
 
 export const getToken = () => {

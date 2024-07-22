@@ -2,7 +2,24 @@
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import router from "@/router";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/parallax";
+import { Autoplay, EffectCoverflow, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import { onMounted, onUnmounted, reactive, ref } from "vue";
+const modules = [Autoplay, Navigation, EffectCoverflow];
+
+const sliderNum = ref(3);
+const coverflowEffect = ref({
+  rotate: 0, //slide做3d旋转时Y轴的旋转角度。默认50。
+  stretch: -260, //每个slide之间的拉伸值，越大slide靠得越紧。
+  depth: 500, //slide的位置深度。值越大z轴距离越远，看起来越小。
+  modifier: 1.5, //depth和rotate和stretch的倍率，相当于depth*modifier、rotate*modifier、stretch*modifier，值越大这三个参数的效果越明显。默认1。
+  slideShadows: false, //开启slide阴影。默认 true。
+});
+const isSmallSize = ref(window.innerWidth < 900);
 
 const techInfo = reactive({
   title: "创新技术，算无止境",
@@ -71,16 +88,15 @@ const dtList = [
     link: "/detail/3",
   },
 ];
-const carouselAct = ref(carouselInfo[0]);
+const carouselAct = ref();
 
-const toDetail = (key) => {
-  console.log(`output->carouselAct.value`, key);
-  router.push({ path: "/goods", query: { type: key } });
+const onSlideChange = (swiper) => {
+  const v = swiper.slides[2].swiperSlideIndex;
+  carouselAct.value = carouselInfo[v];
 };
 
-const carouselChange = (v) => {
-  console.log(`output->v`, v);
-  carouselAct.value = carouselInfo[v];
+const toDetail = (key) => {
+  router.push({ path: "/goods", query: { type: key } });
 };
 
 const toGd = (key) => {
@@ -117,7 +133,20 @@ const goDetail = (value) => {
   if (!value) return;
   router.push({ path: value });
 };
-onMounted(() => {});
+onMounted(() => {
+  carouselAct.value = carouselInfo[0];
+  sliderNum.value = isSmallSize.value ? 1 : 3;
+
+  if (isSmallSize) {
+    coverflowEffect.value = {
+      rotate: 0, //slide做3d旋转时Y轴的旋转角度。默认50。
+      stretch: -260, //每个slide之间的拉伸值，越大slide靠得越紧。
+      depth: 500, //slide的位置深度。值越大z轴距离越远，看起来越小。
+      modifier: 1, //depth和rotate和stretch的倍率，相当于depth*modifier、rotate*modifier、stretch*modifier，值越大这三个参数的效果越明显。默认1。
+      slideShadows: false, //开启slide阴影。默认 true。
+    };
+  }
+});
 
 onUnmounted(() => {});
 </script>
@@ -173,13 +202,11 @@ onUnmounted(() => {});
         </div>
       </div>
     </section>
-    <section
-      class="section-text-wrapper py-32 text-center bg-white w-full h100"
-    >
+    <section class="section-text-wrapper text-center bg-white w-full h100">
       <li class="title wow animate__animated animate__fadeInUp">
         {{ techInfo.title }}
       </li>
-      <div class="card py-32 flex justify-center flex-wrap">
+      <div class="card flex justify-center flex-wrap">
         <div
           @mouseenter="item.hover = true"
           @mouseleave="item.hover = false"
@@ -235,37 +262,60 @@ onUnmounted(() => {});
       <li class="text wow animate__animated animate__fadeInUp">
         多矩阵的产品储备，适配不同业务需求
       </li>
-      <el-carousel
-        style="background: inherit"
-        class="mt-10 mb-25 px-16 wow animate__animated animate__fadeInUp"
-        :interval="5000"
+      <!-- :autoplay="{ delay: 3000, disableOnInteraction: false }" -->
+      <Swiper
+        class="swiper-card"
+        :modules="modules"
+        :centeredSlides="true"
+        :effect="'coverflow'"
+        :coverflow-effect="coverflowEffect"
+        :loop="true"
+        :pagination="swiperOption"
+        :navigation="true"
+        :observe-parents="true"
+        :observer="true"
+        :slides-per-view="sliderNum"
+        :space-between="0"
+        @slideChange="onSlideChange"
+      >
+        <SwiperSlide v-for="(item, index) in carouselInfo" :key="index">
+          <div class="card-item">
+            <img class="carousel-img" :src="item.img" alt="" srcset="" />
+          </div>
+        </SwiperSlide>
+      </Swiper>
+      <!-- <el-carousel
+        class="mt-10 mb-25 px-16"
+        :interval="4000"
         type="card"
         height="520px"
-        indicator-position="none"
-        motion-blur
         @change="carouselChange"
       >
         <el-carousel-item v-for="item in carouselInfo" :key="item">
-          <img class="carousel-img" :src="item.img" alt="" srcset="" />
+          <div class="card-item">
+            <img class="carousel-img" :src="item.img" alt="" srcset="" />
+          </div>
         </el-carousel-item>
-      </el-carousel>
-      <li class="text font-600 wow animate__animated animate__fadeInUp">
-        {{ carouselAct.title }}
-      </li>
-      <li class="my-4 space-x-8 wow animate__animated animate__fadeInUp">
-        <span
-          class="text-4 leading-5"
-          v-for="(item, index) in carouselAct.xh"
-          :key="index"
+      </el-carousel> -->
+      <div v-if="carouselAct">
+        <li class="text font-600 wow animate__animated animate__fadeInUp">
+          {{ carouselAct.title }}
+        </li>
+        <li class="my-4 space-x-8 wow animate__animated animate__fadeInUp">
+          <span
+            class="text-4 leading-5"
+            v-for="(item, index) in carouselAct.xh"
+            :key="index"
+          >
+            {{ item }}
+          </span>
+        </li>
+        <el-button
+          class="btn-black wow animate__animated animate__fadeInUp"
+          @click="toDetail(carouselAct.type)"
+          >了解详情</el-button
         >
-          {{ item }}
-        </span>
-      </li>
-      <el-button
-        class="btn-black wow animate__animated animate__fadeInUp"
-        @click="toDetail(carouselAct.type)"
-        >了解详情</el-button
-      >
+      </div>
     </section>
     <section
       class="section-text-wrapper container-pg5 text-center bg-white w-full"
@@ -300,25 +350,22 @@ onUnmounted(() => {});
   overflow-x: hidden;
 
   .section-wrapper {
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
 
     .pg1_frame-wrapper {
-      position: absolute;
+      position: relative;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       height: 100vh;
       width: 100vw;
-      background-size: cover;
-      background-position: center;
-      position: relative;
       z-index: 3;
 
       .pg1_frame-text-wrapper {
         color: #fff;
         margin: 0 auto;
-        padding-top: 100px;
         text-align: center;
 
         .gd-type {
@@ -350,6 +397,9 @@ onUnmounted(() => {});
           padding: 10px 32px;
           border-radius: 99px;
           background-color: #fff;
+          &:hover {
+            background-color: #f4f4f4;
+          }
         }
 
         .btn-black {
@@ -359,8 +409,11 @@ onUnmounted(() => {});
           padding: 10px 32px;
           border-radius: 99px;
           color: #fff;
-          background-color: inherit;
+          background-color: #111112;
           border: 1px solid #fefefe;
+          &:hover {
+            background-color: #414344;
+          }
         }
       }
     }
@@ -384,6 +437,7 @@ onUnmounted(() => {});
   .section-text-wrapper {
     color: #1d1c23;
     height: auto;
+    padding: 128px 0;
 
     .title {
       font-size: 48px;
@@ -398,6 +452,7 @@ onUnmounted(() => {});
     }
 
     .card {
+      padding: 128px 0;
       .card-box {
         width: 456px;
         height: 400px;
@@ -479,6 +534,9 @@ onUnmounted(() => {});
       color: #1d1c23;
       background-color: #fff;
       border: 1px solid #1d1c23;
+      &:hover {
+        background-color: #f4f4f4;
+      }
     }
 
     .btn-black {
@@ -491,17 +549,56 @@ onUnmounted(() => {});
       color: #fff;
       background-color: #1d1c23;
       border: 1px solid #fefefe;
+      &:hover {
+        background-color: #414344;
+      }
     }
-
-    .carousel-img {
-      width: 520px;
-      height: auto;
+    .swiper-card {
+      width: 1384px;
+      padding: 64px 0;
+      position: relative;
+      :deep(.swiper-button-prev) {
+        font-size: 24px;
+        color: #9eaab0;
+        width: 48px;
+        height: 48px;
+        background-color: #efefef;
+        border-radius: 100%;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+          background-color: #dedede;
+        }
+        &::after {
+          font-size: 24px;
+        }
+      }
+      :deep(.swiper-button-next) {
+        font-size: 24px;
+        color: #9eaab0;
+        width: 48px;
+        height: 48px;
+        background-color: #efefef;
+        border-radius: 100%;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+          background-color: #dedede;
+        }
+        &::after {
+          font-size: 24px;
+        }
+      }
+    }
+    .card-item {
+      text-align: center;
+      .carousel-img {
+        width: 380px;
+      }
     }
   }
 
   .container-pg4 {
     height: 1080px;
-    padding: 128px;
+    padding: 128px 0;
     background: #f4f4f4;
   }
 
@@ -534,7 +631,6 @@ onUnmounted(() => {});
           line-height: 32px;
           letter-spacing: 0;
           min-height: 132px;
-          // padding: 24px 0;
         }
 
         .more {
@@ -551,6 +647,124 @@ onUnmounted(() => {});
 
   :deep(.el-button) {
     height: auto;
+  }
+}
+@media (max-width: 576px) {
+  .pg-container {
+    overflow-x: auto;
+    .section-wrapper {
+      background-size: cover;
+      background-position: center center;
+      .pg1_frame-wrapper {
+        .pg1_frame-text-wrapper {
+          text-wrap: wrap;
+          padding-top: 50px;
+          .gd-type {
+            font-size: 24px;
+          }
+          .gd-name {
+            font-size: 20px;
+          }
+          .gd-ts {
+            width: 315px;
+            font-size: 18px;
+            margin-top: 8px;
+            margin-bottom: 32px;
+          }
+        }
+      }
+    }
+    .section-text-wrapper {
+      padding: 64px 0;
+      .title {
+        font-size: 28px;
+      }
+      .text {
+        font-size: 18px;
+        line-height: 24px;
+      }
+      .card {
+        padding: 48px 0;
+        .card-box {
+          width: 358px;
+          height: 200px;
+          padding: 24px;
+          margin: 0;
+          margin-bottom: 4px;
+          img {
+            width: 48px;
+          }
+          .default-txt {
+            font-size: 24px;
+          }
+        }
+      }
+      .swiper-card {
+        width: 358px;
+        padding: 24px 0;
+        position: relative;
+        :deep(.swiper-button-prev) {
+          font-size: 14px;
+          color: #9eaab0;
+          width: 32px;
+          height: 32px;
+          background-color: #efefef;
+          border-radius: 100%;
+          transition: all 0.5s ease-in-out;
+          &:hover {
+            background-color: #dedede;
+          }
+          &::after {
+            font-size: 14px;
+          }
+        }
+        :deep(.swiper-button-next) {
+          font-size: 14px;
+          color: #9eaab0;
+          width: 32px;
+          height: 32px;
+          background-color: #efefef;
+          border-radius: 100%;
+          transition: all 0.5s ease-in-out;
+          &:hover {
+            background-color: #dedede;
+          }
+          &::after {
+            font-size: 14px;
+          }
+        }
+      }
+      .card-item {
+        text-align: center;
+        .carousel-img {
+          width: 280px;
+        }
+      }
+    }
+    .container-pg4 {
+      height: auto;
+      padding: 64px 0;
+      background: #f4f4f4;
+    }
+    .container-pg5 {
+      padding: 64px 0;
+      .card-news {
+        padding: 24px 0;
+        .card-new-item {
+          width: 358px;
+          height: 172px;
+          margin: 0;
+          margin-bottom: 8px;
+          .title {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: 0;
+            min-height: 80px;
+          }
+        }
+      }
+    }
   }
 }
 </style>

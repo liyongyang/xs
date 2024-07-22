@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { addDialog } from "@/components/Dialog/index";
+import * as popModules from "@/components/Dialog/modulesIdex";
 import { useRoute, useRouter } from "vue-router";
+
 const router = useRouter();
 
 const route = useRoute();
@@ -16,8 +19,25 @@ const page = pageStore[routePathProductName];
 function getRouterPath(key: string) {
   return { path: `/goods/${goodType}/${key}` };
 }
+
 const goback = () => {
   router.push({ path: `/goods/${goodType}` });
+};
+
+const openDialog = () => {
+  addDialog({
+    title: "",
+    width: "480px",
+    props: {},
+    footer: false,
+    component: popModules.SY,
+    callBack: (config) => {
+      //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
+      console.log("回调函数", config);
+      if (config) {
+      }
+    },
+  });
 };
 </script>
 
@@ -36,12 +56,9 @@ const goback = () => {
         >
           {{ nav.value }}
         </router-link>
-        <router-link
-          :to="{ path: '/contactUs' }"
-          class="btn-black py-2 px-3 mr-4 cursor-pointer"
-          >联系我们
-        </router-link>
-        <!-- <li class="btn-black py-2.5 px-4 cursor-pointer">联系我们</li> -->
+        <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
+          联系我们
+        </li>
       </div>
     </div>
   </div>
@@ -73,6 +90,9 @@ const goback = () => {
       color: #fff;
       background-color: #1d1c23;
       border: 1px solid #fefefe;
+      &:hover {
+        background-color: #414344;
+      }
     }
   }
 }

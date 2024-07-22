@@ -1,0 +1,38 @@
+列表展示
+http://47.121.114.133:19057/t-message-info/page
+返回示例：
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "total": 1,
+        "list": [
+            {
+                "id": 1,
+                "name": "测试",
+                "company": "新算",
+                "phone": "13678941236",
+                "email": "xinsuan@163.com",
+                "createBy": null,
+                "createTime": "2024-07-09 08:51:48",
+                "updateBy": null,
+                "updateTime": null
+            }
+        ]
+    }
+}
+
+新增留言
+http://47.121.114.133:19057/t-message-info/addMessage
+请求参数：
+{
+    "name":"测试",
+    "company":"新算",
+    "phone":"136781236",
+    "email":"xinsuan@163.com"
+}
+
+删除留言
+http://47.121.114.133:19057/t-message-info/delByIds
+请求参数：
+[2,3]

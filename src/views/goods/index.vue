@@ -39,7 +39,7 @@ const gdList = {
     {
       img: `/goods/g-r170.png`,
       title: "R270-A",
-      path: "R270",
+      path: "R275A",
       info: [
         {
           img: "/goods/r275-0.webp",
@@ -229,6 +229,33 @@ const gdList = {
         },
       ],
     },
+    {
+      img: `/goods/g-h920.png`,
+      title: "H920",
+      path: "H920",
+      info: [
+        {
+          img: "/goods/h920-0.webp",
+          title: "强大稳定解码力",
+          txt: "专为手持读码场景设计的算法引擎 Mobi × 均匀光技术",
+        },
+        {
+          img: "/goods/h920-1.webp",
+          title: "旗舰级同轴瞄准",
+          txt: "全面改善传统手持式读码器瞄准偏移现象，不再担心漏扫情况",
+        },
+        {
+          img: "/goods/h920-2.webp",
+          title: "训练功能",
+          txt: "新算专有训练功能，极大提升效率，带来极致流畅度",
+        },
+        {
+          img: "/goods/h920-3.webp",
+          title: "人性化设计",
+          txt: "专业的工业设计，更懂工厂实地使用情况",
+        },
+      ],
+    },
     // {
     //   img: ``,
     //   title: "H930",
@@ -327,8 +354,8 @@ const getAct = (key) => {
   router.push({ query: { type: key } });
 };
 const carouselChange = (v) => {
+  console.log(`output->actSlider`, v);
   actSlider.value = actGd.value[v];
-  console.log(`output->actSlider`, actSlider.value);
 };
 
 const toDetail = (v) => {
@@ -357,35 +384,41 @@ onUnmounted(() => {});
         </div>
       </div>
       <div class="flex flex-wrap space-x-2">
-        <div class="cl bg1 flex flex-col justify-end">
+        <div
+          class="cl cursor-pointer bg1 flex flex-col justify-end"
+          @click="getAct('R')"
+        >
           <li class="title p4 wow animate__animated animate__fadeInUp">
             紧凑型R系列
           </li>
           <li
-            class="more h16 cursor-pointer bg-black p4 pt-8 wow animate__animated animate__fadeInUp"
-            @click="getAct('R')"
+            class="more h16 bg-black p4 pt-8 wow animate__animated animate__fadeInUp"
           >
             了解更多
           </li>
         </div>
-        <div class="cl bg2 flex flex-col justify-end">
+        <div
+          class="cl cursor-pointer bg2 flex flex-col justify-end"
+          @click="getAct('RS')"
+        >
           <li class="title p4 wow animate__animated animate__fadeInUp">
             双航插RS系列
           </li>
           <li
             class="more h16 cursor-pointer bg-black p4 pt-8 wow animate__animated animate__fadeInUp"
-            @click="getAct('RS')"
           >
             了解更多
           </li>
         </div>
-        <div class="cl bg3 flex flex-col justify-end">
+        <div
+          class="cl cursor-pointer bg3 flex flex-col justify-end"
+          @click="getAct('H')"
+        >
           <li class="title p4 wow animate__animated animate__fadeInUp">
             手持式H系列
           </li>
           <li
             class="more h16 cursor-pointer bg-black p4 pt-8 wow animate__animated animate__fadeInUp"
-            @click="getAct('H')"
           >
             了解更多
           </li>
@@ -404,10 +437,7 @@ onUnmounted(() => {});
       <div v-if="actGd" class="gd-wrapper flex flex-wrap justify-between">
         <div class="banner-slider text-center">
           <el-carousel
-            :interval="3000"
             :autoplay="false"
-            class="carousel-imgs wow animate__animated animate__fadeIn"
-            motion-blur
             height="550px"
             indicator-position="none"
             @change="carouselChange"
@@ -473,7 +503,7 @@ onUnmounted(() => {});
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: center center;
-      background-color: #3d4448;
+      background-color: #111112;
     }
 
     .cl {
@@ -483,7 +513,7 @@ onUnmounted(() => {});
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center;
-      background-color: #3d4448;
+      background-color: #111112;
 
       .title {
         font-size: 28px;
@@ -592,6 +622,9 @@ onUnmounted(() => {});
     padding: 10px 32px;
     border-radius: 99px;
     background-color: #fff;
+    &:hover {
+      background-color: #f4f4f4;
+    }
   }
 
   .btn-black {
@@ -601,6 +634,9 @@ onUnmounted(() => {});
     padding: 10px 32px;
     border-radius: 99px;
     background-color: #1d1c23;
+    &:hover {
+      background-color: #414344;
+    }
   }
 }
 </style>

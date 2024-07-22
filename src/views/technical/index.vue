@@ -106,17 +106,39 @@
             仅需通过机身按钮或软件按钮，OneClick 即可实现解码
           </li>
         </div>
-        <div
+        <!-- <div
           class="se-bg"
           :style="{ backgroundImage: `url(${bannerImg1})` }"
-        ></div>
+        ></div> -->
+        <el-carousel
+          :interval="3000"
+          class="se-bg"
+          height="480px"
+          indicator-position="none"
+        >
+          <el-carousel-item>
+            <img class="se-bg" src="/technical/oneClick1.png" alt="" />
+          </el-carousel-item>
+          <el-carousel-item>
+            <img class="se-bg" src="/technical/oneClick2.png" alt="" />
+          </el-carousel-item>
+        </el-carousel>
         <!-- <img class="animate__animated animate__fadeIn" :src="bannerImg1" alt="" /> -->
       </div>
       <div class="card flex items-center justify-between">
-        <div
+        <el-carousel
+          :interval="3000"
           class="se-bg"
-          :style="{ backgroundImage: `url(${bannerImg2})` }"
-        ></div>
+          height="480px"
+          indicator-position="none"
+        >
+          <el-carousel-item>
+            <img class="se-bg" src="/technical/speed1.png" alt="" />
+          </el-carousel-item>
+          <el-carousel-item>
+            <img class="se-bg" src="/technical/speed2.png" alt="" />
+          </el-carousel-item>
+        </el-carousel>
         <div class="left text-wrap text-left">
           <li
             class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
@@ -291,7 +313,7 @@
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 
 const oneClickCards = [
@@ -452,7 +474,7 @@ onMounted(() => {
   }, 3000);
 });
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .pg-container {
   width: 100vw;
   height: 100%;
@@ -768,6 +790,9 @@ onMounted(() => {
       color: #fff;
       background-color: #1d1c23;
       border: 1px solid #fefefe;
+      &:hover {
+        background-color: #414344;
+      }
     }
   }
 }

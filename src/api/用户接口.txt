@@ -1,0 +1,69 @@
+http://47.121.114.133:19057/sys-user/login
+post请求
+userName 用户账号 --加密
+password 密码----加密
+
+admin
+Xs@2024
+
+http://47.121.114.133:19057/sys-user/addUser
+post请求 明文传输
+{
+    "userName":"admin",   账号
+    "password":"Xs@2024", 密码
+    "company":"新算公司"
+}
+
+http://47.121.114.133:19057/sys-user/updateUser
+put请求 明文传输
+{
+	"id":
+    "userName":"admin",   账号
+    "password":"Xs@2024", 密码
+    "company":"新算公司"
+}
+
+http://47.121.114.133:19057/sys-user/delByIds
+delete请求 明文传输
+请求参数：
+[1,2]
+
+http://47.121.114.133:19057/sys-user/page
+get请求 分页查询
+请求参数：
+current 当前页
+size 数量
+
+返回参数
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "total": 1,
+        "list": [
+            {
+                "userId": 183,
+                "deptId": null,
+                "userName": "admin",
+                "nickName": null,
+                "userType": "00",
+                "email": "",
+                "phonenumber": "",
+                "sex": "0",
+                "avatar": "",
+                "password": "$2a$10$.6MDvM1d043.WKvMJZ7Bb.mFMkyD2uE3HBEMJopqvYNYViQgLtQ02",
+                "status": "0",
+                "delFlag": "0",
+                "loginIp": "",
+                "loginDate": null,
+                "duty": null,
+                "remark": null,
+                "company": "新算公司",
+                "createBy": "",
+                "createTime": "2024-07-22 09:07:03",
+                "updateBy": "",
+                "updateTime": "2024-07-22 09:07:03"
+            }
+        ]
+    }
+}

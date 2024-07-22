@@ -1,10 +1,10 @@
 <template>
   <el-config-provider>
     <Head
-      v-show="showMenus"
+      v-if="showMenus && fronted"
       class="animate__animated animate__fadeInDown"
     ></Head>
-    <Slider class="slider"></Slider>
+    <Slider v-if="fronted"></Slider>
     <router-view v-slot="{ Component }">
       <component :is="Component" class="" />
     </router-view>
@@ -22,19 +22,14 @@ import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import WOW from "wow.js";
 const route = useRoute();
-const isStart = ref(true);
+const fronted = ref(true);
 const showMenus = ref(true);
 
 watch(route, (v) => {
   window.scrollTo(0, 0);
   showMenus.value = true;
-  isStart.value = true;
-  if (v.path != "/") {
-    isStart.value = false;
-  }
-  console.log(v);
+  fronted.value = v.meta.title != "sys";
 });
-watch(route, (v) => {});
 
 const onMouseWheel = (event: any) => {
   if (event.deltaY > 0) {
@@ -56,14 +51,8 @@ onBeforeUnmount(() => {
 });
 </script>
 <style lang="scss" scoped>
-.slider {
-  position: fixed;
-  bottom: 70px;
-  right: 48px;
-  z-index: 999;
-}
-
 .main {
   padding-top: 88px;
 }
 </style>
+@/components/Dialog/index.vue
