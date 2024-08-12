@@ -1,5 +1,14 @@
 <template>
+  <div class="msg-wapper relative">
+    <div class="text-right mx-4 absolute z-99 top--15 right-0">
+      <el-button class="btn-black2 my-2" @click="exportExcel()">
+        <span class="mr-2">导出</span>
+        <el-icon><Download /></el-icon>
+      </el-button>
+    </div>
+  </div>
   <el-table
+    id="tableRef"
     :data="msgList"
     style="width: 100%"
     height="660"
@@ -47,15 +56,17 @@
 <script setup lang="ts">
 import { sys } from "@/api/sys";
 import { ElMessage } from "element-plus";
+import FileSaver from "file-saver";
 import { onMounted, ref } from "vue";
+import * as XLSX from "xlsx";
 
-const msgList = ref();
+const msgList = ref([]);
 const showDialog = ref(false);
 const actMsg = ref();
 
 const getMsgList = () => {
   sys.getMsgList({}).subscribe((res) => {
-    msgList.value = res.data.list;
+    msgList.value = res.list;
   });
 };
 
@@ -81,6 +92,38 @@ const commit = () => {
     getMsgList();
   });
 };
+const exportExcel = () => {
+  if (!msgList.value.length) {
+    ElMessage({
+      message: "当前没有数据可导出",
+      center: true,
+      offset: 80,
+      type: "error",
+    });
+  } else {
+    /* generate workbook object from table */
+    const wb = XLSX.utils.table_to_book(document.getElementById("tableRef"));
+    /* get binary string as output */
+    let columnWidths = [];
+    for (let index = 0; index < 6; index++) {
+      columnWidths.push({ wch: 20 });
+    }
+    wb.Sheets[wb.SheetNames[0]]["!cols"] = columnWidths;
+    const wbout = XLSX.write(wb, {
+      bookType: "xlsx",
+      bookSST: true,
+      type: "array",
+    });
+    try {
+      FileSaver.saveAs(
+        new Blob([wbout], { type: "application/octet-stream" }),
+        "客户申请信息表.xlsx"
+      );
+    } catch (e) {
+      if (typeof console !== "undefined") console.log(e, wbout);
+    }
+  }
+};
 onMounted(() => {
   getMsgList();
 });
@@ -100,6 +143,21 @@ onMounted(() => {
   font-size: 14px;
   line-height: 20px;
   padding: 10px 32px;
+  border-radius: 99px;
+  color: #fff;
+  background-color: #111112;
+  border: 1px solid #111112;
+  &:hover {
+    color: #fff;
+    background-color: #414344;
+    border: 1px solid #414344;
+  }
+}
+.btn-black2 {
+  height: auto;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 4px 24px;
   border-radius: 99px;
   color: #fff;
   background-color: #111112;

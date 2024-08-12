@@ -1,4 +1,4 @@
-const SYSTEM_NAME = "vite-vue-ts";
+const SYSTEM_NAME = "xs";
 
 /** 缓存数据时用到的 Key */
 class CacheKey {

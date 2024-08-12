@@ -79,6 +79,5 @@ const handleInputConfirm = () => {
   }
   inputVisible.value = false;
   inputValue.value = "";
-  console.log(`output->dynamicTags.value`, dynamicTags.value);
 };
 </script>

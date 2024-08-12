@@ -69,11 +69,11 @@ const fkOpt = [
   },
   {
     key: 3,
-    label: "客户报备已通过",
+    label: "已通过",
   },
   {
     key: 4,
-    label: "客户报备未通过",
+    label: "未通过",
   },
 ];
 const close = () => {
@@ -81,7 +81,6 @@ const close = () => {
 };
 
 const commit = async () => {
-  console.log(`output->----------`);
   switch (props.config.czkey) {
     case "edit":
       const params = {
@@ -95,6 +94,7 @@ const commit = async () => {
           offset: 80,
           type: "success",
         });
+        emit("close", props.config);
       });
       break;
     case "delete":

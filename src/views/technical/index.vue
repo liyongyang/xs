@@ -1,17 +1,23 @@
 <template>
   <div class="pg-container">
     <section class="banner flex items-center justify-center">
-      <li class="title wow animate__animated animate__fadeInUp">
-        全栈软硬件自研，强大性能表现
+      <li
+        v-if="isSmallSize"
+        class="title wow animate__animated animate__fadeInUp"
+      >
+        {{ technical.tit1 }}
+      </li>
+      <li v-else class="title wow animate__animated animate__fadeInUp">
+        {{ technical.tit2 }}
       </li>
     </section>
     <section class="section-wrapper text-center">
-      <div class="tit-bg1 h57">
-        <li class="title pt-32 wow animate__animated animate__fadeInUp">
-          视觉机器算法引擎™
+      <div class="tit-bg1">
+        <li class="title wow animate__animated animate__fadeInUp">
+          {{ technical.p1.tit }}
         </li>
         <li class="text wow animate__animated animate__fadeInUp">
-          完全自主研发解码算法 IP，性能强劲、解码稳定
+          {{ technical.p1.tip }}
         </li>
       </div>
       <div
@@ -19,43 +25,57 @@
         @mouseenter="SEC1_ACT = true"
         @mouseleave="SEC1_ACT = false"
       >
-        <div class="card flex items-center justify-between">
+        <div class="card">
           <div class="left text-wrap text-left">
             <li
               class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
             >
-              超分辨率算法™️
+              {{ technical.p1.card[0].tit }}
             </li>
             <li class="txt wow animate__animated animate__fadeInUp">
-              等效3MP镜头读码效果，支持读取最小尺寸单元 1mil 的一维码，1.5mil
-              的二维码1MP镜头=3MP镜头成像效果，3倍成像质量提升
+              {{ technical.p1.card[0].tip }}
             </li>
           </div>
           <div class="card1-img"></div>
         </div>
-        <div class="card flex items-center justify-between">
+        <div class="card">
+          <div v-if="isSmallSize" class="left text-wrap text-left">
+            <li class="title leading-10 font-600 mb-4">
+              {{ technical.p1.card[1].tit }}
+            </li>
+            <li class="txt">
+              {{ technical.p1.card[1].tip }}
+            </li>
+          </div>
           <div class="card3-img"></div>
-          <div class="left text-wrap text-left">
+          <div v-if="!isSmallSize" class="left text-wrap text-left">
             <li
               class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
             >
-              专利 SPL 技术™️
+              {{ technical.p1.card[1].tit }}
             </li>
             <li class="txt wow animate__animated animate__fadeInUp">
-              专利亚像素定位技术精度可达0.02Pixel，即使定位器（L角）缺陷达30%也能轻松读取
+              {{ technical.p1.card[1].tip }}
             </li>
           </div>
         </div>
-        <div class="card flex items-center justify-between">
+        <div class="card">
           <div class="left text-wrap text-left">
             <li
-              class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+              class="title leading-10 font-600 mb-4"
+              :class="
+                !isSmallSize ? 'wow animate__animated animate__fadeInUp' : ''
+              "
             >
-              自研增强算法
+              {{ technical.p1.card[2].tit }}
             </li>
-            <li class="txt wow animate__animated animate__fadeInUp">
-              ⾃研增加算法，即使对⽐度低⾄ 2%
-              的条码也能够稳定读取，⼀个近乎看不尽的DM码（2%对⽐度），通过算法实现增强⾄明显看到，并成功解码
+            <li
+              class="txt"
+              :class="
+                !isSmallSize ? 'wow animate__animated animate__fadeInUp' : ''
+              "
+            >
+              {{ technical.p1.card[2].tip }}
             </li>
           </div>
           <div class="card4-img"></div>
@@ -63,18 +83,24 @@
       </div>
     </section>
     <section class="section-wrapper text-center">
-      <div class="tit-bg2 py-32">
-        <li class="title wow animate__animated animate__fadeInUp">
-          一键调试 OneClick
+      <div class="tit-bg2">
+        <li
+          class="title"
+          :class="isSmallSize ? '' : 'wow animate__animated animate__fadeInUp'"
+        >
+          {{ technical.p2.tit }}
         </li>
-        <li class="text wow animate__animated animate__fadeInUp">
-          不止是调光，更是自适应算法调参，达到最优解码
+        <li
+          class="text"
+          :class="isSmallSize ? '' : 'wow animate__animated animate__fadeInUp'"
+        >
+          {{ technical.p2.tip }}
         </li>
       </div>
       <div class="flex justify-center flex-wrap">
         <div
           class="card2 flex flex-col justify-between m1 p8 text-left text-wrap"
-          v-for="(item, index) in oneClickCards"
+          v-for="(item, index) in technical.p2.card1"
           :key="index"
         >
           <img
@@ -90,20 +116,20 @@
           </li>
         </div>
       </div>
-      <li class="pt8 pb-32 text-left wow animate__animated animate__fadeInUp">
-        仅限具备一键调试+ OneClick Plus 功能的读码器产品
+      <li class="sec-txt text-left wow animate__animated animate__fadeInUp">
+        {{ technical.p2.tip }}
       </li>
     </section>
     <section class="section-wrapper space-y-40">
-      <div class="card flex items-center justify-between">
+      <div class="card">
         <div class="left text-wrap text-left">
           <li
             class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
           >
-            极致易用
+            {{ technical.p2.card2[0].tit }}
           </li>
           <li class="txt wow animate__animated animate__fadeInUp">
-            仅需通过机身按钮或软件按钮，OneClick 即可实现解码
+            {{ technical.p2.card2[0].tip }}
           </li>
         </div>
         <!-- <div
@@ -125,7 +151,20 @@
         </el-carousel>
         <!-- <img class="animate__animated animate__fadeIn" :src="bannerImg1" alt="" /> -->
       </div>
-      <div class="card flex items-center justify-between">
+      <div class="card">
+        <div v-if="isSmallSize" class="left text-wrap text-left">
+          <li
+            class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+          >
+            {{ technical.p2.card2[1].tit }}
+          </li>
+          <li class="txt wow animate__animated animate__fadeInUp">
+            {{ technical.p2.card2[1].tip1 }}
+          </li>
+          <li class="txt wow animate__animated animate__fadeInUp">
+            {{ technical.p2.card2[1].tip2 }}
+          </li>
+        </div>
         <el-carousel
           :interval="3000"
           class="se-bg"
@@ -139,56 +178,58 @@
             <img class="se-bg" src="/technical/speed2.png" alt="" />
           </el-carousel-item>
         </el-carousel>
-        <div class="left text-wrap text-left">
+        <div v-if="!isSmallSize" class="left text-wrap text-left">
           <li
             class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
           >
-            极致性能
+            {{ technical.p2.card2[1].tit }}
           </li>
           <li class="txt wow animate__animated animate__fadeInUp">
-            对于C级以上条码，⼀键调试 Max 单码平均解码耗时为
-            20ms，相⽐同级产品速度提升 2 倍
+            {{ technical.p2.card2[1].tip1 }}
           </li>
           <li class="txt wow animate__animated animate__fadeInUp">
-            对于条形码，⼀键调试 Max 单码平均解码耗时为
-            10ms，相⽐同级产品速度提升 3 倍
+            {{ technical.p2.card2[1].tip2 }}
           </li>
         </div>
       </div>
     </section>
     <section class="section-wrapper text-center">
-      <li class="title pt-32 pb-16 wow animate__animated animate__fadeInUp">
-        对比表格
+      <li class="title2 wow animate__animated animate__fadeInUp">
+        {{ technical.p3.tit }}
       </li>
-      <img
-        class="table wow animate__animated animate__fadeInUp"
-        src="/technical/table.webp"
-        alt=""
-      />
+      <div class="table-box">
+        <img
+          class="table wow animate__animated animate__fadeInUp"
+          src="/technical/table.webp"
+          alt=""
+        />
+      </div>
     </section>
     <section class="section-wrapper sec2 text-center">
-      <div class="tit-bg3 py-32">
+      <div class="tit-bg3">
         <li class="title wow animate__animated animate__fadeInUp">
-          全新光学系统 <span class="italic skew-x-6">X</span> -Tech™
+          {{ technical.p4.tit }} <span class="italic skew-x-6">X</span> -Tech™
         </li>
         <li class="text wow animate__animated animate__fadeInUp">
-          多种镜头规格、光源颜色及光源类型，灵活组合以高可配置性应对不同场景需求
+          {{ technical.p4.tip }}
         </li>
       </div>
     </section>
     <section class="section-wrapper">
-      <div class="se3-bg relative flex justify-between items-center">
+      <div class="se3-bg relative">
         <img
           class="base-img wow animate__animated animate__fadeIn"
           src="/technical/camera/base.png"
           alt=""
         />
         <img
+          v-if="XList[0].act"
           class="add-img wow animate__animated animate__fadeIn"
           :src="'/technical/camera/' + XList[0].act + '.png'"
           alt=""
         />
         <img
+          v-if="light.length"
           class="add-img wow animate__animated animate__fadeIn"
           :src="'/technical/camera/' + light[0] + '.png'"
           alt=""
@@ -199,29 +240,29 @@
           :src="'/technical/camera/' + light[1] + '.png'"
           alt=""
         />
-        <div class="w80 text-wrap text-left z-29">
+        <div class="pz-info text-wrap text-left z-29">
           <li
-            class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            class="pz-tit font-600 mb-4 wow animate__animated animate__fadeInUp"
           >
-            灵活配置
+            {{ technical.p4.card[0].tit }}
           </li>
-          <li wow animate__animated animate__fadeInUp>
-            多种镜头焦段、光源颜色、光源类型，满足多样化需求
+          <li class="pz-txt wow animate__animated animate__fadeInUp">
+            {{ technical.p4.card[0].tip }}
           </li>
         </div>
-        <div class="w80 text-wrap text-left px-8 z-29">
+        <div class="pz-conf text-wrap text-left px-8 z-29">
           <li class="checked wow animate__animated animate__fadeIn">
-            3 × 3 × 3 灵活配置
+            {{ technical.p4.card[0].tit_r }}
           </li>
           <div class="flex justify-between">
             <div class="flex flex-col text-center">
               <li class="opts-tit wow animate__animated animate__fadeInUp">
-                {{ XList[0].title }}
+                {{ technical.p4.card[0].list[0].tit }}
               </li>
               <li
                 class="wow animate__animated animate__fadeInUp"
                 :class="XList[0].act === t ? 'active-check' : 'default-check'"
-                v-for="t in XList[0].opts"
+                v-for="t in technical.p4.card[0].list[0].opts"
                 :key="t"
                 @click="checkBox(0, t)"
               >
@@ -230,14 +271,14 @@
             </div>
             <div class="flex flex-col text-center">
               <li class="opts-tit wow animate__animated animate__fadeInUp">
-                {{ XList[1].title }}
+                {{ technical.p4.card[0].list[1].tit }}
               </li>
               <li
                 class="wow animate__animated animate__fadeInUp"
                 :class="
                   XList[1].act === t.name ? 'active-check' : 'default-check'
                 "
-                v-for="t in XList[1].opts"
+                v-for="t in technical.p4.card[0].list[1].opts"
                 :key="t.key"
                 @click="checkBox(1, t.name)"
               >
@@ -246,7 +287,7 @@
             </div>
             <div class="flex flex-col text-center">
               <li class="opts-tit wow animate__animated animate__fadeInUp">
-                {{ XList[2].title }}
+                {{ technical.p4.card[0].list[2].tit }}
               </li>
               <li
                 class="wow animate__animated animate__fadeInUp"
@@ -266,46 +307,40 @@
     </section>
     <section class="section-wrapper">
       <div
-        class="se4-bg relative flex justify-between items-center"
+        class="se4-bg relative"
         :style="{ backgroundImage: `url(${lightInfo[actLightInfo].img})` }"
       >
-        <div class="w88 text-wrap text-left">
-          <li
-            class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
-          >
-            无限组合光源技术
+        <div class="se4-info text-wrap text-left">
+          <li class="se4-tit font-600 wow animate__animated animate__fadeInUp">
+            {{ technical.p5.tit }}
           </li>
-          <img src="/technical/txt.png" alt="" />
+          <img class="se4-img" src="/technical/txt.png" alt="" />
           <li
+            v-if="!isSmallSize"
             class="text-5 font-600 leading-7 mb-4 wow animate__animated animate__fadeInUp"
           >
-            首创技术极大提升解码稳定性和性能
+            {{ technical.p5.tip1 }}
           </li>
-          <li class="wow animate__animated animate__fadeInUp">
-            首创技术极大提升解码稳定性和性能搭配一键调试
-            Max，自动选择光源强度及光源类型，相比以往单一光源解码，组合光源解码可极大提升解码性能
+          <li class="se4-txt wow animate__animated animate__fadeInUp">
+            {{ technical.p5.tip2 }}
           </li>
         </div>
-        <li class="absolute bottom-50 right-32 text-7 leading-10 font-600">
-          {{ lightInfo[actLightInfo].txt }}
+        <li class="light-txt font-600">
+          {{ technical.p5.imgInfo[actLightInfo].txt }}
         </li>
       </div>
     </section>
     <section class="section-wrapper">
       <div class="se5-bg relative flex justify-between items-center">
-        <div class="w88 text-wrap text-left">
-          <li
-            class="text-7 leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
-          >
-            同轴瞄准
+        <div class="se5-info text-wrap text-left">
+          <li class="se5-tit font-600 wow animate__animated animate__fadeInUp">
+            {{ technical.p6.tit }}
           </li>
-          <li
-            class="text-5 font-600 leading-7 mb-3 wow animate__animated animate__fadeInUp"
-          >
-            指哪读哪，所见即所扫
+          <li class="se5-txt1 font-600 wow animate__animated animate__fadeInUp">
+            {{ technical.p6.tip }}
           </li>
-          <li class="wow animate__animated animate__fadeInUp">
-            旗舰级瞄准技术，全面改善手持式读码器瞄准偏移现象，不再担心漏扫情况
+          <li class="se5-txt2 wow animate__animated animate__fadeInUp">
+            {{ technical.p6.txt }}
           </li>
         </div>
       </div>
@@ -314,55 +349,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
+import { nextTick, onMounted, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
+const { t, locale } = useI18n();
 
-const oneClickCards = [
-  {
-    img: "/technical/icons/card-icon0.png",
-    txt: "自适应光源",
-    txt2: "灵活组合光源以自适应性、高可配置性应对不同场景需求",
-  },
-  {
-    img: "/technical/icons/card-icon1.png",
-    txt: "自动调参",
-    txt2: "最高达192万种参数配置1，自 动优化曝光、增益、滤波等 参数，应对挑战性读码情况",
-  },
-  {
-    img: "/technical/icons/card-icon2.png",
-    txt: "自适应算法",
-    txt2: "自动匹配机器视觉算法引擎TM的CV算法、AI 算法",
-  },
-  {
-    img: "/technical/icons/card-icon3.png",
-    txt: "自动对焦",
-    txt2: "自动适应各种条码尺寸和工作距离",
-  },
-  {
-    img: "/technical/icons/card-icon4.png",
-    txt: "自识别条码类型",
-    txt2: "自动检测1D码/2D码，根据条码类型调取预定义条码模版库，提高读取速度",
-  },
-  {
-    img: "/technical/icons/card-icon5.png",
-    txt: "无限光源组合技术",
-    txt2: "自主根据读码样本、工况， 智能选择最优光源强度及光源类型，极大提升解码性能",
-  },
-];
+const isSmallSize = ref(window.innerWidth < 576);
 
 const SEC1_ACT = ref(false);
 const timer = ref();
 const actLightInfo = ref(0);
 const lightInfo = [
   {
-    txt: "50%直射光+50%偏振光",
     img: `/technical/light0.png`,
   },
   {
-    txt: "80%直射光+20%偏振光",
     img: `/technical/light1.png`,
   },
   {
-    txt: "100%均匀光",
     img: `/technical/light2.png`,
   },
 ];
@@ -373,26 +376,12 @@ const bannerImg2 = ref(`/technical/speed1.png`);
 
 const XList = reactive([
   {
-    title: "镜头焦段",
-    opts: ["6mm", "12mm", "16mm"],
     act: "6mm",
   },
   {
-    title: "光源颜色",
-    opts: [
-      {
-        name: "红色",
-        key: "red",
-      },
-      {
-        name: "蓝色",
-        key: "blue",
-      },
-    ],
     act: "红色",
   },
   {
-    title: "光源类型",
     opts: [
       {
         name: "直射光",
@@ -412,20 +401,155 @@ const XList = reactive([
     ],
   },
 ]);
-const A = ref();
 
-const B = computed(() => {
-  A.value * 2;
-});
-
-watch(
-  A,
-  (Old, New) => {
-    console.log("old,New", Old, New);
-  },
-  { immediate: true, deep: true }
-);
 let light = reactive(["zs-red"]);
+const technical = {
+  tit1: t("technical.tit1"),
+  tit2: t("technical.tit2"),
+  p1: {
+    tit: t("technical.p1.tit"),
+    tip: t("technical.p1.tip"),
+    card: [
+      {
+        tit: t("technical.p1.card[0].tit"),
+        tip: t("technical.p1.card[0].tip"),
+      },
+      {
+        tit: t("technical.p1.card[1].tit"),
+        tip: t("technical.p1.card[1].tip"),
+      },
+      {
+        tit: t("technical.p1.card[2].tit"),
+        tip: t("technical.p1.card[2].tip"),
+      },
+    ],
+  },
+  p2: {
+    tit: t("technical.p2.tit"),
+    tip: t("technical.p2.tip"),
+    card1: [
+      {
+        img: "/technical/icons/card-icon0.png",
+        txt: t("technical.p2.card1[0].txt"),
+        txt2: t("technical.p2.card1[0].txt2"),
+      },
+      {
+        img: "/technical/icons/card-icon1.png",
+        txt: t("technical.p2.card1[1].txt"),
+        txt2: t("technical.p2.card1[1].txt2"),
+      },
+      {
+        txt: t("technical.p2.card1[2].txt"),
+        txt2: t("technical.p2.card1[2].txt2"),
+      },
+      {
+        img: "/technical/icons/card-icon3.png",
+        txt: t("technical.p2.card1[3].txt"),
+        txt2: t("technical.p2.card1[3].txt2"),
+      },
+      {
+        txt: t("technical.p2.card1[4].txt"),
+        txt2: t("technical.p2.card1[4].txt2"),
+      },
+      {
+        img: "/technical/icons/card-icon5.png",
+        txt: t("technical.p2.card1[5].txt"),
+        txt2: t("technical.p2.card1[5].txt2"),
+      },
+    ],
+    txt: t("technical.p2.txt"),
+    card2: [
+      {
+        tit: t("technical.p2.card2[0].tit"),
+        tip: t("technical.p2.card2[0].tip"),
+      },
+      {
+        tit: t("technical.p2.card2[1].tit"),
+        tip1: t("technical.p2.card2[1].tip1"),
+        tip2: t("technical.p2.card2[1].tip2"),
+      },
+    ],
+  },
+  p3: {
+    tit: t("technical.p3.tit"),
+  },
+  p4: {
+    tit: t("technical.p4.tit"),
+    tip: t("technical.p4.tip"),
+    card: [
+      {
+        tit: t("technical.p4.card[0].tit"),
+        tip: t("technical.p4.card[0].tip"),
+        tit_r: t("technical.p4.card[0].tit_r"),
+        list: [
+          {
+            tit: t("technical.p4.card[0].list[0].tit"),
+            opts: [
+              t("technical.p4.card[0].list[0].opts[0]"),
+              t("technical.p4.card[0].list[0].opts[1]"),
+              t("technical.p4.card[0].list[0].opts[2]"),
+            ],
+          },
+          {
+            tit: t("technical.p4.card[0].list[1].tit"),
+            opts: [
+              {
+                name: t("technical.p4.card[0].list[1].opts[0]"),
+                key: t("technical.p4.card[0].list[1].opts[0]"),
+              },
+              {
+                name: t("technical.p4.card[0].list[1].opts[1]"),
+                key: t("technical.p4.card[0].list[1].opts[1]"),
+              },
+            ],
+          },
+          {
+            tit: "光源类型",
+            opts: [
+              {
+                name: "直射光",
+                key: "zs",
+              },
+              {
+                name: "偏振光",
+                key: "pz",
+              },
+              {
+                name: "均匀光",
+                key: "jy",
+              },
+            ],
+          },
+        ],
+      },
+      {},
+    ],
+  },
+  p5: {
+    tit: t("technical.p5.tit"),
+    tip1: t("technical.p5.tip1"),
+    tip2: t("technical.p5.tip2"),
+    imgInfo: [
+      {
+        txt: t("technical.p5.imgInfo[0].txt"),
+        img: `/technical/light0.png`,
+      },
+      {
+        txt: t("technical.p5.imgInfo[1].txt"),
+        img: `/technical/light1.png`,
+      },
+      {
+        txt: t("technical.p5.imgInfo[2].txt"),
+        img: `/technical/light2.png`,
+      },
+    ],
+  },
+  p6: {
+    tit: t("technical.p6.tit"),
+    tip: t("technical.p6.tip"),
+    txt: t("technical.p6.txt"),
+  },
+};
 const checkBox = (index: number, t: string) => {
   XList[index].act = t;
   if (index === 1) {
@@ -507,6 +631,7 @@ onMounted(() => {
     background-color: #000;
 
     .tit-bg1 {
+      padding-top: 128px;
       position: relative;
       background-size: cover;
       background-position: top center;
@@ -529,6 +654,7 @@ onMounted(() => {
     }
 
     .tit-bg2 {
+      padding: 128px;
       position: relative;
       background-size: cover;
       background-position: center center;
@@ -551,6 +677,7 @@ onMounted(() => {
     }
 
     .tit-bg3 {
+      padding: 128px 0;
       position: relative;
       background-size: cover;
       background-position: center center;
@@ -573,9 +700,42 @@ onMounted(() => {
     }
 
     .se3-bg {
-      position: relative;
       height: 910px;
-
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .pz-info {
+        width: 320px;
+        .pz-tit {
+          font-size: 28px;
+          line-height: 40px;
+        }
+        .pz-txt {
+          color: #a3a8ab;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 22px;
+          text-align: justify;
+        }
+      }
+      .pz-conf {
+        width: 320px;
+        .checked {
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px;
+          text-align: justify;
+        }
+        .opts-tit {
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 22px;
+          text-align: justify;
+        }
+      }
       .base-img {
         position: absolute;
         top: 50%;
@@ -629,10 +789,41 @@ onMounted(() => {
 
     .se4-bg {
       height: 850px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       transition: all 0.8s ease-in-out;
       background-size: cover;
       background-position: center center;
 
+      .se4-info {
+        width: 352px;
+        .se4-tit {
+          font-size: 1.75rem;
+          line-height: 40px;
+          margin-bottom: 16px;
+        }
+        // .se4-img {
+        //   height: 18px;
+        //   margin-bottom: 12px;
+        // }
+        .se4-txt {
+          color: #a3a8ab;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 22px;
+          text-align: justify;
+        }
+      }
+
+      .light-txt {
+        position: absolute;
+        font-size: 1.75rem;
+        line-height: 40px;
+        bottom: 12.5rem;
+        right: 8rem;
+      }
       .light-img {
         position: absolute;
         right: 0;
@@ -646,6 +837,22 @@ onMounted(() => {
       background-repeat: no-repeat;
       background-size: 80%;
       background-position: center right;
+      .se5-info {
+        width: 320px;
+        .se5-tit {
+          font-size: 28px;
+          line-height: 40px;
+          margin-bottom: 16px;
+        }
+        .se5-txt1 {
+          font-size: 20px;
+          margin-bottom: 12px;
+        }
+        .se5-txt2 {
+          font-size: 16px;
+          color: #a3a8ab;
+        }
+      }
     }
 
     .table {
@@ -660,7 +867,19 @@ onMounted(() => {
       letter-spacing: 3.84px;
       z-index: 9;
     }
-
+    .title2 {
+      position: relative;
+      font-size: 48px;
+      font-weight: 500;
+      padding: 64px 0;
+      line-height: normal;
+      letter-spacing: 3.84px;
+      z-index: 9;
+    }
+    .sec-txt {
+      padding-top: 32px;
+      padding-bottom: 128px;
+    }
     .text {
       position: relative;
       font-size: 24px;
@@ -674,6 +893,9 @@ onMounted(() => {
     }
 
     .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       height: 475px;
       .left {
         flex: 0 0 auto;
@@ -688,6 +910,7 @@ onMounted(() => {
           font-style: normal;
           font-weight: 400;
           line-height: 28px;
+          text-align: justify;
         }
       }
 
@@ -792,6 +1015,228 @@ onMounted(() => {
       border: 1px solid #fefefe;
       &:hover {
         background-color: #414344;
+      }
+    }
+  }
+}
+@media (max-width: 576px) {
+  .pg-container {
+    .banner {
+      max-height: 400px;
+      .title {
+        width: 195px;
+        text-align: center;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
+        font-size: 24px;
+        letter-spacing: normal;
+      }
+    }
+    .section-wrapper {
+      width: 358px;
+      .tit-bg1 {
+        padding: 64px 0;
+        &::before {
+          height: 194px;
+        }
+      }
+      .tit-bg2 {
+        padding: 64px 0;
+        &::before {
+          height: 200px;
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.6)
+          );
+        }
+      }
+      .tit-bg3 {
+        padding: 64px 0;
+        &::before {
+          height: 226px;
+        }
+      }
+      .sec-txt {
+        font-size: 12px;
+        color: #a3a8ab;
+        padding-top: 12px;
+        padding-bottom: 64px;
+      }
+      .cont-box {
+        margin-top: 0;
+      }
+      .card {
+        height: auto;
+        display: block;
+        margin-top: 12px;
+        .left {
+          width: 340px;
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
+          .title {
+            font-size: 16px;
+          }
+          .txt {
+            font-size: 14px;
+          }
+        }
+        .card1-img {
+          width: 358px;
+          height: 168px;
+        }
+        .card3-img {
+          width: 358px;
+          height: 168px;
+        }
+        .card4-img {
+          width: 358px;
+          height: 168px;
+        }
+      }
+      .se-bg {
+        width: 358px;
+        height: 189px;
+      }
+      .se3-bg {
+        height: 760px;
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        .pz-info {
+          width: 320px;
+          margin: 0 auto;
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
+          .pz-tit {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+        .base-img {
+          top: 160px;
+          transform: translateY(0);
+          transform: scale(2);
+        }
+        .add-img {
+          top: 160px;
+          transform: translateY(0);
+          transform: scale(2);
+        }
+        .pz-conf {
+          width: 320px;
+          margin: 0 auto;
+          margin-bottom: 40px;
+          z-index: 999;
+        }
+        .checked {
+          margin-bottom: 24px;
+        }
+      }
+      .se4-bg {
+        width: 358px;
+        height: 420px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-size: 150%;
+        background-repeat: no-repeat;
+        background-position: bottom;
+        .se4-info {
+          width: 320px;
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
+          .se4-tit {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 8px;
+          }
+          .se4-img {
+            height: 18px;
+            margin-bottom: 12px;
+          }
+          .se4-txt {
+            font-size: 14px;
+            color: #a3a8ab;
+          }
+        }
+        .light-txt {
+          width: 320px;
+          position: absolute;
+          font-size: 18px;
+          line-height: 40px;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+      .se5-bg {
+        width: 358px;
+        height: 380px;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: 0 120px;
+        .se5-info {
+          width: 320px;
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
+          .se5-tit {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 8px;
+          }
+          .se5-txt1 {
+            font-size: 14px;
+          }
+          .se5-txt2 {
+            font-size: 14px;
+            color: #a3a8ab;
+          }
+        }
+      }
+      .table-box {
+        width: auto;
+        overflow-x: scroll;
+        .table {
+          width: 589px;
+        }
+      }
+
+      .card2 {
+        width: 358px;
+        height: 180px;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
+      }
+      .title {
+        font-size: 24px;
+        letter-spacing: normal;
+      }
+      .title2 {
+        font-size: 24px;
+        letter-spacing: normal;
+        padding-top: 64px;
+        padding-bottom: 32px;
+      }
+      .text {
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
+        font-size: 16px;
       }
     }
   }

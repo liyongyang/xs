@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
+import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
-
 const route = useRoute();
+const isSmallSize = ref(window.innerWidth < 576);
 
 const goodType: string = route.params.goodType as string;
 
@@ -27,13 +28,12 @@ const goback = () => {
 const openDialog = () => {
   addDialog({
     title: "",
-    width: "480px",
+    width: isSmallSize.value ? "358px" : "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config);
       if (config) {
       }
     },
@@ -44,7 +44,11 @@ const openDialog = () => {
 <template>
   <div class="header wow animate__animated animate__fadeInDown">
     <div class="head flex justify-between items-center mx-auto">
-      <section class="good-name cursor-pointer" @click="goback()">
+      <section
+        v-if="!isSmallSize"
+        class="good-name cursor-pointer"
+        @click="goback()"
+      >
         {{ page.name }}
       </section>
       <div class="flex justify-between items-center">
@@ -52,7 +56,7 @@ const openDialog = () => {
           v-for="(nav, index) in page.navs"
           :key="index"
           :to="getRouterPath(nav.key)"
-          class="py-2 px-3 mr-4 cursor-pointer"
+          class="nv-item cursor-pointer"
         >
           {{ nav.value }}
         </router-link>
@@ -81,6 +85,10 @@ const openDialog = () => {
       font-weight: 600;
       line-height: 32px;
     }
+    .nv-item {
+      padding: 12px 8px;
+      margin-right: 16px;
+    }
     .btn-black {
       height: auto;
       font-size: 14px;
@@ -92,6 +100,21 @@ const openDialog = () => {
       border: 1px solid #fefefe;
       &:hover {
         background-color: #414344;
+      }
+    }
+  }
+}
+@media (max-width: 576px) {
+  .header {
+    .head {
+      max-width: 358px;
+      padding: 12px 0;
+      .nv-item {
+        padding: 4px 16px;
+        margin-right: 4px;
+      }
+      .btn-black {
+        padding: 8px 10px;
       }
     }
   }

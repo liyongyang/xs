@@ -2,7 +2,7 @@
   <div class="good-container mx-auto">
     <div class="header wow animate__animated animate__fadeInDown">
       <div class="head flex justify-between items-center mx-auto">
-        <li class="good-name">RS100 工业读码器</li>
+        <li v-if="!isSmallSize" class="good-name">{{ rs100.name }}</li>
         <div class="flex justify-between items-center">
           <router-link
             :to="{ path: '/goods/RS100/product-params' }"
@@ -39,7 +39,7 @@
           <div class="banner-info flex flex-col justify-between">
             <div>
               <li class="title wow animate__animated animate__fadeInUp">
-                RS100 工业读码器
+                {{ rs100.name }}
               </li>
               <div
                 class="flex flex-wrap wow animate__animated animate__fadeInUp"
@@ -53,19 +53,25 @@
                 </li>
               </div>
               <li class="leading-10 wow animate__animated animate__fadeInUp">
-                全新光学系统 · 一键调试+ · 精准无极调焦
+                {{ rs100.tip }}
               </li>
               <!-- 产品介绍 -->
               <li class="mt-3 wow animate__animated animate__fadeInUp"></li>
             </div>
-            <el-button
-              class="btn-black more wow animate__animated animate__fadeInUp"
-              @click="openDialog()"
-              >样机试用/演示</el-button
-            >
+            <div v-if="!isSmallSize" class="flex">
+              <el-button
+                class="btn-black more wow animate__animated animate__fadeInUp"
+                @click="openDialog()"
+                >样机试用/演示</el-button
+              >
+              <el-button
+                class="btn-black more wow animate__animated animate__fadeInUp"
+                >观看视频</el-button
+              >
+            </div>
           </div>
           <div class="banner-img flex flex-col justify-between">
-            <el-carousel
+            <!-- <el-carousel
               class="text-center wow animate__animated animate__fadeInUp"
               height="360px"
             >
@@ -76,15 +82,22 @@
                   alt=""
                 />
               </el-carousel-item>
-            </el-carousel>
+            </el-carousel> -->
+            <img
+              class="act-img w-auto mx-auto text-center wow animate__animated animate__fadeIn"
+              :src="`/rs100/slider/slider${actImg}.webp`"
+              alt=""
+            />
             <div
               class="overflow-x-scroll overflow-y-hidden wow animate__animated animate__fadeInUp"
             >
               <div class="img-box flex flex">
                 <div
-                  class="img-item w30 flex-initial text-center"
+                  class="img-item w30 flex-initial text-center mx-1"
+                  :class="actImg === index ? 'act-img-item bg-gray-200' : ''"
                   v-for="(item, index) in 6"
                   :key="item"
+                  @click="actImg = index"
                 >
                   <img
                     class="h16"
@@ -96,6 +109,17 @@
               </div>
             </div>
           </div>
+          <div v-if="isSmallSize" class="flex mt-8">
+            <el-button
+              class="btn-black more wow animate__animated animate__fadeInUp"
+              @click="openDialog()"
+              >样机试用/演示</el-button
+            >
+            <el-button
+              class="btn-black more wow animate__animated animate__fadeInUp"
+              >观看视频</el-button
+            >
+          </div>
         </div>
       </div>
     </section>
@@ -104,22 +128,17 @@
         <el-collapse-item name="1">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              全新光学系统
-              <span class="italic font-500 font- skew-x-6">X</span>-Tech™
+              {{ rs100.b1 }}
+              <span class="italic font-500 skew-x-6">X</span>-Tech™
             </li>
           </template>
           <div class="info-txt text-wrap">
             <li class="wow animate__animated animate__fadeInUp">
-              3 × 3 × 3 灵活配置
-            </li>
-            <li class="wow animate__animated animate__fadeInUp">
-              新算自研全新光学系统，通过内置 3
-              种光源类型（直射光、偏振光、均匀光），加上 3 种可选配的镜头规格、3
-              种可选配的光 源颜色，灵活组合以高可配置性应对不同场景需求
+              {{ rs100.tip1 }}
             </li>
           </div>
           <img
-            class="wow animate__animated animate__fadeInUp"
+            class="tz-img wow animate__animated animate__fadeInUp"
             src="/rs100/banner.png"
             alt=""
           />
@@ -127,16 +146,21 @@
         <el-collapse-item name="2">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              新算 <span class="italic font-500 font- skew-x-6">X</span>-Tech™
+              {{ rs100.b2 }}
+              <span class="italic font-500 font- skew-x-6">X</span>-Tech™
             </li>
           </template>
           <el-carousel
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
-            height="548px"
+            :height="isSmallSize ? '400px' : '580px'"
+            arrow="always"
           >
-            <el-carousel-item v-for="(items, index) in slider1" :key="index">
+            <el-carousel-item
+              v-for="(items, index) in rs100.info2"
+              :key="index"
+            >
               <div
                 class="card wow animate__animated animate__fadeInUp"
                 v-for="(item, i) in items"
@@ -154,16 +178,25 @@
         <el-collapse-item name="3">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              一键调试+ OneClick Plus
+              {{ rs100.b3 }}
             </li>
           </template>
+          <div class="info-txt text-wrap">
+            <li class="wow animate__animated animate__fadeInUp">
+              {{ rs100.tip3 }}
+            </li>
+          </div>
           <el-carousel
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
-            height="548px"
+            :height="isSmallSize ? '420px' : '580px'"
+            arrow="always"
           >
-            <el-carousel-item v-for="(items, index) in slider2" :key="index">
+            <el-carousel-item
+              v-for="(items, index) in rs100.info3"
+              :key="index"
+            >
               <div
                 class="card wow animate__animated animate__fadeInUp"
                 v-for="(item, i) in items"
@@ -181,43 +214,44 @@
         <el-collapse-item name="4">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              精准无极调焦
+              {{ rs100.b4 }}
             </li>
           </template>
-          <el-carousel
-            :interval="3000"
-            :autoplay="false"
-            class="carousel-imgs"
-            height="548px"
-          >
-            <el-carousel-item v-for="(items, index) in slider3" :key="index">
-              <div
-                class="card wow animate__animated animate__fadeInUp"
-                v-for="(item, i) in items"
-                :key="i"
-              >
-                <img class="img" :src="item.img" alt="" />
-                <div class="msg">
-                  <li class="title">{{ item.title }}</li>
-                  <li class="txt">{{ item.info }}</li>
-                </div>
+          <div class="info-txt text-wrap">
+            <li class="wow animate__animated animate__fadeInUp">
+              {{ rs100.tip4 }}
+            </li>
+          </div>
+          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
+            <div
+              class="card wow animate__animated animate__fadeInUp"
+              v-for="(item, i) in rs100.info4"
+              :key="i"
+            >
+              <img class="img" :src="item.img" alt="" />
+              <div class="msg">
+                <li class="title">{{ item.title }}</li>
+                <li class="txt">{{ item.info }}</li>
               </div>
-            </el-carousel-item>
-          </el-carousel>
+            </div>
+          </div>
         </el-collapse-item>
         <el-collapse-item name="5">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              便利功能
+              {{ rs100.b5 }}
             </li>
           </template>
           <el-carousel
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
-            height="548px"
+            :height="isSmallSize ? '268px' : '548px'"
           >
-            <el-carousel-item v-for="(items, index) in slider4" :key="index">
+            <el-carousel-item
+              v-for="(items, index) in rs100.info5"
+              :key="index"
+            >
               <div
                 class="card wow animate__animated animate__fadeInUp"
                 v-for="(item, i) in items"
@@ -232,27 +266,31 @@
             </el-carousel-item>
           </el-carousel>
         </el-collapse-item>
-        <el-collapse-item name="6">
+        <!-- <el-collapse-item name="6">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
               型号对比
             </li>
           </template>
           <tableSvg></tableSvg>
-        </el-collapse-item>
+        </el-collapse-item> -->
         <el-collapse-item name="7">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              典型应用
+              {{ rs100.b6 }}
             </li>
           </template>
           <el-carousel
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
-            height="548px"
+            :height="isSmallSize ? '340px' : '548px'"
+            arrow="always"
           >
-            <el-carousel-item v-for="(items, index) in slider5" :key="index">
+            <el-carousel-item
+              v-for="(items, index) in rs100.info6"
+              :key="index"
+            >
               <div
                 class="card wow animate__animated animate__fadeInUp"
                 v-for="(item, i) in items"
@@ -276,165 +314,178 @@
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
+const { t, locale } = useI18n();
 const router = useRouter();
+const actImg = ref(0);
+const isSmallSize = ref(window.innerWidth < 576);
 
-import tableSvg from "@/assets/rs100_table.svg";
 const activeNames = ref([]);
 const gdList = ["RS100-M6", "RS100-M12", "RS100-M16"];
-const slider1 = [
-  [
-    {
-      img: `/rs100/xt0.png`,
-      title: "超解析力镜头：读取远距离难读码样本",
-      info: "使用具有精密光学设计的 12/16mm 8MP 镜头，发挥 100% CMOS 传感器性能，相比同级产品仅能发挥 70% CMOS 传感器性能的 1.2MP 普通镜头，RS100 解析力更强、成像质量更好、读取远距离难读码更稳定",
-    },
-    {
-      img: `/rs100/xt1.png`,
-      title: "大视野镜头：读取近距离多码样本",
-      info: "使用 6mm 镜头，通过定制CMOS 传感器及加速硬核，读取条码的视野相比同级产品扩大 30%以上，能够一次性同时读取40个以上条码",
-    },
+const rs100 = {
+  name: t("rs100.name"),
+  tip: t("rs100.tip"),
+  b1: t("rs100.b1"),
+  tip1: t("rs100.tip1"),
+  b2: t("rs100.b2"),
+  info2: [
+    [
+      {
+        img: `/rs100/xt0.png`,
+        title: t("rs100.info2[0][0].title"),
+        info: t("rs100.info2[0][0].info"),
+      },
+      {
+        img: `/rs100/xt1.png`,
+        title: t("rs100.info2[0][1].title"),
+        info: t("rs100.info2[0][1].info"),
+      },
+    ],
+    [
+      {
+        img: `/rs100/xt2.png`,
+        title: t("rs100.info2[1][0].title"),
+        info: t("rs100.info2[1][0].info"),
+      },
+    ],
   ],
-  [
-    {
-      img: `/rs100/xt2.png`,
-      title: "超解析力镜头：读取远距离难读码样本",
-      info: "3种光源最佳解码实例，光源可选择交叠使用",
-    },
+  b3: t("rs100.b3"),
+  tip3: t("rs100.tip3"),
+  info3: [
+    [
+      {
+        img: `/rs100/ts0.png`,
+        title: t("rs100.info3[0][0].title"),
+        info: t("rs100.info3[0][0].info"),
+      },
+      {
+        img: `/rs100/ts1.png`,
+        title: t("rs100.info3[0][1].title"),
+        info: t("rs100.info3[0][1].info"),
+      },
+    ],
+    [
+      {
+        img: `/rs100/ts2.png`,
+        title: t("rs100.info3[1][0].title"),
+        info: t("rs100.info3[1][0].info"),
+      },
+      {
+        img: `/rs100/ts3.png`,
+        title: t("rs100.info3[1][1].title"),
+        info: t("rs100.info3[1][1].info"),
+      },
+    ],
+    [
+      {
+        img: `/rs100/ts4.png`,
+        title: t("rs100.info3[2][0].title"),
+        info: t("rs100.info3[2][0].info"),
+      },
+    ],
   ],
-];
-const slider2 = [
-  [
-    {
-      img: `/rs100/ts0.png`,
-      title: "新升级一键调试，新增 Quick & Max 模式，读码更快更稳定",
-      info: "更快速：解码速度翻倍 ,更稳定：极致稳定解码，更适合移动读取",
-    },
-    {
-      img: `/rs100/ts1.png`,
-      title: "N 种组合光源调试",
-      info: "算法赋予读码器“智能大脑”，一键自适应无 限组合光源，能够自主根据读码样本、工况， 智能选择最优光源强度及光源类型，极大提升 解码性能 快速做出最优选择，算法应用不冗余更精简",
-    },
-  ],
-  [
-    {
-      img: `/rs100/ts2.png`,
-      title: "自适应算法",
-      info: "自动匹配机器视觉算法引擎™的 CV 算法、AI 算法",
-    },
-    {
-      img: `/rs100/ts3.png`,
-      title: "自动调参",
-      info: "超192万种参数配置，自动优化光源、 曝光、增益等参数，应对挑战性读码 情况",
-    },
-  ],
-  [
-    {
-      img: `/rs100/ts4.png`,
-      title: "自动检测条码类型",
-      info: "自动检测 1D/2D 码，根据条码类型调 取预定义条码模版库，提高读取速度",
-    },
-  ],
-];
-const slider3 = [
-  [
+  b4: t("rs100.b4"),
+  tip4: t("rs100.tip4"),
+  info4: [
     {
       img: `/rs100/tj0.png`,
-      title: "新算无极对焦环系统",
-      info: "根据架设距离、1D/2D 码样本尺寸精确调焦，对焦距离可由 30mm 至 ∞ 无穷远",
+      title: t("rs100.info4[0][0].title"),
+      info: t("rs100.info4[0][0].info"),
     },
     {
       img: `/rs100/tj1.png`,
-      title: "机械调焦",
-      info: "手动机械调焦搭配无极对焦环系统能够极大提升操作准确性",
+      title: t("rs100.info4[0][1].title"),
+      info: t("rs100.info4[0][1].info"),
     },
   ],
-];
-const slider4 = [
-  [
-    {
-      img: `/rs100/gn0.png`,
-      title: "双航插支持丰富通信协议",
-      info: "高标准双航插，稳定可靠，不用再担心脱落停机问题",
-    },
-    {
-      img: `/rs100/gn1.png`,
-      title: "格式化数据功能",
-      info: "提供多种数据编辑格式，让数据管理更高效",
-    },
+  b5: t("rs100.b5"),
+  info5: [
+    [
+      {
+        img: `/rs100/gn0.png`,
+        title: t("rs100.info5[0][0].title"),
+        info: t("rs100.info5[0][0].info"),
+      },
+      {
+        img: `/rs100/gn1.png`,
+        title: t("rs100.info5[0][1].title"),
+        info: t("rs100.info5[0][1].info"),
+      },
+    ],
+    [
+      {
+        img: `/rs100/gn2.png`,
+        title: t("rs100.info5[1][0].title"),
+        info: t("rs100.info5[1][0].info"),
+      },
+    ],
   ],
-  [
-    {
-      img: `/rs100/gn2.png`,
-      title: "刻印验证功能",
-      info: "保证 1D/2D 码质量，及时发现印刷缺陷，减少浪费",
-    },
+  b6: t("rs100.b6"),
+  info6: [
+    [
+      {
+        img: `/rs100/yy0.png`,
+        title: t("rs100.info6[0][0].title"),
+        info: t("rs100.info6[0][0].info"),
+      },
+      {
+        img: `/rs100/yy1.png`,
+        title: t("rs100.info6[0][1].title"),
+        info: t("rs100.info6[0][1].info"),
+      },
+    ],
+    [
+      {
+        img: `/rs100/yy2.png`,
+        title: t("rs100.info6[1][0].title"),
+        info: t("rs100.info6[1][0].info"),
+      },
+      {
+        img: `/rs100/yy3.png`,
+        title: t("rs100.info6[1][1].title"),
+        info: t("rs100.info6[1][1].info"),
+      },
+    ],
+    [
+      {
+        img: `/rs100/yy4.png`,
+        title: t("rs100.info6[2][0].title"),
+        info: t("rs100.info6[2][0].info"),
+      },
+      {
+        img: `/rs100/yy5.png`,
+        title: t("rs100.info6[2][1].title"),
+        info: t("rs100.info6[2][1].info"),
+      },
+    ],
+    [
+      {
+        img: `/rs100/yy6.png`,
+        title: t("rs100.info6[3][0].title"),
+        info: t("rs100.info6[3][0].info"),
+      },
+      {
+        img: `/rs100/yy7.png`,
+        title: t("rs100.info6[3][1].title"),
+        info: t("rs100.info6[3][1].info"),
+      },
+    ],
   ],
-];
-const slider5 = [
-  [
-    {
-      img: `/rs100/yy0.png`,
-      title: "易反光表面",
-      info: "金属表面容易产生反光干扰，通过自适应组合光源的偏振光能够降低反射并实现稳定读码",
-    },
-    {
-      img: `/rs100/yy1.png`,
-      title: "移动读取",
-      info: "强大的解码性能能够读取不断旋转的圆柱体锂电池",
-    },
-  ],
-  [
-    {
-      img: `/rs100/yy2.png`,
-      title: "多码同时读取",
-      info: "SMT 料盘上的多个类型的 1D/2D 码，RS100能够同时读取",
-    },
-    {
-      img: `/rs100/yy3.png`,
-      title: "组网读取",
-      info: "RS100支持组网功能，能够通过多台读码器同时读取快递盒不同面的 1D/2D 码，非常适合物流行业",
-    },
-  ],
-  [
-    {
-      img: `/rs100/yy4.png`,
-      title: "金属撞针",
-      info: "RS100强大的解码性能可以解决金属零部件因撞针打标工艺质量差导致的无法解码、读取速度慢等问题",
-    },
-    {
-      img: `/rs100/yy5.png`,
-      title: "多种颜色树脂",
-      info: "轮胎上的1D码通常较小，RS100具备大景深、大像素，能够稳定读取",
-    },
-  ],
-  [
-    {
-      img: `/rs100/yy6.png`,
-      title: "玻璃面读取",
-      info: "玻璃上的 1D/2D 码对比度低且存在严重反光，通过偏振光读取，高效稳定",
-    },
-    {
-      img: `/rs100/yy7.png`,
-      title: "突发模式读码",
-      info: "通过连续拍照，实现多次解码，有效解决高速物流线中漏拍问题，提高解码稳定性",
-    },
-  ],
-];
+};
 
 const openDialog = () => {
   addDialog({
     title: "",
-    width: "480px",
+
+    width: isSmallSize.value ? "358px" : "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config);
       if (config) {
-        console.log(`output->config------`, config);
       }
     },
   });
@@ -456,8 +507,8 @@ onMounted(() => {});
     text-align: center;
 
     .head {
-      max-width: 1512px;
-      padding: 16px 64px;
+      max-width: 1384px;
+      padding: 16px;
       align-items: center;
     }
 
@@ -471,8 +522,8 @@ onMounted(() => {});
   }
 
   .good-wrapper {
-    max-width: 1512px;
-    padding: 0 64px;
+    max-width: 1384px;
+    // padding: 0 64px;
 
     .content {
       padding: 32px 0;
@@ -488,6 +539,8 @@ onMounted(() => {});
         width: 650px;
         height: 440px;
         text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
         padding: 32px 0;
         padding-top: 0;
         border-bottom: #dfe1e2 solid 1px;
@@ -501,7 +554,9 @@ onMounted(() => {});
       .banner-img {
         width: 674px;
         height: 440px;
-
+        .act-img {
+          width: 600px;
+        }
         .img-box {
           width: 840px;
 
@@ -516,6 +571,14 @@ onMounted(() => {});
           :hover {
             border: #dfe1e2 solid 1px;
 
+            img {
+              transform: scale(1.2);
+              transition: all 0.3s ease-in-out;
+              border: #dfe1e200 solid 1px;
+            }
+          }
+          .act-img-item {
+            border: #dfe1e2 solid 1px;
             img {
               transform: scale(1.2);
               transition: all 0.3s ease-in-out;
@@ -552,15 +615,14 @@ onMounted(() => {});
 
     .card {
       flex: 0 0 auto;
-      width: 660px;
-      cursor: pointer;
+      width: 687px;
       word-wrap: break-word;
-      white-space: pre-wrap;
+      white-space: normal;
       transition: all 0.5s;
       overflow-y: hidden;
 
       .img {
-        width: 660px;
+        width: 687px;
       }
 
       .msg {
@@ -579,6 +641,7 @@ onMounted(() => {});
           font-style: normal;
           font-weight: 400;
           line-height: 28px;
+          text-align: justify;
         }
       }
     }
@@ -611,11 +674,142 @@ onMounted(() => {});
   }
 }
 
-:deep(.el-collapse-item) {
-}
-
 :deep(.el-collapse-item__header) {
   height: 108px;
   padding: 32px 0;
+  padding-right: 32px;
+  background-color: inherit;
+}
+:deep(.el-collapse-item__content) {
+  background-color: #fff;
+}
+:deep(.el-carousel__arrow) {
+  top: 95%;
+  background-color: #292929;
+  color: #ffffff;
+  border: 1px solid #868686;
+  &:hover {
+    background-color: #868686;
+  }
+}
+:deep(.el-carousel__arrow--left) {
+  position: absolute;
+  right: 60px;
+  left: auto;
+  bottom: 20px;
+}
+
+:deep(.el-carousel__arrow--right) {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+}
+@media (max-width: 576px) {
+  .good-container {
+    .header {
+      font-size: 14px;
+      .head {
+        width: 358px;
+        padding: 16px 0;
+      }
+    }
+    .good-wrapper {
+      width: 358px;
+      .content {
+        padding: 0;
+        padding-bottom: 32px;
+        .back {
+          display: flex;
+          padding: 12px 0;
+        }
+        .title {
+          font-size: 24px;
+        }
+        .banner-info {
+          width: 358px;
+          height: auto;
+          border-bottom: none;
+          .more {
+            width: 128px;
+            padding: 10px;
+          }
+        }
+        .banner-img {
+          width: 358px;
+          height: 280px;
+
+          .act-img {
+            width: 358px;
+            transform: scale(1);
+          }
+          .img-box {
+            max-width: 358px;
+          }
+        }
+      }
+      .info-title {
+        font-size: 18px;
+        height: 32px;
+        line-height: 32px;
+      }
+
+      .info-txt {
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      .tz-img {
+        width: 358px;
+      }
+      .card {
+        flex: 0 0 auto;
+        width: 320px;
+        margin-right: 8px;
+
+        .jm-img {
+          width: 280px;
+        }
+        .img {
+          width: 320px;
+        }
+        .msg {
+          margin: 0 16px;
+          .title {
+            font-size: 16px;
+            margin-bottom: 0;
+          }
+          .txt {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  :deep(.el-collapse-item__header) {
+    font-size: 24px;
+    width: 358px;
+    height: 64px;
+    padding: 16px 0;
+    background-color: inherit;
+  }
+  .btn-black {
+    height: auto;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 99px;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #fefefe;
+    &:hover {
+      background-color: #414344;
+    }
+  }
+  :deep(.el-collapse-item__content) {
+    background-color: #fff;
+    padding-bottom: 12px;
+  }
+  :deep(.el-carousel__arrow) {
+    top: 90%;
+  }
 }
 </style>

@@ -5,8 +5,11 @@
         <li class="banner-title wow animate__animated animate__fadeInUp">
           {{ bannerInfo1.title }}
         </li>
-        <li class="banner-msg wow animate__animated animate__fadeInUp" v-for="(item, idx) in bannerInfo1.msg"
-          :key="idx">
+        <li
+          class="banner-msg wow animate__animated animate__fadeInUp"
+          v-for="(item, idx) in bannerInfo1.msg"
+          :key="idx"
+        >
           {{ item }}
         </li>
       </div>
@@ -16,7 +19,11 @@
         {{ section1.title }}
       </li>
       <div class="flex justify-between flex-wrap">
-        <div class="card m1 text-left" v-for="(item, index) in section1.info" :key="index">
+        <div
+          class="card m1 text-left"
+          v-for="(item, index) in section1.info"
+          :key="index"
+        >
           <li class="card-name wow animate__animated animate__fadeInUp">
             {{ item.name }}
           </li>
@@ -29,12 +36,16 @@
         </div>
       </div>
     </section>
-    <section class="banner2 mx-auto flex justify-center items-center"
-      :style="{ 'background-image': 'url(' + bannerInfo2.bgImg + ')' }">
+    <section
+      class="banner2 mx-auto flex justify-center items-center"
+      :style="{ 'background-image': 'url(' + bannerInfo2.bgImg + ')' }"
+    >
       <div class="text-wrapper text-center flex flex-col items-center">
-        <!-- <li class="banner-title">{{ bannerInfo2.title }}</li> -->
-        <li class="banner-msg wow animate__animated animate__fadeInUp" v-for="(item, idx) in bannerInfo2.msg"
-          :key="idx">
+        <li
+          class="banner-msg wow animate__animated animate__fadeInUp"
+          v-for="(item, idx) in bannerInfo2.msg"
+          :key="idx"
+        >
           {{ item }}
         </li>
       </div>
@@ -43,38 +54,24 @@
       <li class="title wow animate__animated animate__fadeInUp">
         {{ section2.title }}
       </li>
-      <div class="time flex justify-start">
-        <span @click="changeTime(item)" class="time-tab cursor-pointer animate__animated animate__fadeInUp"
-          v-for="(item, index) in section2.timeList" :key="index"
-          :class="actTimeInfo.time === item.time ? 'act-tiem-tab' : ''">
-          {{ item.time }}
-        </span>
-      </div>
-      <div v-if="actTimeInfo" class="time-info relative flex justify-start flex-wrap text-left">
-        <!-- <el-carousel
-          :interval="3000"
-          :autoplay="false"
-          class="carousel-time"
-          width="100%"
-          height="302px"
+      <div class="time-info relative flex justify-start text-left">
+        <div
+          class="time-info-item"
+          v-for="(item, index) in section2.timeList"
+          :key="index"
         >
-          <el-carousel-item>
-            <div
-              class="time-info-item wow animate__animated animate__pulse animate__slow animate__infinite"
-              v-for="(item, index) in actTimeInfo.child"
+          <div class="item-item">
+            <li class="txt wow animate__animated animate__fadeInUp">
+              {{ item.time }}
+            </li>
+            <li
+              class="wow animate__animated animate__fadeInUp"
+              v-for="(t, index) in item.child"
               :key="index"
             >
-              <li class="txt">
-                {{ item }}
-              </li>
-            </div>
-          </el-carousel-item>
-        </el-carousel> -->
-        <div class="time-info-item wow animate__animated animate__pulse animate__slow"
-          v-for="(item, index) in actTimeInfo.child" :key="index">
-          <li class="txt">
-            {{ item }}
-          </li>
+              {{ t }}
+            </li>
+          </div>
         </div>
       </div>
     </section>
@@ -83,94 +80,100 @@
         {{ section3.title }}
       </li>
       <div class="flex justify-between flex-wrap">
-        <img class="jx-item hover:shadow-lg" v-for="(i, index) in 5" :key="i" :src="'/aboutUs/jx' + index + '.png'"
-          alt="" />
+        <img
+          class="jx-item hover:shadow-lg"
+          v-for="(i, index) in 5"
+          :key="i"
+          :src="'/aboutUs/jx' + index + '.png'"
+          alt=""
+        />
       </div>
     </section>
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
+const isSmallSize = ref(window.innerWidth < 576);
+
 const bannerInfo1 = {
-  title: "新算技术",
-  msg: [
-    `新算技术，深耕于工业机器视觉传感器领域，具备完全独立自主知识产权的解码识读算法。公司以研发为导向，在视觉算法、硬件设计上已做到完全的独立自主，目前已向市场推出多系列高性能固定式工业读码器、手持式工业读码器等多条产品线，在 3C 电子、汽车、新能源及半导体等工业制造领域积累了丰富的行业服务经验。`,
-  ],
+  title: t("aboutUs.bn_tit"),
+  msg: [t("aboutUs.bn_msg[0]")],
 };
 const section1 = {
-  title: "公司概况",
+  title: t("aboutUs.p1.title"),
   info: [
     {
-      key: "员工人数",
-      name: "70+",
+      key: t("aboutUs.p1.info[0].key"),
+      name: t("aboutUs.p1.info[0].name"),
       icon: "/aboutUs/icon-svg0.svg",
     },
     {
-      key: " 研发投入",
-      name: "3000+ 万",
+      key: t("aboutUs.p1.info[1].key"),
+      name: t("aboutUs.p1.info[1].name"),
       icon: "/aboutUs/icon-svg1.svg",
     },
     {
-      key: "融资额",
-      name: "亿元级",
+      key: t("aboutUs.p1.info[2].key"),
+      name: t("aboutUs.p1.info[2].name"),
       icon: "/aboutUs/icon-svg2.svg",
     },
     {
-      key: "深度合作客户",
-      name: "30+",
+      key: t("aboutUs.p1.info[3].key"),
+      name: t("aboutUs.p1.info[3].name"),
       icon: "/aboutUs/icon-svg3.svg",
     },
   ],
 };
 const bannerInfo2 = {
   title: "",
-  msg: [`专注工业机器视觉，以读码产品开启智能制造`],
+  msg: [t("aboutUs.p2.msg[0]")],
   bgImg: "/aboutUs/banner2.webp",
 };
 const section2 = {
-  title: "企业历程",
+  title: t("aboutUs.p3.title"),
   timeList: [
     {
-      time: "2016",
-      child: ["研究部署工业机器视觉算法"],
+      time: t("aboutUs.p3.timeList[0].time"),
+      child: [t("aboutUs.p3.timeList[0].child[0]")],
     },
     {
-      time: "2019",
-      child: ["深圳新算成立"],
-    },
-    {
-      time: "2021",
-      child: ["推出 紧凑型 R 系列旗舰款 R275-A"],
-    },
-    {
-      time: "2022",
+      time: t("aboutUs.p3.timeList[1].time"),
       child: [
-        "Pre-A轮融资 顺为资本, 华方资本, 红杉中国",
-        "推出高性能手持式 H9X 系列",
+        t("aboutUs.p3.timeList[1].child[0]"),
+        t("aboutUs.p3.timeList[1].child[1]"),
       ],
     },
     {
-      time: "2023",
-      child: ["总部宁波新算正式成立", "天使轮融资 顶级风投 红杉中国种子基金"],
+      time: t("aboutUs.p3.timeList[2].time"),
+      child: [
+        t("aboutUs.p3.timeList[2].child[0]"),
+        t("aboutUs.p3.timeList[2].child[1]"),
+      ],
     },
     {
-      time: "2024",
-      child: ["推出 双航插 RS 系列 旗舰款RS300"],
+      time: t("aboutUs.p3.timeList[3].time"),
+      child: [t("aboutUs.p3.timeList[3].child[0]")],
+    },
+    {
+      time: t("aboutUs.p3.timeList[4].time"),
+      child: [t("aboutUs.p3.timeList[4].child[0]")],
+    },
+    {
+      time: t("aboutUs.p3.timeList[5].time"),
+      child: [t("aboutUs.p3.timeList[5].child[0]")],
     },
   ],
 };
-const actTimeInfo = ref(section2.timeList[0]);
 const section3 = {
-  title: "奖项与资质",
+  title: t("aboutUs.p4.title"),
 };
-
-const changeTime = (v: any) => {
-  actTimeInfo.value = v;
-};
-onMounted(() => { });
+onMounted(() => {});
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .pg-container {
   color: #fff;
   position: relative;
@@ -200,6 +203,8 @@ onMounted(() => { });
     .text-wrapper {
       width: 1000px;
       text-wrap: wrap;
+      word-wrap: break-word;
+      white-space: normal;
       z-index: 9;
 
       .banner-title {
@@ -224,6 +229,8 @@ onMounted(() => { });
     height: 480px;
     margin: 0 auto;
     margin-bottom: 128px;
+    background-size: cover;
+    background-position: center center;
 
     &::before {
       content: "";
@@ -237,6 +244,8 @@ onMounted(() => { });
     .text-wrapper {
       width: 1000px;
       text-wrap: wrap;
+      word-wrap: break-word;
+      white-space: normal;
       z-index: 9;
 
       .banner-title {
@@ -265,39 +274,30 @@ onMounted(() => { });
     color: #1d1c23;
     background-color: #fff;
 
-    .time {
-      width: 1384px;
-      margin: 0 auto;
-      padding: 0 64px;
-      margin-bottom: 64px;
-      border-bottom: 1px #dfe1e2 solid;
-
-      .time-tab {
-        margin-right: 128px;
-        font-size: 32px;
-        font-weight: 600;
-        line-height: 44px;
-        padding: 16px 0;
-      }
-
-      .act-tiem-tab {
-        border-bottom: 2px #1d1c23 solid;
-      }
-    }
-
     .time-info {
-      width: 1400px;
+      width: 1680px;
+      overflow-x: scroll;
       margin: 0 auto;
-      border-top: #000 1px solid;
 
+      &::before {
+        content: "";
+        position: absolute;
+        top: 61px;
+        left: 50px;
+        display: block;
+        height: 2px;
+        background-color: #000;
+        width: 2200px;
+      }
       .carousel-time {
         width: 100%;
       }
     }
 
     .time-info-item {
-      width: 252px;
-      padding-top: 16px;
+      position: relative;
+      width: auto;
+      padding: 0 48px;
       color: #1d1c23;
       font-size: 20px;
       font-weight: 400;
@@ -305,7 +305,7 @@ onMounted(() => { });
 
       &::before {
         position: absolute;
-        top: -5px;
+        top: 56px;
         display: block;
         content: "";
         width: 12px;
@@ -313,11 +313,13 @@ onMounted(() => { });
         border-radius: 100%;
         background-color: #000;
       }
-
+      .item-item {
+        line-height: 48px;
+      }
       .txt {
-        text-align: left;
-        width: 210px;
-        text-wrap: wrap;
+        font-size: 32px;
+        font-weight: 600;
+        padding: 0 24px 24px 10px;
       }
     }
   }
@@ -331,7 +333,7 @@ onMounted(() => { });
     transform: scale(0.97);
 
     .jx-item {
-      widows: 270px;
+      width: 270px;
       transition: transform 0.4s ease;
 
       &:hover {
@@ -366,6 +368,105 @@ onMounted(() => { });
     font-weight: 600;
     letter-spacing: 3.84px;
     margin-bottom: 128px;
+  }
+}
+@media (max-width: 576px) {
+  .pg-container {
+    .title {
+      font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 32px;
+    }
+    .banner {
+      height: 320px;
+      background-attachment: local;
+      &::before {
+        display: none;
+      }
+      .text-wrapper {
+        width: 320px;
+        .banner-title {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 8px;
+        }
+        .banner-msg {
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+    }
+    .banner2 {
+      width: 100%;
+      height: 320px;
+      margin-bottom: 0;
+      &::before {
+        width: 100%;
+        height: 320px;
+      }
+      .text-wrapper {
+        width: 358px;
+        .banner-title {
+          font-size: 24px;
+          margin-bottom: 0;
+        }
+        .banner-msg {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+    }
+    .his-wrapper {
+      padding-top: 32px;
+      padding-bottom: 32px;
+      height: 260px;
+      .time-info {
+        width: 358px;
+        &::before {
+          top: 40px;
+          left: 0;
+          width: 1560px;
+        }
+      }
+      .time-info-item {
+        padding: 0;
+        padding-right: 32px;
+        font-size: 16px;
+        line-height: 20px;
+        &::before {
+          top: 37px;
+          width: 8px;
+          height: 8px;
+        }
+        .item-item {
+          line-height: 28px;
+        }
+        .txt {
+          font-size: 16px;
+          padding: 0 0 28px 0;
+        }
+      }
+    }
+    .section-wrapper {
+      width: 358px;
+      padding-top: 32px;
+      padding-bottom: 32px;
+      transform: scale(1);
+      .jx-item {
+        width: 175px;
+        margin-bottom: 10px;
+        &:hover {
+          transform: scale(1);
+        }
+      }
+      .card {
+        width: 168px;
+        margin-bottom: 4px;
+        .card-name {
+          font-size: 32px;
+        }
+      }
+    }
   }
 }
 </style>

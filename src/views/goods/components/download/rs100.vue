@@ -22,37 +22,47 @@ import downloadIcon from "@/assets/icon/download_icon.png";
 
 const list = [
   {
-    title: "产品资料",
+    title: "产品操作手册",
     icon: icon1,
     subChildren: [
-      { title: "产品资料 1", link: "" },
-      { title: "产品资料 2", link: "" },
-      { title: "产品资料 3", link: "" },
+      {
+        title: "RS100快速使用手册",
+        link: "https://xs-code.com/file/RS100/产品操作手册/RS100快速使用手册.pdf",
+      },
+      {
+        title: "RS100 组网模式快速使用指导",
+        link: "https://xs-code.com/file/RS100/产品操作手册/RS100%20组网模式快速使用指导.pdf",
+      },
+      {
+        title: "新算读码器工业协议用户手册V0.2",
+        link: "https://xs-code.com/file/RS100/产品操作手册/新算读码器工业协议用户手册V0.2.pdf",
+      },
     ],
   },
   {
-    title: "用户手册",
+    title: "产品手册",
     icon: icon2,
     subChildren: [
-      { title: "用户手册 1", link: "" },
-      { title: "用户手册 2", link: "" },
+      {
+        title: "RS100读码器产品手册 A4 6.21",
+        link: "https://xs-code.com/file/RS100/产品手册/RS100读码器产品手册%20A4%206.21.pdf",
+      },
     ],
   },
   {
-    title: "软件",
+    title: "调试软件",
     icon: icon3,
     subChildren: [
-      { title: "软件 1", link: "" },
-      { title: "软件 2", link: "" },
-      { title: "软件 3", link: "" },
-      { title: "软件 4", link: "" },
-      { title: "软件 5", link: "" },
+      {
+        title: "XS_Reader_Tools",
+        link: "https://xs-code.com/file/RS100/调试软件/XS_Reader_Tools_1.5.19_x86.exe",
+      },
     ],
   },
   {
     title: "视频",
     icon: icon4,
-    subChildren: [{ title: "视频 1", link: "" }],
+    subChildren: [],
   },
 ];
 
@@ -65,7 +75,7 @@ import SubHeader from "@/components/head/subHeader.vue";
   <div class="good-container mx-auto">
     <SubHeader></SubHeader>
 
-    <div class="px-16 pb-16">
+    <div class="content">
       <h2>下载</h2>
 
       <div>
@@ -93,7 +103,7 @@ import SubHeader from "@/components/head/subHeader.vue";
 
                   <div class="flex items-center">
                     <img class="download-icon" :src="downloadIcon" alt="" />
-                    下载
+                    <a :href="sub.link">下载</a>
                   </div>
                 </div>
                 <span class="divider" />
@@ -110,7 +120,11 @@ import SubHeader from "@/components/head/subHeader.vue";
 .good-container {
   width: 100vw;
   margin-top: 89px;
-
+  .content {
+    width: 1384px;
+    margin: 0 auto;
+    padding: 64px 0;
+  }
   .header {
     background-color: #f4f4f4;
     text-align: center;
@@ -129,65 +143,81 @@ import SubHeader from "@/components/head/subHeader.vue";
       }
     }
   }
-}
 
-.btn-black {
-  height: auto;
-  font-size: 14px;
-  line-height: 20px;
-  border-radius: 99px;
-  color: #fff;
-  background-color: #000;
-  border: 1px solid #fefefe;
-  &:hover {
-    background-color: #414344;
-  }
-}
-
-h2,
-h4 {
-  color: #1d1c23;
-}
-
-h2 {
-  font-size: 48px;
-  font-weight: 500;
-  margin-top: 128px;
-  margin-bottom: 64px;
-  text-align: center;
-}
-
-h4 {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.a-text {
-  color: rgba(29, 28, 35, 0.8);
-  background-color: #f4f4f4;
-  padding: 16px 56px;
-  white-space: pre-wrap;
-  font-size: 14px;
-
-  p {
-    line-height: 40px;
-
-    &:last-of-type .divider {
-      display: none;
+  .btn-black {
+    height: auto;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 99px;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #fefefe;
+    &:hover {
+      background-color: #414344;
     }
   }
 
-  .divider {
-    height: 1px;
-    display: block;
-    margin: 8px 0;
-    background-color: #dfe1e2;
+  h2,
+  h4 {
+    color: #1d1c23;
+  }
+
+  h2 {
+    font-size: 48px;
+    font-weight: 500;
+    margin-top: 128px;
+    margin-bottom: 64px;
+    text-align: center;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .a-text {
+    color: rgba(29, 28, 35, 0.8);
+    background-color: #f4f4f4;
+    padding: 16px 56px;
+    white-space: normal;
+    font-size: 14px;
+
+    p {
+      line-height: 40px;
+
+      &:last-of-type .divider {
+        display: none;
+      }
+    }
+
+    .divider {
+      height: 1px;
+      display: block;
+      margin: 8px 0;
+      background-color: #dfe1e2;
+    }
+  }
+
+  .download-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
   }
 }
 
-.download-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
+@media (max-width: 576px) {
+  .good-container {
+    margin-top: 72px;
+    .content {
+      width: 358px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+  }
 }
 </style>

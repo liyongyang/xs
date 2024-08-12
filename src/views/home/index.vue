@@ -6,10 +6,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/parallax";
+import { useI18n } from "vue-i18n";
+
 import { Autoplay, EffectCoverflow, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { onMounted, onUnmounted, reactive, ref } from "vue";
 const modules = [Autoplay, Navigation, EffectCoverflow];
+const { t, locale } = useI18n();
 
 const sliderNum = ref(3);
 const coverflowEffect = ref({
@@ -21,77 +24,98 @@ const coverflowEffect = ref({
 });
 const isSmallSize = ref(window.innerWidth < 900);
 
+const sec1 = [
+  {
+    name: t("home.sec1[0].name"),
+    type: t("home.sec1[0].type"),
+    feat: t("home.sec1[0].feat"),
+  },
+  {
+    name: t("home.sec1[1].name"),
+    type: t("home.sec1[1].type"),
+    feat: [t("home.sec1[1].feat[0]"), t("home.sec1[1].feat[1]")],
+  },
+  {
+    name: t("home.sec1[2].name"),
+    type: t("home.sec1[2].type"),
+    feat: t("home.sec1[2].feat"),
+  },
+];
 const techInfo = reactive({
-  title: "创新技术，算无止境",
+  title: t("home.sec2.title"),
   list: [
     {
       icon: `/home/se2-icon1.png`,
-      t1: "机器视觉算法引擎™",
-      t2: "完全自主研发解码算法 IP，性能强劲、解码稳定",
+      t1: t("home.sec2.list[0].t1"),
+      t2: t("home.sec2.list[0].t2"),
       hover: false,
     },
     {
       icon: `/home/se2-icon2.png`,
-      t1: "一键调试 OneClick",
-      t2: "不止是调光，更是自适应算法调参，达到最优解码",
+      t1: t("home.sec2.list[1].t1"),
+      t2: t("home.sec2.list[1].t2"),
       hover: false,
     },
     {
       icon: `/home/se2-icon3.png`,
-      t1: "全新光学系统",
-      t2: "多种镜头规格、光源颜色及光源类型，灵活组合以高可配置性应对不同场景需求",
+      t1: t("home.sec2.list[2].t1"),
+      t2: t("home.sec2.list[2].t2"),
       hover: false,
     },
   ],
 });
+const sec3 = {
+  tit: t("home.sec3.title"),
+  tip: t("home.sec3.tip"),
+};
 const carouselInfo = [
   {
-    img: "/home/carousel1.png",
-    title: "紧凑型 R 系列读码器",
-    xh: ["R172 E/S", "R170 E/S"],
-    type: "R",
-  },
-  {
     img: "/home/carousel2.png",
-    title: "紧凑型 R 系列读码器",
-    xh: ["R275-A", "R270-A"],
+    title: t("home.sec3.list[0].title"),
+    xh: [t("home.sec3.list[0].xh[0]"), t("home.sec3.list[0].xh[1]")],
     type: "R",
   },
   {
-    img: "/home/carousel3.png",
-    title: "双航插 RS 系列读码器",
-    xh: ["RS100", "RS300"],
-    type: "RS",
+    img: "/home/carousel1.png",
+    title: t("home.sec3.list[1].title"),
+    xh: [t("home.sec3.list[1].xh[0]"), t("home.sec3.list[1].xh[1]")],
+    type: "R",
   },
   {
     img: "/home/carousel4.webp",
-    title: "手持式 H 系列读码器",
-    xh: ["H920", "H930", "H620"],
+    title: t("home.sec3.list[2].title"),
+    xh: [t("home.sec3.list[2].xh[0]")],
     type: "H",
+  },
+  {
+    img: "/home/carousel3.png",
+    title: t("home.sec3.list[3].title"),
+    xh: [t("home.sec3.list[3].xh[0]")],
+    type: "RS",
   },
 ];
 const dtList = [
   {
     time: "2024-04-15",
-    title: "专注先进工业传感器，「宁波新算」完成Pre-A轮融资｜早起看早期",
+    title: t("newsList[0].title"),
     link: "/detail/1",
   },
   {
     time: "2024-04-23",
-    title:
-      "「新算科技」获数千万元天使轮融资，由红杉中国种子基金独家投资 | 早起看早期",
+    title: t("newsList[1].title"),
     link: "/detail/2",
   },
   {
     time: "2024-06-19",
-    title: "VSDC Innovators Awards 2024 创新奖揭晓！新算技术获行业权威认可",
+    title: t("newsList[2].title"),
     link: "/detail/3",
   },
 ];
 const carouselAct = ref();
 
 const onSlideChange = (swiper) => {
-  const v = swiper.slides[2].swiperSlideIndex;
+  const v = swiper.realIndex; //slides[2].swiperSlideIndex;
+  console.log(swiper.realIndex);
   carouselAct.value = carouselInfo[v];
 };
 
@@ -116,15 +140,13 @@ const toTechnical = () => {
 const openDialog = () => {
   addDialog({
     title: "",
-    width: "480px",
+    width: isSmallSize.value ? "358px" : "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config);
       if (config) {
-        console.log(`output->config------`, config);
       }
     },
   });
@@ -158,9 +180,9 @@ onUnmounted(() => {});
         <div
           class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
         >
-          <li class="gd-type">R275-A</li>
-          <h2 class="gd-name">紧凑型 R 系列读码器</h2>
-          <li class="gd-ts">强大稳定解码力 · 一键调试 · 超小尺寸</li>
+          <li class="gd-type">{{ sec1[0].name }}</li>
+          <h2 class="gd-name">{{ sec1[0].type }}</h2>
+          <li class="gd-ts">{{ sec1[0].feat }}</li>
           <el-button class="btn-white" @click="toGd('R275A')"
             >了解更多</el-button
           >
@@ -173,12 +195,12 @@ onUnmounted(() => {});
         <div
           class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
         >
-          <li class="gd-type">RS100</li>
-          <h2 class="gd-name">双航插 RS 系列读码器</h2>
+          <li class="gd-type">{{ sec1[1].name }}</li>
+          <h2 class="gd-name">{{ sec1[1].type }}</h2>
           <li class="gd-ts">
-            全新光学系统
+            {{ sec1[1].feat[0] }}
             <span class="italic skew-x-6">X</span>
-            -Tech™ · 一键调试+ · 精准无极调焦
+            {{ sec1[1].feat[1] }}
           </li>
           <el-button class="btn-white" @click="toGd('RS100')"
             >了解更多</el-button
@@ -192,9 +214,9 @@ onUnmounted(() => {});
         <div
           class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
         >
-          <li class="gd-type">H920</li>
-          <h2 class="gd-name">手持式 H 系列读码器</h2>
-          <li class="gd-ts">强大稳定解码力 · 同轴瞄准 · 训练功能</li>
+          <li class="gd-type">{{ sec1[2].name }}</li>
+          <h2 class="gd-name">{{ sec1[2].type }}</h2>
+          <li class="gd-ts">{{ sec1[2].feat }}</li>
           <el-button class="btn-white" @click="toGd('H920')"
             >了解更多</el-button
           >
@@ -257,10 +279,10 @@ onUnmounted(() => {});
       class="section-text-wrapper container-pg4 bg-color2 text-center bg-white w-full"
     >
       <li class="title wow animate__animated animate__fadeInUp">
-        业务出发，场景覆盖
+        {{ sec3.tit }}
       </li>
       <li class="text wow animate__animated animate__fadeInUp">
-        多矩阵的产品储备，适配不同业务需求
+        {{ sec3.tip }}
       </li>
       <!-- :autoplay="{ delay: 3000, disableOnInteraction: false }" -->
       <Swiper
@@ -336,7 +358,7 @@ onUnmounted(() => {});
           <li class="txt more" @click="goDetail(item.link)">阅读更多</li>
         </div>
       </div>
-      <el-button class="btn-white">查看更多</el-button>
+      <router-link class="btn-white" to="/news">查看更多</router-link>
     </section>
   </div>
 </template>
@@ -366,6 +388,7 @@ onUnmounted(() => {});
       .pg1_frame-text-wrapper {
         color: #fff;
         margin: 0 auto;
+        margin-top: 64px;
         text-align: center;
 
         .gd-type {
@@ -457,6 +480,8 @@ onUnmounted(() => {});
         width: 456px;
         height: 400px;
         text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
         padding: 56px;
         margin: 4px;
 
@@ -618,6 +643,8 @@ onUnmounted(() => {});
         border-top: 1px solid #3d4448;
         background: #f4f4f4;
         text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
 
         .txt {
           font-size: 14px;
@@ -658,6 +685,8 @@ onUnmounted(() => {});
       .pg1_frame-wrapper {
         .pg1_frame-text-wrapper {
           text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
           padding-top: 50px;
           .gd-type {
             font-size: 24px;

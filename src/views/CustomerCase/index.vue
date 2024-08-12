@@ -2,11 +2,13 @@
   <div class="pg-container">
     <section class="banner1 flex items-center">
       <li class="title-banner wow animate__animated animate__fadeInUp">
-        助力企业实现数智化升级引擎不熄
+        {{ info.tit }}
       </li>
     </section>
     <section class="section-wrapper text-center">
-      <li class="title wow animate__animated animate__fadeInUp">行业案例</li>
+      <li class="title wow animate__animated animate__fadeInUp">
+        {{ info.p1 }}
+      </li>
       <div class="flex justify-between flex-wrap space-y-1">
         <div
           @click="toCase(item.key)"
@@ -20,8 +22,10 @@
       </div>
     </section>
     <section class="section-wrapper affix-container text-center">
-      <li class="title wow animate__animated animate__fadeInUp">客户案例</li>
-      <div class="menus flex justify-start flex-wrap">
+      <li class="title wow animate__animated animate__fadeInUp">
+        {{ info.p2 }}
+      </li>
+      <div class="menus flex justify-start">
         <span
           class="menu-tab cursor-pointer hvr-underline-from-center wow animate__animated animate__fadeInUp"
           v-for="(item, index) in cardConf"
@@ -54,7 +58,6 @@
                   class="case-item mx-2"
                   v-for="(t, index) in item"
                   :key="index"
-                  @click="toCase(items.key)"
                 >
                   <img class="case-img" :src="t.img" alt="" />
                   <li class="case-name">{{ t.name }}</li>
@@ -82,29 +85,47 @@
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
-// const { t, locale } = useI18n();
+const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
 
+const info = {
+  tit: t("customerCase.tit"),
+  p1: t("customerCase.p1"),
+  p2: t("customerCase.p2"),
+};
 const cardConf = [
   {
     key: "car",
-    name: "汽车制造",
+    name: t("customerCase.cardConf[0].name"),
     img: "/customerCase/card0.webp",
     case: [
       [
-        { name: "汽车引擎撞针 DPM 缺陷码", img: "/customerCase/car-0.webp" },
-        { name: "汽车玻璃低对比度 DM 码", img: "/customerCase/car-1.webp" },
-        { name: "曲轴水滴遮挡 DPM 码", img: "/customerCase/car-2.webp" },
-        { name: "轮胎条形码", img: "/customerCase/car-3.webp" },
+        {
+          name: t("customerCase.cardConf[0].case[0][0].name"),
+          img: "/customerCase/car-0.webp",
+        },
+        {
+          name: t("customerCase.cardConf[0].case[0][1].name"),
+          img: "/customerCase/car-1.webp",
+        },
+        {
+          name: t("customerCase.cardConf[0].case[0][2].name"),
+          img: "/customerCase/car-2.webp",
+        },
+        {
+          name: t("customerCase.cardConf[0].case[0][3].name"),
+          img: "/customerCase/car-3.webp",
+        },
       ],
       [
         {
-          name: "手持式读码器读取汽车 1D/2D 码",
+          name: t("customerCase.cardConf[0].case[1][0].name"),
           img: "/customerCase/car-4.webp",
         },
       ],
@@ -112,51 +133,93 @@ const cardConf = [
   },
   {
     key: "gf",
-    name: "光伏新能源",
+    name: t("customerCase.cardConf[1].name"),
     img: "/customerCase/card1.webp",
     case: [
-      { name: "光伏板条形码", img: "/customerCase/gf-0.webp" },
-      { name: "光伏板难读码", img: "/customerCase/gf-1.webp" },
+      {
+        name: t("customerCase.cardConf[1].case[0].name"),
+        img: "/customerCase/gf-0.webp",
+      },
+      {
+        name: t("customerCase.cardConf[1].case[1].name"),
+        img: "/customerCase/gf-1.webp",
+      },
     ],
   },
   {
     key: "ld",
-    name: "锂电新能源",
+    name: t("customerCase.cardConf[2].name"),
     img: "/customerCase/card2.webp",
     case: [
-      { name: "移动读取圆柱电池 DPM 码", img: "/customerCase/ld-0.webp" },
-      { name: "软包电池 DPM 码", img: "/customerCase/ld-1.webp" },
-      { name: "方形电池 DPM 码", img: "/customerCase/ld-2.webp" },
+      {
+        name: t("customerCase.cardConf[2].case[0].name"),
+        img: "/customerCase/ld-0.webp",
+      },
+      {
+        name: t("customerCase.cardConf[2].case[1].name"),
+        img: "/customerCase/ld-1.webp",
+      },
+      {
+        name: t("customerCase.cardConf[2].case[2].name"),
+        img: "/customerCase/ld-2.webp",
+      },
     ],
   },
   {
     key: "sm",
-    name: "3C数码",
+    name: t("customerCase.cardConf[3].name"),
     img: "/customerCase/card3.webp",
     case: [
-      { name: "电子元器件 0.5mm 超小码", img: "/customerCase/sm-0.webp" },
-      { name: "移动读取多个 IC 上的 DM 码", img: "/customerCase/sm-1.webp" },
+      {
+        name: t("customerCase.cardConf[3].case[0].name"),
+        img: "/customerCase/sm-0.webp",
+      },
+      {
+        name: t("customerCase.cardConf[3].case[1].name"),
+        img: "/customerCase/sm-1.webp",
+      },
     ],
   },
   {
     key: "bdt",
-    name: "半导体",
+    name: t("customerCase.cardConf[4].name"),
     img: "/customerCase/card4.webp",
     case: [
-      { name: "在狭窄空间中读取 DPM 码", img: "/customerCase/bdt-0.webp" },
-      { name: "同时读取多个 1D/2D 码", img: "/customerCase/bdt-1.webp" },
-      { name: "隔着玻璃读取晶圆托盘条形码", img: "/customerCase/bdt-2.webp" },
-      { name: "读取低对比度 DPM 码", img: "/customerCase/bdt-3.webp" },
+      {
+        name: t("customerCase.cardConf[4].case[0].name"),
+        img: "/customerCase/bdt-0.webp",
+      },
+      {
+        name: t("customerCase.cardConf[4].case[1].name"),
+        img: "/customerCase/bdt-1.webp",
+      },
+      {
+        name: t("customerCase.cardConf[4].case[2].name"),
+        img: "/customerCase/bdt-2.webp",
+      },
+      {
+        name: t("customerCase.cardConf[4].case[3].name"),
+        img: "/customerCase/bdt-3.webp",
+      },
     ],
   },
   {
     key: "wl",
-    name: "物流运输",
+    name: t("customerCase.cardConf[5].name"),
     img: "/customerCase/card5.webp",
     case: [
-      { name: "快递盒塑料膜遮挡条形码", img: "/customerCase/wl-0.webp" },
-      { name: "组网功能", img: "/customerCase/wl-1.webp" },
-      { name: "突发模式", img: "/customerCase/wl-2.webp" },
+      {
+        name: t("customerCase.cardConf[5].case[0].name"),
+        img: "/customerCase/wl-0.webp",
+      },
+      {
+        name: t("customerCase.cardConf[5].case[1].name"),
+        img: "/customerCase/wl-1.webp",
+      },
+      {
+        name: t("customerCase.cardConf[5].case[2].name"),
+        img: "/customerCase/wl-2.webp",
+      },
     ],
   },
 ];
@@ -182,7 +245,7 @@ const toCase = (i: string) => {
 };
 onMounted(() => {});
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .pg-container {
   color: #fff;
   position: relative;
@@ -197,13 +260,16 @@ onMounted(() => {});
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
     background-image: url("/customerCase/banner.webp");
 
     .title-banner {
-      padding: 64px;
+      width: 1384px;
+      padding: 64px 0;
       font-size: 56px;
       font-weight: 600;
       letter-spacing: 4.48px;
+      margin: 0 auto;
     }
   }
 
@@ -283,8 +349,6 @@ onMounted(() => {});
     }
 
     .case-caontainer {
-      // height: calc(100vh + 128px);
-      // overflow-y: scroll;
       text-align: left;
       padding: 64px 0;
       padding-bottom: 0;
@@ -326,6 +390,56 @@ onMounted(() => {});
             .case-name {
               padding: 32px;
               background-color: #f4f4f4;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 576px) {
+  .pg-container {
+    .banner1 {
+      height: 240px;
+      .title-banner {
+        width: 358px;
+        font-size: 18px;
+      }
+    }
+    .section-wrapper {
+      width: 358px;
+      padding: 48px 0;
+      .title {
+        font-size: 28px;
+        margin: 32px 0;
+      }
+      .card {
+        .name {
+          font-size: 24px;
+        }
+      }
+      .menus {
+        overflow-x: scroll;
+
+        .menu-tab {
+          flex: 0 0 auto;
+          font-size: 16px;
+          line-height: 32px;
+          padding: 12px 0;
+        }
+      }
+      .case-caontainer {
+        overflow-x: scroll;
+        padding: 24px 0;
+        .case-box {
+          padding-bottom: 24px;
+          .case-list {
+            overflow-x: scroll;
+            .case-item {
+              width: 320px;
+              .case-img {
+                width: 320px;
+              }
             }
           }
         }

@@ -1,11 +1,8 @@
-import { ref } from "vue";
+import { defaultRoutes } from "@/router";
 import store from "@/store";
 import { defineStore } from "pinia";
+import { ref } from "vue";
 import { type RouteRecordRaw } from "vue-router";
-import { defaultRoutes } from "@/router";
-import { sys } from "@/api/index";
-
-// const userStore = useUserStoreHook()
 
 const hasPermission = (roles: string[], route: RouteRecordRaw) => {
   if (route.meta && route.meta.roles) {
@@ -86,7 +83,6 @@ const filterChildren = (childrenMap: Array<Object>, lastRouter: string[]) => {
 };
 
 export const usePermissionStore = defineStore("permission", () => {
-  const routesConfig = ref<RouteRecordRaw[]>([]);
   const dynamicRoutesConfig = ref<RouteRecordRaw[]>([]);
   const localRoutesConfig = ref<RouteRecordRaw[]>([]);
   const activeRouteConfig = ref<RouteRecordRaw[]>([]);
@@ -95,29 +91,13 @@ export const usePermissionStore = defineStore("permission", () => {
     activeRouteConfig.value = route;
   };
   const setRoutes = async (roles: string[]) => {
-    let onlineRoutes: any;
     let local: any;
     let topRoutes: any;
-    // onlineRoutes
-    const getRoutes = await sys.getRoutersApi();
-    const route = getRoutes.data.filter((t: any) => t.isPlatform === "1");
-    onlineRoutes = filterAsyncRoutes1(route);
-    onlineRoutes.push({ path: "*", redirect: "/404", hidden: true });
-    topRoutes = onlineRoutes.filter(
-      (it) =>
-        it.meta &&
-        it.meta.title &&
-        (it as any).customizeComponent &&
-        !(it as any).hidden
-    );
-    routesConfig.value = defaultRoutes.concat(onlineRoutes);
-    dynamicRoutesConfig.value = onlineRoutes;
     localRoutesConfig.value = defaultRoutes.concat(local);
     activeRouteConfig.value = topRoutes[0];
   };
 
   return {
-    routesConfig,
     dynamicRoutesConfig,
     localRoutesConfig,
     activeRouteConfig,

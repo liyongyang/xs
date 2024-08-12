@@ -23,7 +23,7 @@
             </li>
           </div>
         </div>
-        <div class="wx-info flex space-x-40">
+        <div class="wx-info flex">
           <div class="flex flex-col justify-between">
             <li class="wow animate__animated animate__fadeInUp">
               {{ info.wx.name }}
@@ -49,7 +49,7 @@
       <div class="xsForm">
         <el-form
           ref="ruleFormRef"
-          style="width: 590px"
+          :style="isSmallSize ? 'width: 358px' : 'width: 590px'"
           :model="ruleForm"
           :rules="rules"
           label-width="left"
@@ -97,7 +97,7 @@
     <section class="loc-wrapper">
       <div class="loc-content">
         <li class="title">{{ loc.title }}</li>
-        <div class="flex justify-between">
+        <div class="cards">
           <div
             class="card hvr-bob flex flex-col justify-end hover:shadow-2xl"
             v-for="(item, index) in loc.content"
@@ -114,62 +114,67 @@
 </template>
 
 <script setup lang="ts">
+import { sys } from "@/api/sys";
 import type { FormInstance, FormRules } from "element-plus";
+import { ElMessage } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t, locale } = useI18n();
+const isSmallSize = ref(window.innerWidth < 576);
 const bannerInfo1 = {
-  title: "联系我们",
+  title: t("contactUs.title"),
 };
 const info = {
   contact: [
     {
-      name: "商务咨询",
-      txt: "lvml@xs-trinity.com",
+      name: t("contactUs.contact[0].name"),
+      txt: t("contactUs.contact[0].txt"),
     },
     {
-      name: "加入我们",
-      txt: "hrfxy@xs-trinity.com",
+      name: t("contactUs.contact[1].name"),
+      txt: t("contactUs.contact[1].txt"),
     },
     {
-      name: "联系电话",
-      txt: "15381991195",
+      name: t("contactUs.contact[2].name"),
+      txt: t("contactUs.contact[2].txt"),
     },
   ],
   wx: {
-    name: "官方微信二维码",
+    name: t("contactUs.wx.name"),
     img: "/aboutUs/wx.png",
   },
   gzh: {
-    name: "微信公众号二维码",
+    name: t("contactUs.gzh.name"),
     img: "/aboutUs/gzh.png",
   },
 };
 const loc = {
-  title: "办公地点",
+  title: t("contactUs.loc.title"),
   content: [
     {
-      name: "宁波总部",
-      loc: "宁波鄞州区星空国际写字楼大厦",
+      name: t("contactUs.content[0].name"),
+      loc: t("contactUs.content[0].loc"),
       bg: `/aboutUs/loc0.png`,
     },
     {
-      name: "南京分公司",
-      loc: "南京栖霞区紫东国际创意园",
+      name: t("contactUs.content[1].name"),
+      loc: t("contactUs.content[1].loc"),
       bg: `/aboutUs/loc1.png`,
     },
     {
-      name: "杭州分公司",
-      loc: "杭州萧山区杭州湾智慧谷",
+      name: t("contactUs.content[2].name"),
+      loc: t("contactUs.content[2].loc"),
       bg: `/aboutUs/loc2.png`,
     },
     {
-      name: "苏州办公室",
-      loc: "苏州苏州工业园区传奇大厦",
+      name: t("contactUs.content[3].name"),
+      loc: t("contactUs.content[3].loc"),
       bg: `/aboutUs/loc3.png`,
     },
     {
-      name: "深圳办公室",
-      loc: "深圳南山区南海德大厦",
+      name: t("contactUs.content[4].name"),
+      loc: t("contactUs.content[4].loc"),
       bg: `/aboutUs/loc4.png`,
     },
   ],
@@ -200,9 +205,19 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log("submit!");
+      sys.addMsg(ruleForm).subscribe((res) => {
+        ElMessage({
+          message: "已成功提交信息",
+          center: true,
+          offset: 80,
+          type: "success",
+        });
+        ruleForm.name = "";
+        ruleForm.company = "";
+        ruleForm.phone = "";
+        ruleForm.email = "";
+      });
     } else {
-      console.log("error submit!", fields);
     }
   });
 };
@@ -237,6 +252,8 @@ onMounted(() => {});
     .text-wrapper {
       width: 1000px;
       text-wrap: wrap;
+      word-wrap: break-word;
+      white-space: normal;
       z-index: 9;
 
       .banner-title {
@@ -288,7 +305,7 @@ onMounted(() => {});
       .wx-info {
         height: 200px;
         padding-top: 32px;
-
+        gap: 120px;
         img {
           width: 107px;
         }
@@ -328,42 +345,50 @@ onMounted(() => {});
         letter-spacing: 3.84px;
         margin-bottom: 32px;
       }
-      .card {
-        position: relative;
-        color: #fff;
-        width: 270px;
-        height: 354px;
-        padding: 32px;
-        text-wrap: wrap;
-        text-align: left;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
+      .cards {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .card {
+          position: relative;
+          color: #fff;
           width: 270px;
           height: 354px;
-          background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.3) 51%,
-            #000 100%
-          );
-        }
-        .name {
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 22px;
-          z-index: 2;
-        }
-        .loc {
-          font-size: 18px;
-          font-weight: 600;
-          line-height: 24px;
-          z-index: 2;
+          padding: 32px;
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
+          text-align: left;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 270px;
+            height: 354px;
+            background: linear-gradient(
+              180deg,
+              rgba(0, 0, 0, 0.3) 51%,
+              #000 100%
+            );
+          }
+          .name {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 22px;
+            z-index: 2;
+          }
+          .loc {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 24px;
+            z-index: 2;
+          }
         }
       }
     }
@@ -393,6 +418,93 @@ onMounted(() => {});
     background-color: #fff;
     &:hover {
       background-color: #f4f4f4;
+    }
+  }
+}
+@media (max-width: 576px) {
+  .pg-container {
+    .title {
+      font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 0;
+    }
+    .banner {
+      height: 320px;
+      background-attachment: local;
+      &::before {
+        display: none;
+      }
+      .text-wrapper {
+        width: 320px;
+        .banner-title {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 8px;
+        }
+        .banner-msg {
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+    }
+    .section-wrapper {
+      display: block;
+      width: 358px;
+      padding-top: 32px;
+      margin-bottom: 32px;
+      .contact {
+        width: 358px;
+        height: 460px;
+        .contact-item {
+          padding: 12px 0;
+          .name {
+            font-size: 16px;
+          }
+          .txt {
+            font-size: 16px;
+            line-height: 20px;
+          }
+        }
+        .wx-info {
+          padding-top: 24px;
+          gap: 100px;
+        }
+      }
+      .xsForm {
+        width: 358px;
+        margin: 0 auto;
+        padding: 0;
+      }
+    }
+    .loc-wrapper {
+      .loc-content {
+        width: 358px;
+        padding: 40px 0;
+        .title {
+          font-size: 18px;
+          margin-bottom: 12px;
+        }
+        .cards {
+          .card {
+            width: 175px;
+            height: 230px;
+            margin-bottom: 12px;
+            padding: 12px;
+            &::after {
+              width: 175px;
+              height: 230px;
+            }
+            .name {
+              font-size: 12px;
+              line-height: 16px;
+            }
+            .loc {
+              font-size: 14px;
+              line-height: 20px;
+            }
+          }
+        }
+      }
     }
   }
 }

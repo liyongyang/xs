@@ -42,13 +42,17 @@
             <template #label>
               <div class="">账号</div>
             </template>
-            <el-input v-model="ruleForm.name" />
+            <el-input v-model="ruleForm.userName" type="text" />
           </el-form-item>
           <el-form-item prop="company">
             <template #label>
               <div class="">密码</div>
             </template>
-            <el-input v-model="ruleForm.pwd" type="password" show-password />
+            <el-input
+              v-model="ruleForm.password"
+              type="password"
+              show-password
+            />
           </el-form-item>
           <div class="text-center mt-12">
             <el-button class="btn-black" type="primary" @click="submitForm()">
@@ -64,10 +68,15 @@
 <script setup lang="ts">
 import { sys } from "@/api/sys";
 import logo1 from "@/assets/logo1.svg";
+import { useUserStoreHook } from "@/store/modules/user";
+import { ElMessage } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
 import Msg from "./com/msg.vue";
 import Report from "./com/report.vue";
 import User from "./com/user.vue";
+
+const userStore = useUserStoreHook();
+
 const actTab = ref("msg");
 const tabs = [
   { name: "试用申请", key: "msg" },
@@ -76,33 +85,45 @@ const tabs = [
 ];
 const showSys = ref(false);
 const ruleForm = reactive({
-  name: "",
-  pwd: "",
+  userName: "",
+  password: "",
 });
-const msgList = ref();
 
-const userList = ref();
-const reportList = ref();
-
-const activeName = ref("first");
 const submitForm = () => {
-  showSys.value = true;
-};
-const tabClick = (tab, event) => {
-  console.log(tab, event);
-};
-
-const getMsgList = () => {
-  sys.getMsgList({}).subscribe((res) => {
-    msgList.value = res.data.list;
+  // showSys.value = true;
+  userStore.getLogin(ruleForm).then((res) => {
+    if (res.code === 200) {
+      if (res.data.username === "admin") {
+        showSys.value = true;
+      } else {
+        ElMessage({
+          message: "抱歉，您无权限进入,请联系管理员",
+          center: true,
+          offset: 80,
+          type: "error",
+        });
+      }
+    } else {
+      ElMessage({
+        message: "请输入正确的账号或密码",
+        center: true,
+        offset: 80,
+        type: "error",
+      });
+    }
   });
 };
 
-const deleteRow = (v: any) => {
-  console.log(`output->v`, v);
+const loginCheck = () => {
+  sys.loginCheck().subscribe((res) => {
+    if (res && res.username === "admin") {
+      showSys.value = true;
+    }
+  });
 };
+
 onMounted(() => {
-  getMsgList();
+  loginCheck();
 });
 </script>
 <style lang="scss" scoped>

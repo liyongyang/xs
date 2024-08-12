@@ -1,4 +1,4 @@
-import http from "@/utils/http";
+import http,{downloadFile} from "@/utils/http";
 
 const tansParams = (params) => {
   let result = "";
@@ -16,12 +16,19 @@ const tansParams = (params) => {
 };
 
 const config = {
-  transformRequest: [tansParams],
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  responseType: "blob",
+  headers: { "Content-Type": "application/json" },
 };
 
 class Sys {
+  /**
+   * 登录
+   */
+  login(params: any) {
+    return http.post<any>("/sys-user/login", params);
+  }
+  loginCheck() {
+    return http.get<any>("/sys-user/checkToken");
+  }
   /**
    *
    * @param params 留言列表
@@ -51,7 +58,7 @@ class Sys {
    * 账号列表
    */
   userList(params: any) {
-    return http.get<any>("/sys-user/page", params);
+    return http.get<any>("/sys-user/page", { params });
   }
   /**
    * 添加账号
@@ -63,7 +70,7 @@ class Sys {
    * 编辑账号
    */
   editUser(params: any) {
-    return http.put<any>("/sys-user/updateUser", params);
+    return http.put<any>("/sys-user/updateUser", params, config);
   }
   /**
    * 删除账号
@@ -71,6 +78,10 @@ class Sys {
   deletUser(params: any) {
     return http.delete<any>("/sys-user/delByIds", { data: params });
   }
+    // 导出账号
+    exportUser(params, filename) {
+      return downloadFile("/lgd-modules-system/logininfor/export", params, filename);
+    }
   /**
    *  报备列表
    */
@@ -87,7 +98,7 @@ class Sys {
    * 编辑报备
    */
   editReport(params: any) {
-    return http.post<any>("/t-customer-report/updateStatus", params);
+    return http.put<any>("/t-customer-report/updateStatus", params);
   }
   /**
    * 删除报备

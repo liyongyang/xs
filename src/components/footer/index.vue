@@ -1,6 +1,9 @@
 <template>
   <div class="pg-wrapper">
-    <div v-if="route.meta.title != 'report'" class="contact text-left">
+    <div
+      v-if="route.meta.title != 'report' && route.meta.title != 'sys'"
+      class="contact"
+    >
       <li class="title wow animate__animated animate__fadeInUp">
         联系我们获取更多产品信息与合作细节
       </li>
@@ -45,12 +48,47 @@
           </div>
           <div class="conf space-y-6">
             <li>关注我们</li>
-            <div class="space-x-6">
-              <icon0></icon0>
-              <icon1></icon1>
-              <icon2></icon2>
-              <icon3></icon3>
-              <icon4></icon4>
+            <div class="flex space-x-6">
+              <div class="icon-item">
+                <icon0 class="cursor-pointer"></icon0>
+                <img
+                  class="icon-hover"
+                  src="@/assets/footer/icon0.png"
+                  alt=""
+                />
+              </div>
+              <div class="icon-item">
+                <icon1 class="cursor-pointer"></icon1>
+                <img
+                  class="icon-hover"
+                  src="@/assets/footer/icon1.png"
+                  alt=""
+                />
+              </div>
+              <div class="icon-item">
+                <icon2 class="cursor-pointer"></icon2>
+                <img
+                  class="icon-hover"
+                  src="@/assets/footer/icon2.png"
+                  alt=""
+                />
+              </div>
+              <div class="icon-item">
+                <icon3 class="cursor-pointer"></icon3>
+                <img
+                  class="icon-hover"
+                  src="@/assets/footer/icon3.png"
+                  alt=""
+                />
+              </div>
+              <div class="icon-item">
+                <icon4 class="cursor-pointer"></icon4>
+                <img
+                  class="icon-hover"
+                  src="@/assets/footer/icon4.png"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -65,15 +103,15 @@
 </template>
 
 <script setup lang="ts">
-import icon0 from "@/assets/footer-icon0.svg";
-import icon1 from "@/assets/footer-icon1.svg";
-import icon2 from "@/assets/footer-icon2.svg";
-import icon3 from "@/assets/footer-icon3.svg";
-import icon4 from "@/assets/footer-icon4.svg";
+import icon0 from "@/assets/footer/footer-icon0.svg";
+import icon1 from "@/assets/footer/footer-icon1.svg";
+import icon2 from "@/assets/footer/footer-icon2.svg";
+import icon3 from "@/assets/footer/footer-icon3.svg";
+import icon4 from "@/assets/footer/footer-icon4.svg";
 import logo from "@/assets/logo2.svg";
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
@@ -138,22 +176,16 @@ const goodMenus = [
   },
 ];
 
-watch(route, (v) => {
-  console.log(`output->v`, route.meta.title);
-});
-
 const openDialog = () => {
   addDialog({
     title: "",
-    width: "480px",
+    width: isSmallSize.value ? "358px" : "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config);
       if (config) {
-        console.log(`output->config------`, config);
       }
     },
   });
@@ -172,7 +204,10 @@ onMounted(() => {});
   background-color: #f4f4f4;
   border-top: 1px solid #dfe1e2;
   text-wrap: wrap;
+  word-wrap: break-word;
+  white-space: normal;
   .contact {
+    text-align: left;
     width: 1384px;
     margin: 0 auto;
     padding: 64px 0;
@@ -272,6 +307,24 @@ onMounted(() => {});
           line-height: 22px;
           margin-bottom: 32px;
         }
+        .icon-item {
+          position: relative;
+          &:hover {
+            .icon-hover {
+              opacity: 1;
+              transform: scale(1.3);
+              transition: all 0.8s;
+              top: -210px;
+            }
+          }
+          .icon-hover {
+            opacity: 0;
+            position: absolute;
+            top: -185px;
+            left: -75px;
+            z-index: 999;
+          }
+        }
       }
 
       .goods-box {
@@ -293,8 +346,15 @@ onMounted(() => {});
 @media (max-width: 576px) {
   .pg-wrapper {
     text-align: center;
+    .contact {
+      text-align: center;
+      width: 390px;
+      margin: 0 auto;
+      padding: 64px 0;
+    }
     .title {
       width: 290px;
+      margin: 0 auto;
       font-size: 28px;
       font-weight: 500;
       line-height: normal;

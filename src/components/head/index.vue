@@ -15,19 +15,17 @@
             <el-option label="English" value="en" />
           </el-select>
         </div>
-        <menuSvg></menuSvg>
+        <menuSvg class="mx-2" @click="openMenu()"></menuSvg>
       </div>
     </div>
     <!-- pc -->
     <div
       ref="headRef"
       class="head-box"
-      @mouseenter="isShowChild(true)"
-      @mouseleave="isShowChild(false)"
       v-else
+      @mouseleave="isShowChild(menus[0], false)"
     >
       <div class="head">
-        <!-- <img src="/public/common/logo.png" alt="" srcset="" /> -->
         <logo class="cursor-pointer mt-2" @click="reload"></logo>
         <section>
           <div class="menus">
@@ -35,7 +33,8 @@
               v-for="(item, index) in menus"
               :key="index"
               class=""
-              @click="changePage(item, i)"
+              @mouseenter="isShowChild(item, true)"
+              @click="changePage(item)"
             >
               <li
                 class="menu hvr-underline-from-center"
@@ -54,6 +53,7 @@
                   :label="t.name"
                 >
                   <li
+                    :class="v.path === 'R275A' ? 'newLi' : ''"
                     class="hover:font-500"
                     v-for="(v, i) in t.child"
                     :key="i"
@@ -66,7 +66,7 @@
             </div>
             <div class="about-tabs" v-show="activeRoute === 'aboutUs'">
               <li
-                class="my-4 cursor-pointer hover:font-500"
+                class="mb-4 cursor-pointer hover:font-500"
                 v-for="(v, i) in aboutUsMenus"
                 :key="i"
                 @click="toPage1(v)"
@@ -80,7 +80,7 @@
           <div
             :class="activeRoute === '-1' ? 'active-bg' : 'default-bg'"
             class="btn-black mr-8 cursor-pointer"
-            @click="toContact"
+            @click="loginCheck()"
           >
             {{ t("Email") }}
           </div>
@@ -94,18 +94,89 @@
       </div>
     </div>
   </div>
+  <el-dialog v-model="openMenus" class="modal-comp" :fullscreen="true">
+    <div class="menu-list">
+      <div class="menus wow animate__animated animate__fadeInDown">
+        <div v-for="(item, index) in menus" :key="index">
+          <li
+            :class="activeRoute === item.path ? 'active-menu' : 'default-menu'"
+            @click.stop="changePage(item)"
+          >
+            {{ item.name }}
+          </li>
+          <div v-if="item.path === 'goods'">
+            <div
+              class="flex flex-col"
+              v-for="(item, index) in goodMenus"
+              :key="index"
+            >
+              <li class="my-2">{{ item.name }}</li>
+              <li
+                :class="v.path === 'R275A' ? 'newLi' : ''"
+                class="mb-2 hover:font-500"
+                v-for="(v, i) in item.child"
+                :key="i"
+                @click="toPage(v)"
+              >
+                {{ v.name }}
+              </li>
+            </div>
+            <!-- <el-tabs tabPosition="left">
+              <el-tab-pane
+                v-for="(t, index) in goodMenus"
+                :key="index"
+                :label="t.name"
+              >
+                <li
+                  :class="v.path === 'R275A' ? 'newLi' : ''"
+                  class="mb-2 hover:font-500"
+                  v-for="(v, i) in t.child"
+                  :key="i"
+                  @click="toPage(v)"
+                >
+                  {{ v.name }}
+                </li>
+              </el-tab-pane>
+            </el-tabs> -->
+          </div>
+          <div v-if="item.path === 'aboutUs'">
+            <li
+              class="child-menu"
+              v-for="t in item.child"
+              :key="t.path"
+              @click="toPage1(t)"
+            >
+              {{ t.name }}
+            </li>
+          </div>
+        </div>
+        <div class="bb-li">
+          <li
+            :class="activeRoute === '-1' ? 'active-bg' : 'default-bg'"
+            class="w30 btn-black cursor-pointer"
+            @click="loginCheck()"
+          >
+            {{ t("Email") }}
+          </li>
+        </div>
+      </div>
+      <div class="close" @click="openMenus = false">
+        <el-icon><CloseBold /></el-icon>
+      </div>
+    </div>
+  </el-dialog>
   <el-dialog
     class="modal-comp"
     v-model="showDialog"
     title="Warning"
-    width="490"
+    :width="isSmallSize ? 358 : 490"
     align-center
   >
     <div class="flex flex-col justify-center items-center space-y-10">
       <logo></logo>
       <el-form
         ref="ruleFormRef"
-        style="width: 400px"
+        :style="isSmallSize ? 'width: 320px' : 'width: 400px'"
         :model="ruleForm"
         label-width="left"
       >
@@ -113,13 +184,13 @@
           <template #label>
             <div class="">账号</div>
           </template>
-          <el-input v-model="ruleForm.name" />
+          <el-input v-model="ruleForm.userName" />
         </el-form-item>
         <el-form-item prop="company">
           <template #label>
             <div class="">密码</div>
           </template>
-          <el-input v-model="ruleForm.pwd" type="password" show-password />
+          <el-input v-model="ruleForm.password" type="password" show-password />
         </el-form-item>
         <div class="text-center mt-12">
           <el-button class="btn-black2" type="primary" @click="submitForm()">
@@ -132,27 +203,73 @@
 </template>
 
 <script setup lang="ts">
+import { sys } from "@/api/sys";
 import logo from "@/assets/logo1.svg";
 import menuSvg from "@/assets/menu.svg";
+import { useUserStoreHook } from "@/store/modules/user";
 import { onMounted, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+const userStore = useUserStoreHook();
+
 const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const headRef = ref();
+const openMenus = ref(false);
 const isSmallSize = ref(window.innerWidth < 576);
 const activeRoute = ref("goods");
 const showMenu = ref(true);
 const ruleForm = reactive({
-  name: "",
-  pwd: "",
+  userName: "",
+  password: "",
 });
 const menus = [
   {
     path: "goods",
     name: t("common.routes.menu1"),
     id: 0,
+    child: [
+      {
+        name: "紧凑型R系列",
+        child: [
+          {
+            name: "R275-A",
+            path: "R275A",
+          },
+          {
+            name: "R270-A",
+            path: "R275A",
+          },
+          {
+            name: "R172-E/S",
+            path: "R17",
+          },
+          {
+            name: "R170-E/S",
+            path: "R17",
+          },
+        ],
+      },
+      {
+        name: "双航插RS系列",
+        child: [
+          {
+            name: "RS100",
+            path: "RS100",
+          },
+        ],
+      },
+      {
+        name: "手持式H系列",
+        child: [
+          {
+            name: "H920",
+            path: "H920",
+          },
+        ],
+      },
+    ],
   },
   // {
   //   path: "service",
@@ -173,6 +290,24 @@ const menus = [
     path: "aboutUs",
     name: t("common.routes.menu5"),
     id: 4,
+    child: [
+      {
+        name: "关于新算",
+        path: "aboutUs",
+      },
+      {
+        name: "新闻资讯",
+        path: "news",
+      },
+      {
+        name: "展会动态",
+        path: "expo",
+      },
+      {
+        name: "联系我们",
+        path: "contactUs",
+      },
+    ],
   },
 ];
 const goodMenus = [
@@ -204,14 +339,6 @@ const goodMenus = [
         name: "RS100",
         path: "RS100",
       },
-      // {
-      //   name: "RS 300",
-      //   path: "RS300",
-      // },
-      // {
-      //   name: "RS 20000",
-      //   path: "RS20000",
-      // },
     ],
   },
   {
@@ -221,14 +348,6 @@ const goodMenus = [
         name: "H920",
         path: "H920",
       },
-      // {
-      //   name: "H930",
-      //   path: "H930",
-      // },
-      // {
-      //   name: "H620",
-      //   path: "H620",
-      // },
     ],
   },
 ];
@@ -261,9 +380,14 @@ watch(route, (v) => {
     activeRoute.value = temp?.path;
   }
   showMenu.value = true;
+  console.log(`output->activeRoute`, activeRoute.value);
 });
 
+const openMenu = () => {
+  openMenus.value = true;
+};
 const reload = () => {
+  openMenus.value = false;
   router
     .push({
       path: "/",
@@ -272,54 +396,62 @@ const reload = () => {
       window.location.reload();
     });
 };
-const isShowChild = (open: boolean) => {
-  console.log(`output->activeRoute.value`, activeRoute.value, open);
-  if (activeRoute.value === "goods" || activeRoute.value === "aboutUs") {
-    if (open) {
-      headRef.value.style.height = "240px";
-    } else {
-      headRef.value.style.height = "88px";
-    }
+const isShowChild = (v: any, open: boolean) => {
+  activeRoute.value = v.path;
+  if (
+    open &&
+    (activeRoute.value === "goods" || activeRoute.value === "aboutUs")
+  ) {
+    headRef.value.style.height = "240px";
+  } else {
+    headRef.value.style.height = "88px";
   }
 };
 const toPage = (item: any) => {
+  openMenus.value = false;
   router.push({
     path: `/goods/${item.path}`,
   });
 };
 const toPage1 = (v: any) => {
+  openMenus.value = false;
   router.push({
     path: `/${v.path}`,
   });
 };
 const showDialog = ref(false);
 const toContact = () => {
-  ruleForm.name = "";
-  ruleForm.pwd = "";
+  ruleForm.userName = "";
+  ruleForm.password = "";
   showDialog.value = true;
-  // activeRoute.value = "report";
-  // showMenu.value = false;
-  // router.push("/report");
-  // headRef.value.style.height = "88px";
 };
+const loginCheck = () => {
+  activeRoute.value = "report";
+  openMenus.value = false;
+  sys.loginCheck().subscribe((res) => {
+    if (res) {
+      router.push("/report");
+    } else {
+      toContact();
+    }
+  });
+};
+
 const submitForm = () => {
   showDialog.value = false;
   activeRoute.value = "report";
-  showMenu.value = false;
-  router.push("/report");
-  headRef.value.style.height = "88px";
+  userStore.getLogin(ruleForm).then((res) => {
+    showMenu.value = false;
+    router.push("/report");
+  });
 };
 const changeLang = () => {
   localStorage.setItem("locale", locale.value);
   window.location.reload();
 };
-const changePage = (item: any, i: number) => {
+const changePage = (item: any) => {
+  openMenus.value = false;
   activeRoute.value = item.path;
-  if (activeRoute.value === "goods" || activeRoute.value === "aboutUs") {
-    headRef.value.style.height = "240px";
-  } else {
-    headRef.value.style.height = "88px";
-  }
   router.push({
     path: `/${item.path}`,
   });
@@ -346,10 +478,6 @@ onMounted(() => {});
     transition: height 0.8s;
     -webkit-transition: height 0.8s;
 
-    &:hover {
-      // height: 240px;
-    }
-
     .head {
       font-weight: 500;
       display: flex;
@@ -357,7 +485,9 @@ onMounted(() => {});
       align-items: flex-start;
 
       .menus {
+        position: relative;
         display: flex;
+        gap: 32px;
 
         .menu {
           font-size: 16px;
@@ -388,6 +518,20 @@ onMounted(() => {});
       color: #1d1c23cc;
 
       .good-tabs {
+        .newLi {
+          position: relative;
+          &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 6px;
+            right: 2px;
+            width: 6px;
+            height: 6px;
+            border-radius: 100%;
+            background-color: #c6c6cd;
+          }
+        }
         :deep(.el-tabs__item) {
           text-align: left;
           height: 32px !important;
@@ -417,6 +561,9 @@ onMounted(() => {});
             color: #1d1c23cc;
             height: 32px;
             line-height: 32px;
+          }
+          &:nth-child(0) {
+            color: red;
           }
         }
       }
@@ -496,19 +643,18 @@ onMounted(() => {});
       }
     }
   }
-
-  .btn-black {
-    height: auto;
-    font-size: 14px;
-    line-height: 20px;
-    padding: 10px 32px;
-    border-radius: 99px;
-    color: #fff;
-    background-color: #1d1c23;
-    border: 1px solid #fefefe;
-    &:hover {
-      background-color: #414344;
-    }
+}
+.btn-black {
+  height: auto;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 32px;
+  border-radius: 99px;
+  color: #fff;
+  background-color: #1d1c23;
+  border: 1px solid #fefefe;
+  &:hover {
+    background-color: #414344;
   }
 }
 .btn-black2 {
@@ -570,6 +716,96 @@ onMounted(() => {});
   .head-container {
     .head {
       padding: 28px 16px 12px 16px;
+    }
+  }
+  .el-dialog__body {
+    padding: 0 !important;
+  }
+  .menu-list {
+    padding-top: 24px;
+    width: 100vw;
+    height: 100vh;
+    // position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    .menus {
+      color: #1d1c23;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .child-menu {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 8px 0;
+      }
+      :deep(.el-tabs__item) {
+        text-align: left;
+        height: 32px !important;
+        line-height: 32px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        justify-content: flex-start;
+
+        &:hover {
+          color: #1d1c23;
+        }
+      }
+      .active-menu {
+        height: 48px;
+        width: 358px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px 0;
+        border-bottom: #1d1c23 2px solid;
+      }
+      .default-menu {
+        height: 48px;
+        width: 358px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px 0;
+        border-bottom: #c6c6cd 1px solid;
+      }
+      .bb-li {
+        height: 48px;
+        width: 358px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+    .close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #1d1c23;
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      background-color: #f4f4f4;
+      z-index: 999;
+    }
+    .newLi {
+      width: max-content;
+      position: relative;
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 2px;
+        right: -12px;
+        width: 6px;
+        height: 6px;
+        border-radius: 100%;
+        background-color: #c6c6cd;
+      }
     }
   }
 }

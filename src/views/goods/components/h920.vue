@@ -2,7 +2,9 @@
   <div class="good-container mx-auto">
     <div class="header wow animate__animated animate__fadeInDown">
       <div class="head flex justify-between items-center mx-auto">
-        <li class="good-name">H920 有线款高性能读码器</li>
+        <li v-if="!isSmallSize" class="good-name">
+          {{ h920.name }}
+        </li>
         <div class="flex justify-between items-center">
           <router-link
             :to="{ path: '/goods/H920/product-params' }"
@@ -40,21 +42,17 @@
           <div class="banner-info flex flex-col justify-between">
             <div>
               <li class="title wow animate__animated animate__fadeInUp">
-                H920 有线款高性能读码器
+                {{ h920.name }}
               </li>
               <div
                 class="flex flex-wrap wow animate__animated animate__fadeInUp"
               >
-                <li
-                  class="text-3.5 leading-5 m1 px-2 rounded-xl bg-gray-200"
-                  v-for="i in 3"
-                  :key="i"
-                >
-                  H930
+                <li class="text-3.5 leading-5 m1 px-2 rounded-xl bg-gray-200">
+                  {{ h920.type }}
                 </li>
               </div>
               <li class="leading-10 wow animate__animated animate__fadeInUp">
-                强大稳定解码力气 · 同轴瞄准 · 训练功能
+                {{ h920.tip }}
               </li>
               <!-- 产品介绍 -->
               <li class="mt-3 wow animate__animated animate__fadeInUp"></li>
@@ -66,7 +64,7 @@
             </el-button>
           </div>
           <div class="banner-img flex flex-col justify-between">
-            <el-carousel
+            <!-- <el-carousel
               class="text-center wow animate__animated animate__fadeInUp"
               height="360px"
             >
@@ -77,19 +75,26 @@
                   alt=""
                 />
               </el-carousel-item>
-            </el-carousel>
+            </el-carousel> -->
+            <img
+              class="act-img w-auto mx-auto text-center"
+              :src="`/h920/slider/slider${actImg}.png`"
+              alt=""
+            />
             <div
               class="overflow-x-scroll overflow-y-hidden wow animate__animated animate__fadeInUp"
             >
-              <div class="img-box flex flex">
+              <div class="img-box flex flex mx-1">
                 <div
-                  class="img-item w30 flex-initial text-center"
-                  v-for="(item, index) in 4"
+                  class="img-item w30 flex-initial text-center mx-1"
+                  :class="actImg === index ? 'act-img-item bg-gray-200' : ''"
+                  v-for="(item, index) in 6"
                   :key="item"
+                  @click="actImg = index"
                 >
                   <img
                     class="h18"
-                    :src="`/h920/slider/slider${index}.webp`"
+                    :src="`/h920/slider/slider${index}.png`"
                     alt=""
                     srcset=""
                   />
@@ -105,22 +110,23 @@
         <el-collapse-item name="1">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              强大稳定的解码力
+              {{ h920.b1 }}
             </li>
           </template>
           <div
-            class="info-txt w172 text-wrap wow animate__animated animate__fadeInUp"
+            class="info-txt text-wrap wow animate__animated animate__fadeInUp"
           >
-            <li>专为手持读码场景设计的算法引擎 Mobi × 均匀光技术</li>
-            <li>轻松应对各种难读码</li>
+            <li>{{ h920.tip1 }}</li>
+            <li>{{ h920.tip1_2 }}</li>
           </div>
           <el-carousel
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
-            height="448px"
+            :height="isSmallSize ? '368px' : '500px'"
+            arrow="always"
           >
-            <el-carousel-item v-for="(items, index) in slider1" :key="index">
+            <el-carousel-item v-for="(items, index) in h920.info1" :key="index">
               <div
                 class="card jm-card wow animate__animated animate__fadeInUp"
                 v-for="(item, i) in items"
@@ -137,22 +143,22 @@
         <el-collapse-item name="2">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              同轴瞄准
+              {{ h920.b2 }}
             </li>
           </template>
           <div
-            class="info-txt w172 text-wrap wow animate__animated animate__fadeInUp"
+            class="info-txt text-wrap wow animate__animated animate__fadeInUp"
           >
-            <li>旗舰级瞄准性能</li>
-            <li>全面改善传统手持式读码器瞄准偏移现象，不用再担心漏扫情况</li>
+            <li>{{ h920.tip2 }}</li>
+            <li>{{ h920.tip2_2 }}</li>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
             <div
               class="card wow animate__animated animate__fadeInUp"
-              v-for="(item, i) in slider2"
+              v-for="(item, i) in h920.info2"
               :key="i"
             >
-              <img class="img" :src="item.img" alt="" />
+              <img class="tz-img" :src="item.img" alt="" />
               <div class="msg">
                 <li class="txt">{{ item.info }}</li>
               </div>
@@ -162,27 +168,37 @@
         <el-collapse-item name="3">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              训练功能
+              {{ h920.b3 }}
             </li>
           </template>
           <div
-            class="info-txt w172 text-wrap wow animate__animated animate__fadeInUp"
+            class="info-txt text-wrap wow animate__animated animate__fadeInUp"
           >
-            <li>新算专有训练功能，极大提升效率，带来极致流畅度</li>
+            <li>{{ h920.tip3 }}</li>
             <li>
-              训练需要待读取的 1D/2D
-              码，提升解码景深、解码速度和解码率，待训练完成后，同类码的读取
-              即可达到瞬时读取
+              {{ h920.tip3_2 }}
             </li>
           </div>
           <div class="card wow animate__animated animate__fadeInUp">
             <img class="img" src="/h920/xl0.webp" alt="" />
-            <div class="msg">
-              <li class="txt">紧凑型一体化设计</li>
-            </div>
           </div>
         </el-collapse-item>
         <el-collapse-item name="4">
+          <template #title>
+            <li class="info-title wow animate__animated animate__fadeInUp">
+              {{ h920.b4 }}
+            </li>
+          </template>
+          <div
+            class="info-txt text-wrap wow animate__animated animate__fadeInUp"
+          >
+            <li>{{ h920.tip4 }}</li>
+          </div>
+          <div class="card wow animate__animated animate__fadeInUp">
+            <img class="img" src="/h920/sj.webp" alt="" />
+          </div>
+        </el-collapse-item>
+        <!-- <el-collapse-item name="4">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
               专利算法
@@ -202,17 +218,17 @@
             </li>
           </template>
           <tableSvg></tableSvg>
-        </el-collapse-item>
+        </el-collapse-item> -->
         <el-collapse-item name="6">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              典型应用
+              {{ h920.b5 }}
             </li>
           </template>
-          <div class="flex justify-between">
+          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
             <div
               class="card wow animate__animated animate__fadeInUp"
-              v-for="(item, i) in slider3"
+              v-for="(item, i) in h920.info5"
               :key="i"
             >
               <img class="img" :src="item.img" alt="" />
@@ -231,14 +247,84 @@
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+const { t, locale } = useI18n();
 
 const router = useRouter();
 const route = useRoute();
+const isSmallSize = ref(window.innerWidth < 576);
 
-import tableSvg from "@/assets/h920_table.svg";
+const actImg = ref(0);
 
 const activeNames = ref([]);
+const h920 = {
+  name: t("h920.name"),
+  type: t("h920.type"),
+  tip: t("h920.tip"),
+  b1: t("h920.b1"),
+  tip1: t("h920.tip1"),
+  tip1_2: t("h920.tip1_2"),
+  info1: [
+    [
+      {
+        img: `/h920/jm0.webp`,
+        title: t("h920.info1[0][0].title"),
+      },
+      {
+        img: `/h920/jm1.webp`,
+        title: t("h920.info1[0][1].title"),
+      },
+      {
+        img: `/h920/jm2.webp`,
+        title: t("h920.info1[0][2].title"),
+      },
+    ],
+    [
+      {
+        img: `/h920/jm3.webp`,
+        title: t("h920.info1[1][0].title"),
+      },
+      {
+        img: `/h920/jm4.webp`,
+        title: t("h920.info1[1][1].title"),
+      },
+      {
+        img: `/h920/jm5.webp`,
+        title: t("h920.info1[1][2].title"),
+      },
+    ],
+  ],
+  b2: t("h920.b2"),
+  tip2: t("h920.tip2"),
+  tip2_2: t("h920.tip2_2"),
+  info2: [
+    {
+      img: `/h920/mz0.webp`,
+      title: t("h920.info2[0][0].title"),
+    },
+    {
+      img: `/h920/mz1.webp`,
+      title: t("h920.info2[0][1].title"),
+    },
+  ],
+  b3: t("h920.b3"),
+  tip3: t("h920.tip3"),
+  tip3_2: t("h920.tip3_2"),
+  b4: t("h920.b4"),
+  tip4: t("h920.tip4"),
+  b5: t("h920.b5"),
+  info5: [
+    {
+      img: `/h920/yy0.webp`,
+      title: t("h920.info5[0].title"),
+    },
+    {
+      img: `/h920/yy1.webp`,
+      title: t("h920.info5[1].title"),
+    },
+  ],
+};
 const slider1 = [
   [
     {
@@ -282,26 +368,24 @@ const slider2 = [
 const slider3 = [
   {
     img: `/h920/yy0.webp`,
-    title: "汽车制造1",
+    title: "汽车制造",
   },
   {
     img: `/h920/yy1.webp`,
-    title: "汽车制造2",
+    title: "汽车制造",
   },
 ];
 
 const openDialog = () => {
   addDialog({
     title: "",
-    width: "480px",
+    width: isSmallSize.value ? "358px" : "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config);
       if (config) {
-        console.log(`output->config------`, config);
       }
     },
   });
@@ -323,8 +407,8 @@ onMounted(() => {});
     text-align: center;
 
     .head {
-      max-width: 1512px;
-      padding: 16px 64px;
+      width: 1384px;
+      padding: 16px 0;
       align-items: center;
     }
 
@@ -338,8 +422,8 @@ onMounted(() => {});
   }
 
   .good-wrapper {
-    max-width: 1512px;
-    padding: 0 64px;
+    max-width: 1384px;
+    padding: 0;
 
     .content {
       padding: 32px 0;
@@ -355,6 +439,8 @@ onMounted(() => {});
         width: 650px;
         height: 440px;
         text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
         padding: 32px 0;
         padding-top: 0;
         border-bottom: #dfe1e2 solid 1px;
@@ -366,11 +452,16 @@ onMounted(() => {});
       }
 
       .banner-img {
-        width: 674px;
+        width: 650px;
         height: 440px;
 
+        .act-img {
+          height: 300px;
+          transform: scale(1.25);
+        }
         .img-box {
           .img-item {
+            padding-top: 10px;
             border: #dfe1e200 solid 1px;
 
             img {
@@ -381,6 +472,14 @@ onMounted(() => {});
           :hover {
             border: #dfe1e2 solid 1px;
 
+            img {
+              transform: scale(1.2);
+              transition: all 0.3s ease-in-out;
+              border: #dfe1e200 solid 1px;
+            }
+          }
+          .act-img-item {
+            border: #dfe1e2 solid 1px;
             img {
               transform: scale(1.2);
               transition: all 0.3s ease-in-out;
@@ -417,15 +516,15 @@ onMounted(() => {});
 
     .card {
       flex: 0 0 auto;
-      width: 660px;
-      cursor: pointer;
+      width: 687px;
       word-wrap: break-word;
-      white-space: pre-wrap;
+      white-space: normal;
       transition: all 0.5s;
       overflow-y: hidden;
 
+      .tz-img,
       .img {
-        width: 660px;
+        width: 687px;
       }
 
       .jm-img {
@@ -483,11 +582,126 @@ onMounted(() => {});
   }
 }
 
-:deep(.el-collapse-item) {
-}
-
 :deep(.el-collapse-item__header) {
   height: 108px;
   padding: 32px 0;
+  padding-right: 32px;
+  background-color: inherit;
+}
+:deep(.el-collapse-item__content) {
+  background-color: #fff;
+}
+:deep(.el-carousel__arrow) {
+  top: 95%;
+  background-color: #292929;
+  color: #ffffff;
+  border: 1px solid #868686;
+  &:hover {
+    background-color: #868686;
+  }
+}
+:deep(.el-carousel__arrow--left) {
+  position: absolute;
+  right: 60px;
+  left: auto;
+  bottom: 20px;
+}
+
+:deep(.el-carousel__arrow--right) {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+}
+@media (max-width: 576px) {
+  .good-container {
+    .header {
+      font-size: 14px;
+      .head {
+        width: 358px;
+      }
+    }
+    .good-wrapper {
+      width: 358px;
+      .content {
+        padding: 0;
+        padding-bottom: 32px;
+        .back {
+          display: flex;
+          padding: 12px 0;
+        }
+        .title {
+          font-size: 24px;
+        }
+        .banner-info {
+          width: 358px;
+          height: auto;
+          border-bottom: none;
+        }
+        .banner-img {
+          width: 358px;
+          height: 365px;
+          .act-img {
+            width: 358px;
+            transform: scale(1);
+          }
+          .img-box {
+            max-width: 358px;
+          }
+        }
+      }
+      .info-title {
+        font-size: 24px;
+      }
+
+      .info-txt {
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      .card {
+        flex: 0 0 auto;
+        width: 340px;
+        .tz-img {
+          width: 320px;
+          margin-right: 8px;
+        }
+        .jm-img {
+          width: 280px;
+        }
+        .img {
+          width: 320px;
+        }
+        .msg {
+          margin: 0 16px;
+          .title {
+            font-size: 16px;
+            margin-bottom: 0;
+          }
+          .txt {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  :deep(.el-collapse-item__header) {
+    font-size: 24px;
+    width: 358px;
+    height: 64px;
+    padding: 16px 0;
+    background-color: inherit;
+  }
+  .btn-black {
+    height: auto;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 99px;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #fefefe;
+    &:hover {
+      background-color: #414344;
+    }
+  }
 }
 </style>

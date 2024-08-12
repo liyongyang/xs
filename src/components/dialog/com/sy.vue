@@ -2,7 +2,6 @@
   <div class="xsForm">
     <el-form
       ref="ruleFormRef"
-      style="width: 400px"
       :model="ruleForm"
       :rules="rules"
       label-width="left"
@@ -21,7 +20,7 @@
       </el-form-item>
       <el-form-item prop="company">
         <template #label>
-          <div class="">企业姓名</div>
+          <div class="">公司</div>
         </template>
         <el-input v-model="ruleForm.company" />
       </el-form-item>
@@ -36,6 +35,18 @@
           <div class="">邮箱</div>
         </template>
         <el-input v-model="ruleForm.email" />
+      </el-form-item>
+      <el-form-item prop="zw">
+        <template #label>
+          <div class="">职务</div>
+        </template>
+        <el-input v-model="ruleForm.zw" />
+      </el-form-item>
+      <el-form-item prop="city">
+        <template #label>
+          <div class="">所在城市</div>
+        </template>
+        <el-input v-model="ruleForm.city" />
       </el-form-item>
       <div class="text-center mt-8">
         <el-button
@@ -64,6 +75,8 @@ const ruleForm = reactive({
   company: "",
   phone: "",
   email: "",
+  zw: "",
+  city: "",
 });
 interface RuleForm {
   name: string;
@@ -89,10 +102,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       sys.addMsg(ruleForm).subscribe((res) => {});
-      console.log("submit!");
       emit("close", ruleForm);
     } else {
-      console.log("error submit!", fields);
     }
   });
 };
@@ -153,6 +164,14 @@ onMounted(() => {});
   background-color: #fff;
   &:hover {
     background-color: #f4f4f4;
+  }
+}
+@media (max-width: 576px) {
+  .xsForm {
+    padding: 0;
+  }
+  .btn-black {
+    width: 228px;
   }
 }
 </style>

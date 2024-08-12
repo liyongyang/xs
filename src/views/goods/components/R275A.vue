@@ -1,144 +1,133 @@
 <script setup>
-import tableSvg from "@/assets/r275a_table.svg";
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
+const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
+const isSmallSize = ref(window.innerWidth < 900);
 
 const showGd = ref(true);
 const chilMenu = ref(false);
 const gdRef = ref();
-const videoRef = ref();
 const videoRef2 = ref();
 const pg1Act = ref(0);
 const currentVideo = ref(0);
 let imgUrls = ref([]);
+const isThrottled = ref(false);
 
 const A275A_INFO = {
   detailInfo: {
-    title: "设计细节",
+    title: t("A275A_INFO.detailInfo.title"),
     slider: [
       [
         {
           img: "/R275A/detail/slider0.webp",
-          tit: "全透型钢化视窗",
-          txt: "光学镀膜 + 钢化视窗 = 清晰读取，坚固耐用",
+          tit: t("A275A_INFO.detailInfo.slider[0][0].tit"),
+          txt: t("A275A_INFO.detailInfo.slider[0][0].txt"),
         },
         {
           img: "/R275A/detail/slider1.webp",
-          tit: "全新几何光学设计",
-          txt: "专业设计的镀银抛物面反射器，读码更加稳定",
+          tit: t("A275A_INFO.detailInfo.slider[0][1].tit"),
+          txt: t("A275A_INFO.detailInfo.slider[0][1].txt"),
         },
         {
           img: "/R275A/detail/slider2.webp",
-          tit: "专研偏光滤镜照明",
-          txt: "减少光干扰，稳定读码",
+          tit: t("A275A_INFO.detailInfo.slider[0][2].tit"),
+          txt: t("A275A_INFO.detailInfo.slider[0][2].txt"),
         },
       ],
       [
         {
           img: "/R275A/detail/slider3.webp",
-          tit: "多ROI配置功能",
-          txt: "多码环境下也能稳定读取",
+          tit: t("A275A_INFO.detailInfo.slider[1][0].tit"),
+          txt: t("A275A_INFO.detailInfo.slider[1][0].txt"),
         },
         {
           img: "/R275A/detail/slider4.webp",
-          tit: "先进异构处理系统",
-          txt: "提高解码性能、降低功耗",
+          tit: t("A275A_INFO.detailInfo.slider[1][1].tit"),
+          txt: t("A275A_INFO.detailInfo.slider[1][1].txt"),
         },
         {
           img: "/R275A/detail/slider5.webp",
-          tit: "先进异构处理系统",
-          txt: "光专为解决难读码而优化的 DSP",
+          tit: t("A275A_INFO.detailInfo.slider[1][2].tit"),
+          txt: t("A275A_INFO.detailInfo.slider[1][2].txt"),
         },
       ],
     ],
   },
   yyInfo: {
-    title: "丰富的应用场景",
+    title: t("A275A_INFO.yyInfo.title"),
     slider: [
       [
         {
           img: "/R275A/yy/slider0.webp",
-          tit: "0.5mm超小码",
-          txt: "电子零部件的条码越来越小。采用超分辨率算法™的 R275-A，能够稳定读取超小码",
+          tit: t("A275A_INFO.yyInfo.slider[0][0].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[0][0].txt"),
         },
         {
           img: "/R275A/yy/slider1.webp",
-          tit: "L角破损30%",
-          txt: "即使关键定位器（L角）破损达30%，SPL技术TM都能够轻松解决",
+          tit: t("A275A_INFO.yyInfo.slider[0][1].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[0][1].txt"),
         },
       ],
       [
         {
           img: "/R275A/yy/slider2.webp",
-          tit: "撞针深浅不一",
-          txt: "金属铸件的撞针打标工艺会影响条码质量，利用新算强 大的图像处理能力可以实现稳定读取",
+          tit: t("A275A_INFO.yyInfo.slider[1][0].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[1][0].txt"),
         },
         {
           img: "/R275A/yy/slider3.webp",
-          tit: "弧面反光",
-          txt: "金属弧面的DPM码容易造成反光干扰解码，通过偏光滤 镜降低反射可稳定解码",
+          tit: t("A275A_INFO.yyInfo.slider[1][1].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[1][1].txt"),
         },
       ],
       [
         {
           img: "/R275A/yy/slider4.webp",
-          tit: "金属拉丝",
-          txt: "条码会因为黑色金属拉丝基底而难以读取，R275-A增强 算法能够实现稳定读取",
+          tit: t("A275A_INFO.yyInfo.slider[2][0].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[2][0].txt"),
         },
         {
           img: "/R275A/yy/slider5.webp",
-          tit: "塑料膜遮挡",
-          txt: "物流包裹覆膜会造成读码无法读取，强大的算法引擎能 够解决该问题",
+          tit: t("A275A_INFO.yyInfo.slider[2][1].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[2][1].txt"),
         },
       ],
       [
         {
           img: "/R275A/yy/slider6.webp",
-          tit: "透过玻璃读取",
-          txt: "精密设备有时要求读码器透过玻璃窗读取，通过偏光滤 镜能够减少玻璃反光，从而读取条码",
+          tit: t("A275A_INFO.yyInfo.slider[3][0].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[3][0].txt"),
         },
         {
           img: "/R275A/yy/slider7.webp",
-          tit: "多码同时读取",
-          txt: "SMT料盘往往有多个类型的条码，R275-A支持多种码制， 能够实现同时读取多个不同的条码",
+          tit: t("A275A_INFO.yyInfo.slider[3][1].tit"),
+          txt: t("A275A_INFO.yyInfo.slider[3][1].txt"),
         },
       ],
     ],
   },
   dbInfo: {
     title: "产品对比",
-    more: "详细参数",
+    title: t("A275A_INFO.dbInfo.title"),
+    more: t("A275A_INFO.dbInfo.more"),
   },
 };
 
-watch(
-  videoRef2.value,
-  (Old, New) => {
-    console.log("=======", Old, New);
-    // if (New === 190) {
-    //   pg1Act.value++;
-    //   document.body.style.overflow = "hidden";
-    // } else {
-    //   document.body.style.overflow = "auto";
-    // }
-  },
-  { immediate: true, deep: true }
-);
 const openDialog = () => {
   addDialog({
     title: "",
-    width: "480px",
+    width: isSmallSize.value ? "358px" : "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config);
       if (config) {
       }
     },
@@ -151,30 +140,245 @@ const goBack = () => {
 
 const playNextVideo = () => {
   const videos = document.querySelectorAll("video");
-  console.log(`output->videos`, videos);
   videos[currentVideo.value].style.display = "block"; // 显示当前视频
   videos[currentVideo.value].play(); // 播放当前视频
   currentVideo.value = (currentVideo.value + 1) % videos.length; // 更新当前视频索引
   setTimeout(playNextVideo, videos[currentVideo.value].duration * 1000); // 在当前视频播放完后切换到下一个视频
 };
 
-const handleScroll = (event) => {
-  console.log(
-    `scrollY`,
-    pg1Act.value,
-    window.scrollY,
-    videoRef2.value.style.display
-  );
+let intervalId = null; // 定义全局变量以保持定时器的引用
 
+const player0 = (key) => {
+  if (isThrottled.value || intervalId) return; // 如果正在节流，直接返回
+  isThrottled.value = true; // 设置节流标志
+  if (key === "next") {
+    intervalId = setInterval(() => {
+      if (pg1Act.value < 39) {
+        pg1Act.value++;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 40);
+  } else {
+    intervalId = setInterval(() => {
+      if (pg1Act.value > 0) {
+        pg1Act.value--;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+        showGd.value = true;
+      }
+    }, 40);
+  }
+  // 设定节流时间为 800ms
+  setTimeout(() => {
+    isThrottled.value = false; // 在 800ms 后重置节流标志
+  }, 1000);
+};
+const player1 = (key) => {
+  if (isThrottled.value || intervalId) return; // 如果正在节流，直接返回
+  isThrottled.value = true; // 设置节流标志
+  if (key === "next") {
+    intervalId = setInterval(() => {
+      if (pg1Act.value < 100) {
+        pg1Act.value++;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 40);
+  } else {
+    intervalId = setInterval(() => {
+      if (pg1Act.value >= 39) {
+        pg1Act.value--;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 40);
+  }
+  // 设定节流时间为 800ms
+  setTimeout(() => {
+    isThrottled.value = false; // 在 800ms 后重置节流标志
+  }, 1000);
+};
+const player2 = (key) => {
+  if (isThrottled.value || intervalId) return; // 如果正在节流，直接返回
+  isThrottled.value = true; // 设置节流标志
+  if (key === "next") {
+    intervalId = setInterval(() => {
+      if (pg1Act.value < 115) {
+        pg1Act.value++;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  } else {
+    intervalId = setInterval(() => {
+      if (pg1Act.value >= 100) {
+        pg1Act.value--;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  }
+  // 设定节流时间为 800ms
+  setTimeout(() => {
+    isThrottled.value = false; // 在 800ms 后重置节流标志
+  }, 1000);
+};
+const player3 = (key) => {
+  if (isThrottled.value || intervalId) return; // 如果正在节流，直接返回
+  isThrottled.value = true; // 设置节流标志
+  if (key === "next") {
+    intervalId = setInterval(() => {
+      if (pg1Act.value < 130) {
+        pg1Act.value++;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  } else {
+    intervalId = setInterval(() => {
+      if (pg1Act.value >= 115) {
+        pg1Act.value--;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  }
+  // 设定节流时间为 800ms
+  setTimeout(() => {
+    isThrottled.value = false; // 在 800ms 后重置节流标志
+  }, 1000);
+};
+const player4 = (key) => {
+  if (isThrottled.value || intervalId) return; // 如果正在节流，直接返回
+  isThrottled.value = true; // 设置节流标志
+  if (key === "next") {
+    intervalId = setInterval(() => {
+      if (pg1Act.value < 150) {
+        pg1Act.value++;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  } else {
+    intervalId = setInterval(() => {
+      if (pg1Act.value >= 130) {
+        pg1Act.value--;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  }
+  // 设定节流时间为 800ms
+  setTimeout(() => {
+    isThrottled.value = false; // 在 800ms 后重置节流标志
+  }, 1000);
+};
+const player5 = (key) => {
+  if (isThrottled.value || intervalId) return; // 如果正在节流，直接返回
+  isThrottled.value = true; // 设置节流标志
+  if (key === "next") {
+    intervalId = setInterval(() => {
+      if (pg1Act.value < 170) {
+        pg1Act.value++;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  } else {
+    intervalId = setInterval(() => {
+      if (pg1Act.value >= 150) {
+        pg1Act.value--;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  }
+  // 设定节流时间为 800ms
+  setTimeout(() => {
+    isThrottled.value = false; // 在 800ms 后重置节流标志
+  }, 1000);
+};
+const player6 = (key) => {
+  if (isThrottled.value || intervalId) return; // 如果正在节流，直接返回
+  isThrottled.value = true; // 设置节流标志
+  if (key === "next") {
+    intervalId = setInterval(() => {
+      if (pg1Act.value < 190) {
+        pg1Act.value++;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+        if (videoRef2.value.style.display === "none") {
+          videoRef2.value.style.display = "block";
+          videoRef2.value.play();
+        }
+      }
+    }, 50);
+  } else {
+    intervalId = setInterval(() => {
+      if (pg1Act.value >= 170) {
+        pg1Act.value--;
+      } else {
+        clearInterval(intervalId); // 清除定时器
+        intervalId = null; // 重置定时器引用
+        isThrottled.value = false; // 重置节流标志
+      }
+    }, 50);
+  }
+  // 设定节流时间为 800ms
+  setTimeout(() => {
+    isThrottled.value = false; // 在 800ms 后重置节流标志
+  }, 1000);
+};
+
+const handleScroll = (event) => {
+  console.log(`===`, pg1Act.value);
   if (event.deltaY > 0) {
     // 向下滚动
-    if (!videoRef2.value.paused) {
-      event.preventDefault();
-    }
     chilMenu.value = true;
     showGd.value = false;
     if (pg1Act.value < 190) {
-      pg1Act.value++;
+      if (pg1Act.value < 39) {
+        player0("next");
+      } else if (pg1Act.value < 100) {
+        player1("next");
+      } else if (pg1Act.value < 110) {
+        player2("next");
+      } else if (pg1Act.value < 130) {
+        player3("next");
+      } else if (pg1Act.value < 150) {
+        player4("next");
+      } else if (pg1Act.value < 170) {
+        player5("next");
+      } else {
+        player6("next");
+      }
       event.preventDefault();
     } else {
       if (videoRef2.value.style.display === "none") {
@@ -193,10 +397,22 @@ const handleScroll = (event) => {
     if (window.scrollY === 0) {
       // 向上滚动
       if (pg1Act.value > 1) {
-        pg1Act.value--;
+        if (pg1Act.value < 39) {
+          player0("pre");
+        } else if (pg1Act.value < 100) {
+          player1("pre");
+        } else if (pg1Act.value < 115) {
+          player2("pre");
+        } else if (pg1Act.value < 130) {
+          player3("pre");
+        } else if (pg1Act.value < 150) {
+          player4("pre");
+        } else if (pg1Act.value < 170) {
+          player5("pre");
+        } else {
+          player6("pre");
+        }
       } else {
-        pg1Act.value = 0;
-        showGd.value = true;
       }
     }
   }
@@ -259,6 +475,30 @@ onBeforeUnmount(() => {
     </div>
     <section class="section-banner relative">
       <div
+        v-if="isSmallSize"
+        class="banner-wapper banner-wapper1 panel center column gradient-blue text-dark"
+      >
+        <!-- <img class="banner-item" src="/home/r275a.webp" alt="" /> -->
+        <li
+          class="go-back flex items-center wow animate__animated animate__fadeInUp"
+          v-show="showGd"
+          @click="goBack"
+        >
+          <el-icon>
+            <ArrowLeftBold />
+          </el-icon>
+          <span class="text-3.5 px-3">返回</span>
+        </li>
+        <div class="text-wrapper animate__animated animate__fadeInUp z-10">
+          <li class="gd-type">R275-A</li>
+          <h2 class="gd-name">紧凑型R系列读码器</h2>
+          <li class="gd-ts">强大稳定解码力 · 一键调试 · 超小尺寸</li>
+          <el-button class="btn-white" @click="openDialog()">试用</el-button>
+          <el-button class="btn-black">观看视频</el-button>
+        </div>
+      </div>
+      <div
+        v-else
         ref="gdRef"
         class="pg1_frame-wrapper panel center column gradient-blue text-dark"
         @wheel="handleScroll"
@@ -294,25 +534,38 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </section>
-    <section class="video-wrapper relative">
+    <section v-if="!isSmallSize" class="video-wrapper relative">
       <div class="pg1_video-wrapper absolute top-0 left-0">
         <video ref="videoRef2" class="bgvideo" muted>
           <source src="/R275A/video2.mp4" />
         </video>
       </div>
     </section>
+    <section v-if="isSmallSize" class="banner-wapper">
+      <img class="banner-item" src="/R275A/webp2/33.webp" alt="" />
+      <img class="banner-item" src="/R275A/webp2/55.webp" alt="" />
+      <img class="banner-item" src="/R275A/webp2/108.webp" alt="" />
+      <img class="banner-item" src="/R275A/webp2/124.webp" alt="" />
+      <img class="banner-item" src="/R275A/webp2/130.webp" alt="" />
+      <img class="banner-item" src="/R275A/webp2/148.webp" alt="" />
+      <img class="banner-item" src="/R275A/webp2/175.webp" alt="" />
+      <video class="banner-item" muted loop autoplay>
+        <source src="/R275A/video2.mp4" />
+      </video>
+    </section>
     <section class="pg bg-black">
       <div class="content">
-        <li
+        <!-- <li
           class="title text-center text-white wow animate__animated animate__fadeInUp"
         >
           {{ A275A_INFO.detailInfo.title }}
-        </li>
+        </li> -->
         <el-carousel
           :interval="3000"
-          height="420px"
+          :height="isSmallSize ? '240px' : '420px'"
           class="detail-slider"
           indicator-position="none"
+          arrow="always"
         >
           <el-carousel-item
             v-for="(items, index) in A275A_INFO.detailInfo.slider"
@@ -337,10 +590,15 @@ onBeforeUnmount(() => {
     </section>
     <section class="pg bg-white">
       <div class="content text-slate-900">
-        <li class="title text-center wow animate__animated animate__fadeInUp">
+        <!-- <li class="title text-center wow animate__animated animate__fadeInUp">
           {{ A275A_INFO.yyInfo.title }}
-        </li>
-        <el-carousel :interval="3000" height="480px" class="yy-slider">
+        </li> -->
+        <el-carousel
+          :interval="3000"
+          arrow="always"
+          :height="isSmallSize ? '240px' : '480px'"
+          class="yy-slider"
+        >
           <el-carousel-item
             v-for="(items, index) in A275A_INFO.yyInfo.slider"
             :key="index"
@@ -362,7 +620,7 @@ onBeforeUnmount(() => {
         </el-carousel>
       </div>
     </section>
-    <section class="pg bg-white">
+    <!-- <section class="pg bg-white">
       <div class="content text-slate-900">
         <li class="title text-center wow animate__animated animate__fadeInUp">
           {{ A275A_INFO.dbInfo.title }}
@@ -371,7 +629,6 @@ onBeforeUnmount(() => {
           <tableSvg></tableSvg>
         </div>
         <div class="text-center more wow animate__animated animate__fadeInUp">
-          <!-- <el-button class="btn-white more-btn mx-auto">{{}}</el-button> -->
           <router-link
             :to="{ path: '/goods/R275A/product-params' }"
             class="btn-white more-btn cursor-pointer"
@@ -380,7 +637,7 @@ onBeforeUnmount(() => {
           </router-link>
         </div>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
 <style lang="scss" scoped>
@@ -522,7 +779,6 @@ onBeforeUnmount(() => {
       padding: 128px 0;
 
       .detail-slider {
-        margin-top: 128px;
         padding-bottom: 20px;
         width: 100%;
 
@@ -623,7 +879,7 @@ onBeforeUnmount(() => {
     border-radius: 99px;
     color: #fff;
     background-color: #111112;
-    border: 1px solid #fefefe;
+    border: 1px solid #414344;
     &:hover {
       background-color: #414344;
     }
@@ -632,6 +888,137 @@ onBeforeUnmount(() => {
     width: 100vw;
     height: 100vh;
     object-fit: cover;
+  }
+}
+:deep(.el-carousel__arrow) {
+  top: 95%;
+  background-color: #292929;
+  color: #ffffff;
+  border: 1px solid #868686;
+  &:hover {
+    background-color: #868686;
+  }
+}
+:deep(.el-carousel__arrow--left) {
+  position: absolute;
+  right: 60px;
+  left: auto;
+  bottom: 20px;
+}
+
+:deep(.el-carousel__arrow--right) {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+}
+@media (max-width: 576px) {
+  .pg-container {
+    .section-banner {
+      padding-top: 72px;
+      position: relative;
+    }
+
+    .banner-wapper {
+      position: relative;
+      width: 100vw;
+      height: auto;
+      background-image: url("/home/r275a.webp");
+      background-size: 150%;
+      background-position: center;
+      background-repeat: no-repeat;
+      .text-wrapper {
+        padding-top: 32px;
+        text-align: center;
+        .gd-type {
+          color: #ffffff;
+          font-size: 18px;
+          line-height: 32px;
+          letter-spacing: normal;
+        }
+        .gd-name {
+          color: #ffffff;
+          font-size: 16px;
+          line-height: 32px;
+        }
+        .gd-ts {
+          color: #a3a8ab;
+          margin: 0 0 16px 0;
+        }
+      }
+      .banner-item {
+        width: 100vw;
+        height: auto;
+        display: block;
+      }
+      .img-item {
+        width: 100vw;
+        height: 320px;
+        background-size: cover;
+        background-position: center;
+        background-attachment: local;
+      }
+      .go-back {
+        color: #fff;
+        position: absolute;
+        top: 24px;
+        left: 10px;
+      }
+      .pg1_frame-text-wrapper {
+        .gd-type {
+          font-size: 24px;
+          line-height: 32px;
+          letter-spacing: normal;
+        }
+        .gd-name {
+          font-size: 18px;
+          line-height: 32px;
+        }
+        .gd-ts {
+          margin: 0 0 16px 0;
+        }
+      }
+    }
+    .banner-wapper1 {
+      height: 400px;
+    }
+    .pg {
+      .content {
+        width: 358px;
+        padding: 32px 0;
+        .detail-slider {
+          padding-bottom: 8px;
+          .slider-item {
+            width: 175px;
+          }
+        }
+        .yy-slider {
+          margin-top: 0;
+          padding-bottom: 0;
+          .slider-item {
+            width: 175px;
+            img {
+              width: 175px;
+            }
+          }
+        }
+      }
+
+      .tit {
+        font-size: 14px;
+        line-height: 16px;
+      }
+      .txt {
+        font-size: 12px;
+        line-height: 14px;
+        margin-top: 10px;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
+      }
+    }
+  }
+  :deep(.el-carousel__arrow) {
+    top: 90%;
   }
 }
 </style>

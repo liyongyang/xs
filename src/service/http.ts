@@ -1,9 +1,9 @@
-import { Rxios } from "./Rxios";
-import { ElMessage } from "element-plus";
 import { useUserStore } from "@/store/modules/user";
-import router from "../router";
+import { ElMessage } from "element-plus";
 import { saveAs } from "file-saver";
 import { tap } from "rxjs/operators";
+import router from "../router";
+import { Rxios } from "./Rxios";
 
 // axios全局设置
 const http = new Rxios({
@@ -65,7 +65,6 @@ http.interceptors.request.use(
     }
     // Add X-Access-Token header to every request, you can add other custom headers here
     if (useUserStore.token) {
-      console.log("token", useUserStore.token);
       config.headers["Authorization"] = useUserStore.token;
     }
     // if (!config.url?.endsWith("login")) {

@@ -2,7 +2,7 @@
   <div class="good-container mx-auto">
     <div class="header wow animate__animated animate__fadeInDown">
       <div class="head flex justify-between items-center mx-auto">
-        <li class="good-name">R17 系列紧凑型读码器</li>
+        <li v-if="!isSmallSize" class="good-name">{{ r17.name }}</li>
         <div class="flex justify-between items-center">
           <router-link
             :to="{ path: '/goods/R17/product-params' }"
@@ -28,7 +28,7 @@
     <section class="good-wrapper mx-auto">
       <div class="content">
         <li
-          class="flex items-center py-2 px-3 cursor-pointer wow animate__animated animate__fadeInUp"
+          class="back items-center cursor-pointer wow animate__animated animate__fadeInUp"
         >
           <el-icon>
             <ArrowLeftBold />
@@ -39,21 +39,20 @@
           <div class="banner-info flex flex-col justify-between">
             <div>
               <li class="title wow animate__animated animate__fadeInUp">
-                R17 系列紧凑型读码器
+                {{ r17.name }}
               </li>
               <div
                 class="flex flex-wrap wow animate__animated animate__fadeInUp"
               >
-                <li
-                  class="text-3.5 leading-5 m1 px-2 rounded-xl bg-gray-200"
-                  v-for="i in 2"
-                  :key="i"
-                >
-                  R17-E/S
+                <li class="text-3.5 leading-5 m1 px-2 rounded-xl bg-gray-200">
+                  R172-E/S
+                </li>
+                <li class="text-3.5 leading-5 m1 px-2 rounded-xl bg-gray-200">
+                  R170-E/S
                 </li>
               </div>
               <li class="leading-10 wow animate__animated animate__fadeInUp">
-                一键调试 · 读取稳定 · 部署灵活
+                {{ r17.tip }}
               </li>
               <!-- 产品介绍 -->
               <li class="mt-3 wow animate__animated animate__fadeInUp"></li>
@@ -65,7 +64,8 @@
             >
           </div>
           <div class="banner-img flex flex-col justify-between">
-            <el-carousel
+            <!-- <el-carousel
+              :autoplay="false"
               class="text-center wow animate__animated animate__fadeIn"
               height="360px"
             >
@@ -76,15 +76,22 @@
                   alt=""
                 />
               </el-carousel-item>
-            </el-carousel>
+            </el-carousel> -->
+            <img
+              class="act-img w-auto mx-auto text-center wow animate__animated animate__fadeIn"
+              :src="`/r17/slider/slider${actImg}.webp`"
+              alt=""
+            />
             <div
               class="overflow-x-scroll overflow-y-hidden wow animate__animated animate__fadeInUp"
             >
               <div class="img-box flex">
                 <div
-                  class="img-item w30 flex-initial text-center"
+                  class="img-item w30 flex-initial text-center mx-1"
+                  :class="actImg === index ? 'act-img-item bg-gray-200' : ''"
                   v-for="(item, index) in 5"
                   :key="item"
+                  @click="actImg = index"
                 >
                   <img
                     class="h16"
@@ -99,7 +106,7 @@
         </div>
       </div>
     </section>
-    <section class="good-wrapper mx-auto">
+    <!-- <section class="good-wrapper mx-auto">
       <li class="info-title mb-8 wow animate__animated animate__fadeInUp">
         产品特点
       </li>
@@ -113,19 +120,19 @@
           <li class="txt mt-3">{{ item.info }}</li>
         </div>
       </div>
-    </section>
+    </section> -->
     <section class="good-wrapper mx-auto">
       <el-collapse v-model="activeNames">
         <el-collapse-item name="1">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              一键调试
+              {{ r17.b1 }}
             </li>
           </template>
-          <div class="flex justify-between">
+          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
             <div
               class="card wow animate__animated animate__fadeInUp"
-              v-for="(item, i) in slider1"
+              v-for="(item, i) in r17.info1"
               :key="i"
             >
               <img class="img" :src="item.img" alt="" />
@@ -139,30 +146,30 @@
         <el-collapse-item name="2">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              读取稳定
+              {{ r17.b2 }}
             </li>
           </template>
           <div class="card wow animate__animated animate__fadeInUp">
             <img class="img" src="/r17/dq0.webp" alt="" />
             <div class="msg">
-              <li class="txt">10颗LED照明确保各种工况下清晰读码</li>
+              <li class="txt">{{ r17.info2 }}</li>
             </div>
           </div>
         </el-collapse-item>
         <el-collapse-item name="3">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              部署灵活
+              {{ r17.b3 }}
             </li>
           </template>
           <div class="card wow animate__animated animate__fadeInUp">
             <img class="img" src="/r17/yy3.webp" alt="" />
             <div class="msg">
-              <li class="txt">紧凑型一体化设计</li>
+              <li class="txt">{{ r17.info3 }}</li>
             </div>
           </div>
         </el-collapse-item>
-        <el-collapse-item name="4">
+        <!-- <el-collapse-item name="4">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
               专利算法
@@ -174,28 +181,28 @@
               <li class="txt">超高性价比集成专利算法，具备通用解码性能</li>
             </div>
           </div>
-        </el-collapse-item>
-        <el-collapse-item name="5">
+        </el-collapse-item> -->
+        <!-- <el-collapse-item name="5">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
               型号对比
             </li>
           </template>
           <tableSvg></tableSvg>
-        </el-collapse-item>
+        </el-collapse-item> -->
         <el-collapse-item name="6">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
-              典型应用
+              {{ r17.b4 }}
             </li>
           </template>
           <el-carousel
-            :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
-            height="548px"
+            :height="isSmallSize ? '220px' : '548px'"
+            arrow="always"
           >
-            <el-carousel-item v-for="(items, index) in slider2" :key="index">
+            <el-carousel-item v-for="(items, index) in r17.info4" :key="index">
               <div class="card" v-for="(item, i) in items" :key="i">
                 <img
                   class="img wow animate__animated animate__fadeInUp"
@@ -218,86 +225,71 @@
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
+const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
+const isSmallSize = ref(window.innerWidth < 576);
 
-import tableSvg from "@/assets/r17_table.svg";
+const actImg = ref(0);
 const activeNames = ref([]);
-const featList = [
-  {
-    title: "红光集成光",
-    info: "一体化设计安装便捷",
-  },
-  {
-    title: "丰富的IO接口",
-    info: "以太网、RS232等 ",
-  },
-  {
-    title: "多种触发",
-    info: "支持软件触发/外部触发 ",
-  },
-  {
-    title: "支持多种码制",
-    info: "支持DM、QR码读取",
-  },
-  {
-    title: "紧凑使读码器",
-    info: "48*27*29mm",
-  },
-  {
-    title: "多场景适配",
-    info: "完美适配各种使用场景",
-  },
-];
+const r17 = {
+  name: t("r17.name"),
+  tip: t("r17.tip"),
+  b1: t("r17.b1"),
+  info1: [
+    {
+      img: `/r17/ts0.webp`,
+      title: t("r17.info1[0].title"),
+      info: t("r17.info1[0].info"),
+    },
+    {
+      img: `/r17/ts1.webp`,
+      title: t("r17.info1[1].title"),
+      info: t("r17.info1[1].info"),
+    },
+  ],
+  b2: t("r17.b2"),
+  info2: t("r17.info2"),
+  b3: t("r17.b3"),
+  info3: t("r17.info3"),
+  b4: t("r17.b4"),
+  info4: [
+    [
+      {
+        img: `/r17/yy0.webp`,
+        title: t("r17.info4[0][0].title"),
+      },
+      {
+        img: `/r17/yy1.webp`,
+        title: t("r17.info4[0][1].title"),
+      },
+    ],
+    [
+      {
+        img: `/r17/yy2.webp`,
+        title: t("r17.info4[1][0].title"),
+      },
+      {
+        img: `/r17/yy3.webp`,
+        title: t("r17.info4[1][1].title"),
+      },
+    ],
+  ],
+};
 
-const slider1 = [
-  {
-    img: `/r17/ts0.webp`,
-    title: "自动调参",
-    info: "超 86万 种参数配置，自动优化曝光、增益、滤镜等参数，应对挑战性读码情况",
-  },
-  {
-    img: `/r17/ts1.webp`,
-    title: "自动检测读码类型",
-    info: "自动检测1D码/2D码，根据条码类型条区域定义条码模版库，提高读取速度",
-  },
-];
-const slider2 = [
-  [
-    {
-      img: `/r17/yy0.webp`,
-      title: "锂电新能源",
-    },
-    {
-      img: `/r17/yy1.webp`,
-      title: "3C电子",
-    },
-  ],
-  [
-    {
-      img: `/r17/yy2.webp`,
-      title: "汽车制造",
-    },
-    {
-      img: `/r17/yy3.webp`,
-      title: "光伏新能源",
-    },
-  ],
-];
 const openDialog = () => {
   addDialog({
     title: "",
-    width: "480px",
+    width: isSmallSize.value ? "358px" : "480px",
     props: {},
     footer: false,
     component: popModules.SY,
     callBack: (config) => {
       //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
-      console.log("回调函数", config);
       if (config) {
-        console.log(`output->config------`, config);
       }
     },
   });
@@ -319,8 +311,8 @@ onMounted(() => {});
     text-align: center;
 
     .head {
-      max-width: 1512px;
-      padding: 16px 64px;
+      max-width: 1384px;
+      padding: 16px 0;
       align-items: center;
     }
 
@@ -334,8 +326,8 @@ onMounted(() => {});
   }
 
   .good-wrapper {
-    max-width: 1512px;
-    padding: 0 64px;
+    max-width: 1384px;
+    padding: 0;
 
     .content {
       padding: 32px 0;
@@ -351,6 +343,8 @@ onMounted(() => {});
         width: 650px;
         height: 440px;
         text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
         padding: 32px 0;
         padding-top: 0;
         border-bottom: #dfe1e2 solid 1px;
@@ -365,6 +359,9 @@ onMounted(() => {});
         width: 674px;
         height: 440px;
 
+        .act-img {
+          width: 600px;
+        }
         .img-box {
           max-width: 840px;
 
@@ -379,6 +376,14 @@ onMounted(() => {});
           :hover {
             border: #dfe1e2 solid 1px;
 
+            img {
+              transform: scale(1.2);
+              transition: all 0.3s ease-in-out;
+              border: #dfe1e200 solid 1px;
+            }
+          }
+          .act-img-item {
+            border: #dfe1e2 solid 1px;
             img {
               transform: scale(1.2);
               transition: all 0.3s ease-in-out;
@@ -440,7 +445,7 @@ onMounted(() => {});
       width: 660px;
       cursor: pointer;
       word-wrap: break-word;
-      white-space: pre-wrap;
+      white-space: normal;
       transition: all 0.5s;
       overflow-y: hidden;
 
@@ -494,7 +499,7 @@ onMounted(() => {});
     font-size: 14px;
     line-height: 20px;
     border-radius: 99px;
-    padding: 10px 32px;
+    padding: 10px 24px;
     color: #fff;
     background-color: #000;
     border: 1px solid #fefefe;
@@ -503,12 +508,81 @@ onMounted(() => {});
     }
   }
 
-  :deep(.el-collapse-item) {
-  }
-
   :deep(.el-collapse-item__header) {
     height: 108px;
     padding: 32px 0;
+    padding-right: 32px;
+    background-color: inherit;
+  }
+  :deep(.el-collapse-item__content) {
+    background-color: #fff;
+  }
+}
+@media (max-width: 576px) {
+  .good-container {
+    .header {
+      font-size: 14px;
+      .head {
+        width: 358px;
+      }
+    }
+    .good-wrapper {
+      width: 358px;
+      .content {
+        padding: 0;
+        padding-bottom: 32px;
+        .back {
+          display: flex;
+          padding: 12px 0;
+        }
+        .title {
+          font-size: 24px;
+        }
+        .banner-info {
+          width: 358px;
+          height: auto;
+          border-bottom: none;
+        }
+        .banner-img {
+          width: 358px;
+          height: 300px;
+          .act-img {
+            width: 358px;
+          }
+          .img-box {
+            max-width: 358px;
+          }
+        }
+      }
+      .info-title {
+        font-size: 24px;
+      }
+      .card {
+        flex: 0 0 auto;
+        width: 342px;
+        .img {
+          width: 320px;
+        }
+        .msg {
+          margin: 0 16px;
+          .title {
+            font-size: 16px;
+            margin-bottom: 0;
+          }
+          .txt {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    :deep(.el-collapse-item__header) {
+      font-size: 24px;
+      width: 358px;
+      height: 64px;
+      padding: 16px 0;
+      background-color: inherit;
+    }
   }
 }
 </style>

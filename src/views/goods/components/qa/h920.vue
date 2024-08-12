@@ -112,6 +112,6 @@ h4 {
   color: rgba(29, 28, 35, 0.8);
   background-color: #f4f4f4;
   padding: 16px 56px;
-  white-space: pre-wrap;
+  white-space: normal;
 }
 </style>

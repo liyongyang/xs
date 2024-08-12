@@ -44,15 +44,29 @@
     </div>
   </div>
 
-
-  <div ref="containerRef" class="my-container" :style="{ backgroundColor: bgConf[active].color }">
+  <div
+    ref="containerRef"
+    class="my-container"
+    :style="{ backgroundColor: bgConf[active].color }"
+  >
     <section class="page">
       <div ref="box1" class="w-full h20 bg-sky-800 z-100">box1</div>
       <div ref="box2" class="w-1/2 h40 bg-sky-600">box2</div>
-      <div v-for="(items, idx) in bgConf" :key="idx" :class="active === idx ? 'show' : 'hidden'">
-        <img v-for="(item, index) in items.pList" :key="item" ref="imageRefs"
+      <div
+        v-for="(items, idx) in bgConf"
+        :key="idx"
+        :class="active === idx ? 'show' : 'hidden'"
+      >
+        <img
+          v-for="(item, index) in items.pList"
+          :key="item"
+          ref="imageRefs"
           class="absolute w64 z-10 opacity100 imageItem animate__animated"
-          :class="[`p` + idx + `-` + index, bgConf[0].p_animate]" :src="item" alt="" srcset="" />
+          :class="[`p` + idx + `-` + index, bgConf[0].p_animate]"
+          :src="item"
+          alt=""
+          srcset=""
+        />
         <div class="absolute title font-normal color-white animate__animated">
           <li>{{ items.title[0] }}</li>
           <li>{{ items.title[1] }}</li>
@@ -64,12 +78,7 @@
 
 <script setup lang="ts">
 import { gsap } from "gsap";
-import {
-  nextTick,
-  onMounted,
-  reactive,
-  ref
-} from "vue";
+import { nextTick, onMounted, reactive, ref } from "vue";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -191,8 +200,6 @@ const start = () => {
   );
 };
 const proShow = () => {
-  console.log("imagesRefs", imageRefs.value); // 输出图片 DOM 元素的引用数组
-
   imageRefs.value.forEach((t) => {
     // gsap.fromTo(
     //   t,
@@ -216,7 +223,6 @@ const proShow = () => {
     //   }
     // );
   });
-  console.log("imageRefs.value", imageRefs.value);
 };
 onMounted(() => {
   nextTick(() => {
@@ -310,7 +316,7 @@ onMounted(() => {
   background-color: #fff;
   left: 15%;
   transform-origin: 50%;
-  animation: circle7124 .5s alternate infinite ease;
+  animation: circle7124 0.5s alternate infinite ease;
 }
 
 @keyframes circle7124 {
@@ -334,13 +340,13 @@ onMounted(() => {
 
 .circle:nth-child(2) {
   left: 45%;
-  animation-delay: .2s;
+  animation-delay: 0.2s;
 }
 
 .circle:nth-child(3) {
   left: auto;
   right: 15%;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
 
 .shadow {
@@ -354,7 +360,7 @@ onMounted(() => {
   z-index: -1;
   left: 15%;
   filter: blur(1px);
-  animation: shadow046 .5s alternate infinite ease;
+  animation: shadow046 0.5s alternate infinite ease;
 }
 
 @keyframes shadow046 {
@@ -364,24 +370,24 @@ onMounted(() => {
 
   40% {
     transform: scaleX(1);
-    opacity: .7;
+    opacity: 0.7;
   }
 
   100% {
-    transform: scaleX(.2);
-    opacity: .4;
+    transform: scaleX(0.2);
+    opacity: 0.4;
   }
 }
 
 .shadow:nth-child(4) {
   left: 45%;
-  animation-delay: .2s
+  animation-delay: 0.2s;
 }
 
 .shadow:nth-child(5) {
   left: auto;
   right: 15%;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
 </style>
 <style>
@@ -452,7 +458,7 @@ onMounted(() => {
 
 .love::before,
 .love::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 30px;
   height: 30px;
@@ -480,7 +486,7 @@ onMounted(() => {
 }
 
 .death:after {
-  content: '';
+  content: "";
   height: 63px;
   position: absolute;
   border-left: 12px solid red;
@@ -490,7 +496,7 @@ onMounted(() => {
 }
 
 .death:before {
-  content: '';
+  content: "";
   height: 60px;
   position: absolute;
   border-left: 12px solid red;
@@ -513,7 +519,7 @@ onMounted(() => {
 }
 
 .robots::after {
-  content: '';
+  content: "";
   width: 12px;
   height: 12px;
   top: 0;
@@ -525,7 +531,7 @@ onMounted(() => {
 }
 
 .robots::before {
-  content: '';
+  content: "";
   width: 12px;
   height: 12px;
   top: 0;
@@ -571,7 +577,6 @@ onMounted(() => {
 }
 
 @keyframes rotation {
-
   20%,
   100% {
     transform: rotate(180deg);
