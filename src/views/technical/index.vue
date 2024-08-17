@@ -7,7 +7,11 @@
       >
         {{ technical.tit1 }}
       </li>
-      <li v-else class="title wow animate__animated animate__fadeInUp">
+      <li
+        v-else
+        class="wow animate__animated animate__fadeInUp"
+        :class="locale === 'en' ? 'title-en' : 'title'"
+      >
         {{ technical.tit2 }}
       </li>
     </section>
@@ -244,25 +248,25 @@
           <li
             class="pz-tit font-600 mb-4 wow animate__animated animate__fadeInUp"
           >
-            {{ technical.p4.card[0].tit }}
+            {{ technical.p4.card.tit }}
           </li>
           <li class="pz-txt wow animate__animated animate__fadeInUp">
-            {{ technical.p4.card[0].tip }}
+            {{ technical.p4.card.tip }}
           </li>
         </div>
         <div class="pz-conf text-wrap text-left px-8 z-29">
           <li class="checked wow animate__animated animate__fadeIn">
-            {{ technical.p4.card[0].tit_r }}
+            {{ technical.p4.card.tit_r }}
           </li>
           <div class="flex justify-between">
             <div class="flex flex-col text-center">
               <li class="opts-tit wow animate__animated animate__fadeInUp">
-                {{ technical.p4.card[0].list[0].tit }}
+                {{ XList[0].tit }}
               </li>
               <li
                 class="wow animate__animated animate__fadeInUp"
                 :class="XList[0].act === t ? 'active-check' : 'default-check'"
-                v-for="t in technical.p4.card[0].list[0].opts"
+                v-for="t in XList[0].opts"
                 :key="t"
                 @click="checkBox(0, t)"
               >
@@ -271,23 +275,23 @@
             </div>
             <div class="flex flex-col text-center">
               <li class="opts-tit wow animate__animated animate__fadeInUp">
-                {{ technical.p4.card[0].list[1].tit }}
+                {{ XList[1].tit }}
               </li>
               <li
                 class="wow animate__animated animate__fadeInUp"
                 :class="
-                  XList[1].act === t.name ? 'active-check' : 'default-check'
+                  XList[1].act === t.key ? 'active-check' : 'default-check'
                 "
-                v-for="t in technical.p4.card[0].list[1].opts"
+                v-for="t in XList[1].opts"
                 :key="t.key"
-                @click="checkBox(1, t.name)"
+                @click="checkBox(1, t.key)"
               >
                 {{ t.name }}
               </li>
             </div>
             <div class="flex flex-col text-center">
               <li class="opts-tit wow animate__animated animate__fadeInUp">
-                {{ technical.p4.card[0].list[2].tit }}
+                {{ XList[2].tit }}
               </li>
               <li
                 class="wow animate__animated animate__fadeInUp"
@@ -295,7 +299,7 @@
                   XList[2].opts[index].act ? 'active-check' : 'default-check'
                 "
                 v-for="(t, index) in XList[2].opts"
-                :key="index.key"
+                :key="index"
                 @click="checkBox2(index)"
               >
                 {{ t.name }}
@@ -376,25 +380,39 @@ const bannerImg2 = ref(`/technical/speed1.png`);
 
 const XList = reactive([
   {
+    tit: t("technical.p4.card.list[0].tit"),
+    opts: ["6mm", "12mm", "16mm"],
     act: "6mm",
   },
   {
-    act: "红色",
-  },
-  {
+    tit: t("technical.p4.card.list[1].tit"),
     opts: [
       {
-        name: "直射光",
+        name: t("technical.p4.card.list[1].opts[0].name"),
+        key: "red",
+      },
+      {
+        name: t("technical.p4.card.list[1].opts[1].name"),
+        key: "blue",
+      },
+    ],
+    act: "red",
+  },
+  {
+    tit: t("technical.p4.card.list[2].tit"),
+    opts: [
+      {
+        name: t("technical.p4.card.list[2].opts[0]"),
         key: "zs",
         act: true,
       },
       {
-        name: "偏振光",
+        name: t("technical.p4.card.list[2].opts[1]"),
         key: "pz",
         act: false,
       },
       {
-        name: "均匀光",
+        name: t("technical.p4.card.list[2].opts[2]"),
         key: "jy",
         act: false,
       },
@@ -439,6 +457,8 @@ const technical = {
         txt2: t("technical.p2.card1[1].txt2"),
       },
       {
+        img: "/technical/icons/card-icon2.png",
+
         txt: t("technical.p2.card1[2].txt"),
         txt2: t("technical.p2.card1[2].txt2"),
       },
@@ -448,6 +468,7 @@ const technical = {
         txt2: t("technical.p2.card1[3].txt2"),
       },
       {
+        img: "/technical/icons/card-icon4.png",
         txt: t("technical.p2.card1[4].txt"),
         txt2: t("technical.p2.card1[4].txt2"),
       },
@@ -476,54 +497,51 @@ const technical = {
   p4: {
     tit: t("technical.p4.tit"),
     tip: t("technical.p4.tip"),
-    card: [
-      {
-        tit: t("technical.p4.card[0].tit"),
-        tip: t("technical.p4.card[0].tip"),
-        tit_r: t("technical.p4.card[0].tit_r"),
-        list: [
-          {
-            tit: t("technical.p4.card[0].list[0].tit"),
-            opts: [
-              t("technical.p4.card[0].list[0].opts[0]"),
-              t("technical.p4.card[0].list[0].opts[1]"),
-              t("technical.p4.card[0].list[0].opts[2]"),
-            ],
-          },
-          {
-            tit: t("technical.p4.card[0].list[1].tit"),
-            opts: [
-              {
-                name: t("technical.p4.card[0].list[1].opts[0]"),
-                key: t("technical.p4.card[0].list[1].opts[0]"),
-              },
-              {
-                name: t("technical.p4.card[0].list[1].opts[1]"),
-                key: t("technical.p4.card[0].list[1].opts[1]"),
-              },
-            ],
-          },
-          {
-            tit: "光源类型",
-            opts: [
-              {
-                name: "直射光",
-                key: "zs",
-              },
-              {
-                name: "偏振光",
-                key: "pz",
-              },
-              {
-                name: "均匀光",
-                key: "jy",
-              },
-            ],
-          },
-        ],
-      },
-      {},
-    ],
+    card: {
+      tit: t("technical.p4.card.tit"),
+      tip: t("technical.p4.card.tip"),
+      tit_r: t("technical.p4.card.tit_r"),
+      list: [
+        {
+          tit: t("technical.p4.card.list[0].tit"),
+          opts: [
+            t("technical.p4.card.list[0].opts[0]"),
+            t("technical.p4.card.list[0].opts[1]"),
+            t("technical.p4.card.list[0].opts[2]"),
+          ],
+        },
+        {
+          tit: t("technical.p4.card.list[1].tit"),
+          opts: [
+            {
+              name: t("technical.p4.card.list[1].opts[0].name"),
+              key: t("technical.p4.card.list[1].opts[0].key"),
+            },
+            {
+              name: t("technical.p4.card.list[1].opts[1].name"),
+              key: t("technical.p4.card.list[1].opts[1].key"),
+            },
+          ],
+        },
+        {
+          tit: t("technical.p4.card.list[2].tit"),
+          opts: [
+            {
+              name: t("technical.p4.card.list[2].opts[0]"),
+              key: "zs",
+            },
+            {
+              name: t("technical.p4.card.list[2].opts[1]"),
+              key: "pz",
+            },
+            {
+              name: t("technical.p4.card.list[2].opts[2]"),
+              key: "jy",
+            },
+          ],
+        },
+      ],
+    },
   },
   p5: {
     tit: t("technical.p5.tit"),
@@ -550,6 +568,7 @@ const technical = {
     txt: t("technical.p6.txt"),
   },
 };
+
 const checkBox = (index: number, t: string) => {
   XList[index].act = t;
   if (index === 1) {
@@ -557,6 +576,7 @@ const checkBox = (index: number, t: string) => {
     XList[2].opts[0].act = XList[2].opts[1].act = false;
   }
 };
+
 const checkBox2 = (i: number) => {
   if (i === 2) {
     XList[2].opts[2].act = !XList[2].opts[2].act;
@@ -566,16 +586,9 @@ const checkBox2 = (i: number) => {
     light = XList[2].opts[2].act ? [] : light;
     XList[2].opts[2].act = false;
     XList[2].opts[i].act = !XList[2].opts[i].act;
-    if (XList[1].act === "红色") {
-      XList[2].opts[i].act
-        ? light.push(XList[2].opts[i].key + "-red")
-        : light.pop();
-    }
-    if (XList[1].act === "蓝色") {
-      XList[2].opts[i].act
-        ? light.push(XList[2].opts[i].key + "-blue")
-        : light.pop();
-    }
+    XList[2].opts[i].act
+      ? light.push(XList[2].opts[i].key + "-" + XList[1].act)
+      : light.pop();
   }
 };
 onMounted(() => {
@@ -614,6 +627,20 @@ onMounted(() => {
     background-size: cover;
     background-position: center center;
 
+    .title-en {
+      width: 1200px;
+      text-align: center;
+      font-size: 64px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      letter-spacing: 4.48px;
+      position: relative;
+      z-index: 9;
+      text-wrap: wrap;
+      word-wrap: break-word;
+      white-space: normal;
+    }
     .title {
       font-size: 56px;
       font-style: normal;
@@ -622,6 +649,9 @@ onMounted(() => {
       letter-spacing: 4.48px;
       position: relative;
       z-index: 9;
+      text-wrap: wrap;
+      word-wrap: break-word;
+      white-space: normal;
     }
   }
 
@@ -654,7 +684,7 @@ onMounted(() => {
     }
 
     .tit-bg2 {
-      padding: 128px;
+      padding: 128px 0;
       position: relative;
       background-size: cover;
       background-position: center center;
@@ -768,6 +798,7 @@ onMounted(() => {
       }
 
       .default-check {
+        min-width: 64px;
         cursor: pointer;
         margin-top: 16px;
         padding: 10px;
@@ -885,6 +916,9 @@ onMounted(() => {
       font-size: 24px;
       line-height: 32px;
       z-index: 9;
+      text-wrap: wrap;
+      word-wrap: break-word;
+      white-space: normal;
     }
 
     .cont-box {

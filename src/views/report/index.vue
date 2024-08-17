@@ -157,8 +157,8 @@
               v-model="reportForm.remark"
             />
           </el-form-item>
-          <el-button class="btn-black2" @click="submitForm(ruleFormRef)"
-            >提交</el-button
+          <el-button class="btn-black2" @click="submitForm(ruleFormRef)">
+            提交</el-button
           >
         </el-form>
       </section>
@@ -170,7 +170,9 @@
             <el-icon>
               <ArrowLeftBold />
             </el-icon>
-            <span class="px-3" @click="showFrom = true">返回</span>
+            <span class="px-3" @click="showFrom = true">{{
+              t("common.back")
+            }}</span>
           </li>
         </div>
 

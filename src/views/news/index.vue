@@ -40,7 +40,7 @@
     </section>
     <el-button
       class="flex justify-center more btn-white wow animate__animated animate__fadeInUp"
-      >查看更多</el-button
+      >{{ t("common.btn.more2") }}</el-button
     >
   </div>
 </template>

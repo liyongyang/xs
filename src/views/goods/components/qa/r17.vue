@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t, locale } = useI18n();
 const list = [
   {
     q: "在复杂的环境中有什么高效的使用方法",
@@ -34,7 +36,7 @@ import SubHeader from "@/components/head/subHeader.vue";
     <SubHeader></SubHeader>
 
     <div class="px-16 pb-16">
-      <h2>常见问题</h2>
+      <h2>{{ t("common.headLink.t3") }}</h2>
 
       <div>
         <el-collapse v-model="activeNames">

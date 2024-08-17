@@ -58,27 +58,33 @@
         >
           <el-form-item prop="name">
             <template #label>
-              <div class="wow animate__animated animate__fadeInUp">姓名</div>
+              <div class="wow animate__animated animate__fadeInUp">
+                {{ t("common.form.t1") }}
+              </div>
             </template>
             <el-input v-model="ruleForm.name" />
           </el-form-item>
           <el-form-item prop="company">
             <template #label>
               <div class="wow animate__animated animate__fadeInUp">
-                企业姓名
+                {{ t("common.form.t2") }}
               </div>
             </template>
             <el-input v-model="ruleForm.company" />
           </el-form-item>
           <el-form-item prop="phone">
             <template #label>
-              <div class="wow animate__animated animate__fadeInUp">电话</div>
+              <div class="wow animate__animated animate__fadeInUp">
+                {{ t("common.form.t3") }}
+              </div>
             </template>
             <el-input v-model="ruleForm.phone" />
           </el-form-item>
           <el-form-item prop="email">
             <template #label>
-              <div class="wow animate__animated animate__fadeInUp">邮箱</div>
+              <div class="wow animate__animated animate__fadeInUp">
+                {{ t("common.form.t4") }}
+              </div>
             </template>
             <el-input v-model="ruleForm.email" />
           </el-form-item>
@@ -88,7 +94,7 @@
               type="primary"
               @click="submitForm(ruleFormRef)"
             >
-              提交
+              {{ t("common.form.t7") }}
             </el-button>
           </div>
         </el-form>
@@ -123,7 +129,7 @@ import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
 const isSmallSize = ref(window.innerWidth < 576);
 const bannerInfo1 = {
-  title: t("contactUs.title"),
+  title: t("contactUs.tit"),
 };
 const info = {
   contact: [
@@ -153,28 +159,28 @@ const loc = {
   title: t("contactUs.loc.title"),
   content: [
     {
-      name: t("contactUs.content[0].name"),
-      loc: t("contactUs.content[0].loc"),
+      name: t("contactUs.loc.content[0].name"),
+      loc: t("contactUs.loc.content[0].loc"),
       bg: `/aboutUs/loc0.png`,
     },
     {
-      name: t("contactUs.content[1].name"),
-      loc: t("contactUs.content[1].loc"),
+      name: t("contactUs.loc.content[1].name"),
+      loc: t("contactUs.loc.content[1].loc"),
       bg: `/aboutUs/loc1.png`,
     },
     {
-      name: t("contactUs.content[2].name"),
-      loc: t("contactUs.content[2].loc"),
+      name: t("contactUs.loc.content[2].name"),
+      loc: t("contactUs.loc.content[2].loc"),
       bg: `/aboutUs/loc2.png`,
     },
     {
-      name: t("contactUs.content[3].name"),
-      loc: t("contactUs.content[3].loc"),
+      name: t("contactUs.loc.content[3].name"),
+      loc: t("contactUs.loc.content[3].loc"),
       bg: `/aboutUs/loc3.png`,
     },
     {
-      name: t("contactUs.content[4].name"),
-      loc: t("contactUs.content[4].loc"),
+      name: t("contactUs.loc.content[4].name"),
+      loc: t("contactUs.loc.content[4].loc"),
       bg: `/aboutUs/loc4.png`,
     },
   ],

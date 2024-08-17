@@ -27,7 +27,8 @@
       </li>
       <div class="menus flex justify-start">
         <span
-          class="menu-tab cursor-pointer hvr-underline-from-center wow animate__animated animate__fadeInUp"
+          class="cursor-pointer hvr-underline-from-center wow animate__animated animate__fadeInUp"
+          :class="locale === 'en' ? 'menu-tab-en' : 'menu-tab'"
           v-for="(item, index) in cardConf"
           :key="index"
           @click="scrollTo(item.key)"
@@ -267,9 +268,13 @@ onMounted(() => {});
       width: 1384px;
       padding: 64px 0;
       font-size: 56px;
+      line-height: 64px;
       font-weight: 600;
       letter-spacing: 4.48px;
       margin: 0 auto;
+      text-wrap: wrap;
+      word-wrap: break-word;
+      white-space: normal;
     }
   }
 
@@ -327,6 +332,20 @@ onMounted(() => {});
       margin: 0;
       text-align: left;
       border-bottom: 1px solid #dde2e4;
+
+      .menu-tab-en {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 32px;
+        margin-right: 48px;
+        padding: 16px 0;
+        opacity: 0.8;
+        transition: all 0.5s ease-in-out;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
 
       .menu-tab {
         font-size: 32px;
@@ -388,7 +407,14 @@ onMounted(() => {});
             }
 
             .case-name {
-              padding: 32px;
+              height: 88px;
+              padding: 0 20px;
+              display: flex;
+              justify-items: center;
+              align-items: center;
+              text-wrap: wrap;
+              word-wrap: break-word;
+              white-space: normal;
               background-color: #f4f4f4;
             }
           }

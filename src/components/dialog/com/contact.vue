@@ -23,20 +23,22 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t, locale } = useI18n();
 const emit = defineEmits(["close"]);
 
 const contact = [
   {
-    name: "商务咨询",
+    name: t("contactUs.contact[0].name"),
     txt: "lvml@xs-trinity.com",
   },
   {
-    name: "加入我们",
+    name: t("contactUs.contact[1].name"),
     txt: "hrfxy@xs-trinity.com",
   },
   {
-    name: "联系电话",
+    name: t("contactUs.contact[2].name"),
     txt: "15381991195",
   },
 ];

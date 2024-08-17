@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t, locale } = useI18n();
 const icon1 = ref();
 import("@/assets/icon/product_word_icon.png").then((module) => {
   icon1.value = module.default;
@@ -127,7 +129,7 @@ import SubHeader from "@/components/head/subHeader.vue";
     <SubHeader></SubHeader>
 
     <div class="content">
-      <h2>下载</h2>
+      <h2>{{ t("common.headLink.t2") }}</h2>
 
       <div>
         <el-collapse v-model="activeNames">
@@ -154,7 +156,7 @@ import SubHeader from "@/components/head/subHeader.vue";
 
                   <div class="flex items-center">
                     <img class="download-icon" :src="downloadIcon" alt="" />
-                    <a :href="sub.link">下载</a>
+                    <a :href="sub.link">{{ t("common.headLink.t2") }}</a>
                   </div>
                 </div>
                 <span class="divider" />

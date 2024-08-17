@@ -3,6 +3,9 @@ import imgProductDetail from "@/assets/productParams/r17_product_details.png";
 import imgProductParams from "@/assets/productParams/r17_product_prams.svg";
 
 import SubHeader from "@/components/head/subHeader.vue";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
 </script>
 
 <template>
@@ -10,7 +13,7 @@ import SubHeader from "@/components/head/subHeader.vue";
     <SubHeader></SubHeader>
 
     <div class="content flex flex-col items-center">
-      <h2>产品参数</h2>
+      <h2>{{ t("common.headLink.t1") }}</h2>
       <div class="img-svg">
         <imgProductParams></imgProductParams>
       </div>

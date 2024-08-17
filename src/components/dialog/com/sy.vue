@@ -14,37 +14,37 @@
       </el-icon>
       <el-form-item prop="name">
         <template #label>
-          <div class="">姓名</div>
+          <div class="">{{ t("common.form.t1") }}</div>
         </template>
         <el-input v-model="ruleForm.name" />
       </el-form-item>
       <el-form-item prop="company">
         <template #label>
-          <div class="">公司</div>
+          <div class="">{{ t("common.form.t2") }}</div>
         </template>
         <el-input v-model="ruleForm.company" />
       </el-form-item>
       <el-form-item prop="phone">
         <template #label>
-          <div class="">电话</div>
+          <div class="">{{ t("common.form.t3") }}</div>
         </template>
         <el-input v-model="ruleForm.phone" />
       </el-form-item>
       <el-form-item prop="email">
         <template #label>
-          <div class="">邮箱</div>
+          <div class="">{{ t("common.form.t4") }}</div>
         </template>
         <el-input v-model="ruleForm.email" />
       </el-form-item>
       <el-form-item prop="zw">
         <template #label>
-          <div class="">职务</div>
+          <div class="">{{ t("common.form.t5") }}</div>
         </template>
         <el-input v-model="ruleForm.zw" />
       </el-form-item>
       <el-form-item prop="city">
         <template #label>
-          <div class="">所在城市</div>
+          <div class="">{{ t("common.form.t6") }}</div>
         </template>
         <el-input v-model="ruleForm.city" />
       </el-form-item>
@@ -54,7 +54,7 @@
           type="primary"
           @click="submitForm(ruleFormRef)"
         >
-          提交
+          {{ t("common.form.t7") }}
         </el-button>
       </div>
     </el-form>
@@ -66,7 +66,9 @@ import { sys } from "@/api/sys";
 
 import type { FormInstance, FormRules } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t, locale } = useI18n();
 const emit = defineEmits(["close"]);
 
 const ruleFormRef = ref<FormInstance>();

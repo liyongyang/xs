@@ -7,20 +7,20 @@
           <router-link
             :to="{ path: '/goods/R17/product-params' }"
             class="py-2 px-3 mr-4 cursor-pointer"
-            >产品参数</router-link
+            >{{ t("common.headLink.t1") }}</router-link
           >
           <router-link
             :to="{ path: '/goods/R17/download' }"
             class="py-2 px-3 mr-4 cursor-pointer"
-            >下载</router-link
+            >{{ t("common.headLink.t2") }}</router-link
           >
           <router-link
             :to="{ path: '/goods/R17/qa' }"
             class="py-2 px-3 mr-4 cursor-pointer"
-            >常见问题</router-link
+            >{{ t("common.headLink.t3") }}</router-link
           >
           <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
-            联系我们
+            {{ t("common.headLink.t4") }}
           </li>
         </div>
       </div>
@@ -33,7 +33,9 @@
           <el-icon>
             <ArrowLeftBold />
           </el-icon>
-          <span class="text-3.5 px-3" @click="goBack()">返回</span>
+          <span class="text-3.5 px-3" @click="goBack()">{{
+            t("common.back")
+          }}</span>
         </li>
         <div class="flex flex-wrap justify-between">
           <div class="banner-info flex flex-col justify-between">
@@ -60,7 +62,7 @@
             <el-button
               class="btn-black more wow animate__animated animate__fadeInUp"
               @click="openDialog()"
-              >样机试用/演示</el-button
+              >{{ t("common.footer.info1.txt1") }}</el-button
             >
           </div>
           <div class="banner-img flex flex-col justify-between">

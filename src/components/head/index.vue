@@ -37,8 +37,11 @@
               @click="changePage(item)"
             >
               <li
-                class="menu hvr-underline-from-center"
-                :class="activeRoute === item.path ? 'active-bg' : 'default-bg'"
+                class="hvr-underline-from-center"
+                :class="[
+                  route.meta.title === item.path ? 'active-bg' : 'default-bg',
+                  locale === 'en' ? 'menu-en' : 'menu',
+                ]"
               >
                 {{ item.name }}
               </li>
@@ -121,23 +124,6 @@
                 {{ v.name }}
               </li>
             </div>
-            <!-- <el-tabs tabPosition="left">
-              <el-tab-pane
-                v-for="(t, index) in goodMenus"
-                :key="index"
-                :label="t.name"
-              >
-                <li
-                  :class="v.path === 'R275A' ? 'newLi' : ''"
-                  class="mb-2 hover:font-500"
-                  v-for="(v, i) in t.child"
-                  :key="i"
-                  @click="toPage(v)"
-                >
-                  {{ v.name }}
-                </li>
-              </el-tab-pane>
-            </el-tabs> -->
           </div>
           <div v-if="item.path === 'aboutUs'">
             <li
@@ -182,19 +168,19 @@
       >
         <el-form-item prop="name">
           <template #label>
-            <div class="">账号</div>
+            <div class="">{{ t("common.user") }}</div>
           </template>
           <el-input v-model="ruleForm.userName" />
         </el-form-item>
         <el-form-item prop="company">
           <template #label>
-            <div class="">密码</div>
+            <div class="">{{ t("common.pwd") }}</div>
           </template>
           <el-input v-model="ruleForm.password" type="password" show-password />
         </el-form-item>
         <div class="text-center mt-12">
           <el-button class="btn-black2" type="primary" @click="submitForm()">
-            登录
+            {{ t("common.login") }}
           </el-button>
         </div>
       </el-form>
@@ -231,7 +217,7 @@ const menus = [
     id: 0,
     child: [
       {
-        name: "紧凑型R系列",
+        name: t("gdList.card[1]"),
         child: [
           {
             name: "R275-A",
@@ -252,7 +238,7 @@ const menus = [
         ],
       },
       {
-        name: "双航插RS系列",
+        name: t("gdList.card[2]"),
         child: [
           {
             name: "RS100",
@@ -261,7 +247,7 @@ const menus = [
         ],
       },
       {
-        name: "手持式H系列",
+        name: t("gdList.card[3]"),
         child: [
           {
             name: "H920",
@@ -292,19 +278,19 @@ const menus = [
     id: 4,
     child: [
       {
-        name: "关于新算",
+        name: t("common.childMenu[0]"),
         path: "aboutUs",
       },
       {
-        name: "新闻资讯",
+        name: t("common.childMenu[1]"),
         path: "news",
       },
       {
-        name: "展会动态",
+        name: t("common.childMenu[2]"),
         path: "expo",
       },
       {
-        name: "联系我们",
+        name: t("common.headLink.t4"),
         path: "contactUs",
       },
     ],
@@ -312,7 +298,7 @@ const menus = [
 ];
 const goodMenus = [
   {
-    name: "紧凑型R系列",
+    name: t("gdList.card[1]"),
     child: [
       {
         name: "R275-A",
@@ -333,7 +319,7 @@ const goodMenus = [
     ],
   },
   {
-    name: "双航插RS系列",
+    name: t("gdList.card[2]"),
     child: [
       {
         name: "RS100",
@@ -342,7 +328,7 @@ const goodMenus = [
     ],
   },
   {
-    name: "手持式H系列",
+    name: t("gdList.card[3]"),
     child: [
       {
         name: "H920",
@@ -354,19 +340,19 @@ const goodMenus = [
 
 const aboutUsMenus = [
   {
-    name: "关于新算",
+    name: t("common.childMenu[0]"),
     path: "aboutUs",
   },
   {
-    name: "新闻资讯",
+    name: t("common.childMenu[1]"),
     path: "news",
   },
   {
-    name: "展会动态",
+    name: t("common.childMenu[2]"),
     path: "expo",
   },
   {
-    name: "联系我们",
+    name: t("common.headLink.t4"),
     path: "contactUs",
   },
 ];
@@ -378,9 +364,10 @@ watch(route, (v) => {
   } else {
     const temp = menus.find((l) => l.path === v.meta.title);
     activeRoute.value = temp?.path;
+    console.log(`output->activeRoute.value`, activeRoute.value, v);
   }
+
   showMenu.value = true;
-  console.log(`output->activeRoute`, activeRoute.value);
 });
 
 const openMenu = () => {
@@ -397,7 +384,9 @@ const reload = () => {
     });
 };
 const isShowChild = (v: any, open: boolean) => {
+  // if (open && (v.path === "goods" || v.path === "aboutUs")) {
   activeRoute.value = v.path;
+  // }
   if (
     open &&
     (activeRoute.value === "goods" || activeRoute.value === "aboutUs")
@@ -494,6 +483,12 @@ onMounted(() => {});
           cursor: pointer;
           padding: 12px 0;
           margin: 0 40px;
+        }
+        .menu-en {
+          font-size: 16px;
+          cursor: pointer;
+          padding: 12px 0;
+          margin: 0 16px;
         }
 
         .hvr-underline-from-center:before {

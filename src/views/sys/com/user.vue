@@ -61,7 +61,7 @@
         <el-form ref="ruleFormRef" :model="userForm" label-width="left">
           <el-form-item prop="userName">
             <template #label>
-              <div class="">账号</div>
+              <div class="">{{ t("common.user") }}</div>
             </template>
             <el-input
               :disabled="showKey === 'delete'"
@@ -70,7 +70,7 @@
           </el-form-item>
           <el-form-item prop="password">
             <template #label>
-              <div class="">密码</div>
+              <div class="">{{ t("common.pwd") }}</div>
             </template>
             <el-input
               :disabled="showKey === 'delete'"
@@ -88,7 +88,7 @@
           </el-form-item>
           <div class="text-center mt-12">
             <el-button class="btn-black2" type="primary" @click="commit()">
-              提交
+              {{ t("common.form.t7") }}
             </el-button>
           </div>
         </el-form>

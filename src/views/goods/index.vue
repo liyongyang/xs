@@ -298,9 +298,9 @@ onUnmounted(() => {});
       >
         <li class="title p4 text-center">{{ card[0] }}</li>
         <div class="h16 bg-black text-left p4 pt-8">
-          <el-button class="btn-white" @click="openDialog()"
-            >样机使试用/演示</el-button
-          >
+          <el-button class="btn-white" @click="openDialog()">{{
+            t("common.footer.info1.txt1")
+          }}</el-button>
         </div>
       </div>
       <div class="card2 space-x-2">
@@ -308,22 +308,32 @@ onUnmounted(() => {});
           class="cl cursor-pointer bg1 flex flex-col justify-end wow animate__animated animate__fadeIn"
           @click="getAct('R')"
         >
-          <li class="title p4">{{ card[1] }}</li>
-          <li class="more h16 bg-black p4 pt-8">了解更多</li>
+          <li :class="locale === 'en' ? 'title-en' : 'title'">
+            {{ card[1] }}
+          </li>
+          <li class="more h16 bg-black p4 pt-8">{{ t("common.btn.more") }}</li>
         </div>
         <div
           class="cl cursor-pointer bg2 flex flex-col justify-end wow animate__animated animate__fadeIn"
           @click="getAct('RS')"
         >
-          <li class="title p4">{{ card[2] }}</li>
-          <li class="more h16 cursor-pointer bg-black p4 pt-8">了解更多</li>
+          <li :class="locale === 'en' ? 'title-en' : 'title'">
+            {{ card[2] }}
+          </li>
+          <li class="more h16 cursor-pointer bg-black p4 pt-8">
+            {{ t("common.btn.more") }}
+          </li>
         </div>
         <div
           class="cl cursor-pointer bg3 flex flex-col justify-end wow animate__animated animate__fadeIn"
           @click="getAct('H')"
         >
-          <li class="title p4">{{ card[3] }}</li>
-          <li class="more h16 cursor-pointer bg-black p4 pt-8">了解更多</li>
+          <li :class="locale === 'en' ? 'title-en' : 'title'">
+            {{ card[3] }}
+          </li>
+          <li class="more h16 cursor-pointer bg-black p4 pt-8">
+            {{ t("common.btn.more") }}
+          </li>
         </div>
       </div>
     </section>
@@ -333,7 +343,9 @@ onUnmounted(() => {});
           <el-icon>
             <ArrowLeftBold />
           </el-icon>
-          <span class="text-3.5 px-3" @click="act = ''">返回</span>
+          <span class="text-3.5 px-3" @click="act = ''">{{
+            t("common.back")
+          }}</span>
         </li>
       </div>
       <div v-if="actGd" class="gd-wrapper flex flex-wrap justify-between">
@@ -356,7 +368,7 @@ onUnmounted(() => {});
                 <el-button
                   class="btn-black wow animate__animated animate__fadeInUp"
                   @click="toDetail(item)"
-                  >了解更多</el-button
+                  >{{ t("common.btn.more") }}</el-button
                 >
               </div>
             </el-carousel-item>
@@ -429,6 +441,12 @@ onUnmounted(() => {});
         line-height: 40px;
         padding: 16px;
       }
+      .title-en {
+        font-size: 19px;
+        font-weight: 600;
+        line-height: 24px;
+        padding: 16px;
+      }
 
       .more {
         color: #a3a8ab;
@@ -463,7 +481,6 @@ onUnmounted(() => {});
     color: #fff;
     position: relative;
     background-color: #000;
-    overflow-x: hidden;
 
     .banner-slider {
       width: 515px;
@@ -498,6 +515,10 @@ onUnmounted(() => {});
       }
 
       .feat-info {
+        width: 398px;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
         padding: 16px;
         padding-right: 0;
         background-color: #111212;

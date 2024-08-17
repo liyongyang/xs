@@ -8,10 +8,13 @@ export default {
       menu4: "Customer Case",
       menu5: "Company Information",
     },
+    childMenu: ["Aboutus", "News", "Exhibition"],
     btn: {
       more: "Learn more",
-      try: "try out",
+      more2: "Learn more",
+      try: "Try out",
       read_more: "Read more",
+      video: "Video",
     },
     headLink: {
       t1: "Product Parameters",
@@ -26,22 +29,25 @@ export default {
       t4: "Email",
       t5: "Position",
       t6: "City",
+      t7: "Commit",
     },
-    user: "账号",
-    pwd: "密码",
+    back: "Back",
+    user: "User",
+    pwd: "Password",
+    login: "Login",
     footer: {
       info1: {
-        tit: "联系我们获取更多产品信息与合作细节",
-        txt1: "样机试用/演示",
-        txt2: "咨询热线",
+        tit: "Contact us for more product information and cooperation details",
+        txt1: "Prototype trial / Demo",
+        txt2: "Hotline",
         txt3: "15381991195",
       },
       info2: {
-        txt1: "专注工业机器视觉，以读码产品开启智能制造",
-        txt2: "隐私政策",
-        txt3: "Cookies政策",
-        txt4: "备案信息",
-        txt5: "关注我们",
+        txt1: "Focus on industrial machine vision and start smart manufacturing with code reading products",
+        txt2: "privacy policy",
+        txt3: "Cookies",
+        txt4: "浙ICP备2023017780号-1",
+        txt5: "Follow us",
       },
     },
   },
@@ -104,7 +110,7 @@ export default {
         {
           img: "/home/carousel4.webp",
           title: "Handheld H-Series Barcode Reader",
-          xh: ["H920 无线/有线"],
+          xh: ["H920 (Wireless/Wired)"],
           type: "H",
         },
         {
@@ -118,7 +124,7 @@ export default {
   },
   gdList: {
     card: [
-      "Industrial Barcode Reader",
+      "Barcode Reader",
       "Compact R-Series",
       "Dual Aviation plugs RS-Series",
       "Handheld H-Series",
@@ -195,7 +201,7 @@ export default {
         txt: "-",
       },
     ],
-    Hlist: ["H920（有线）", "H920（无线）"],
+    Hlist: ["H920(Wired)", "H920(Wireless)"],
     H: [
       {
         title: "Patented Handheld Algorithm Engine",
@@ -216,6 +222,7 @@ export default {
     ],
   },
   A275A_INFO: {
+    name: "A275-A",
     detailInfo: {
       title: "Design details",
       slider: [
@@ -522,14 +529,14 @@ export default {
     tip3: "XinSuan Tech's exclusive training function greatly improves efficiency",
     tip3_2: `Train the 1D/2D barcodes to be read to improve the decoding depth of field, decoding speed and decoding rate, and when the training is completed, the reading of the same kind of code can reach instantaneous reading`,
     b4: "Compact integrated design",
-    tip4: "专业的工业设计，更懂工厂实地使用情况",
+    tip4: "Professional industrial design, better understanding of on-site factory usage",
     b5: "Applications",
     info5: [
       {
-        title: "汽车制造",
+        title: "Automobile manufacturing",
       },
       {
-        title: "汽车制造",
+        title: "Automobile manufacturing",
       },
     ],
   },
@@ -603,37 +610,34 @@ export default {
     p4: {
       tit: "New Optical System",
       tip: "A variety of lens specifications, light source color and light source type, flexible combination of high configurability to suit any application",
-      card: [
-        {
-          tit: "Flexible Configuration",
-          tip: "Multiple lens focal lengths, light source colors, and light source types to meet diverse needs",
-          tit_r: "3 × 3 × 3 灵活配置",
-          list: [
-            {
-              tit: "镜头焦段",
-              opts: ["6mm", "12mm", "16mm"],
-            },
-            {
-              tit: "光源颜色",
-              opts: [
-                {
-                  name: "红色",
-                  key: "red",
-                },
-                {
-                  name: "蓝色",
-                  key: "blue",
-                },
-              ],
-            },
-            {
-              title: "光源类型",
-              opts: ["直射光", "偏振光", "均匀光"],
-            },
-          ],
-        },
-        {},
-      ],
+      card: {
+        tit: "Flexible Configuration",
+        tip: "Multiple lens focal lengths, light source colors, and light source types to meet diverse needs",
+        tit_r: "3×3×3 Flexible configuration",
+        list: [
+          {
+            tit: "Length",
+            opts: ["6mm", "12mm", "16mm"],
+          },
+          {
+            tit: "Color",
+            opts: [
+              {
+                name: "red",
+                key: "red",
+              },
+              {
+                name: "blue",
+                key: "blue",
+              },
+            ],
+          },
+          {
+            tit: "Type",
+            opts: ["direct", "polarized", "uniform"],
+          },
+        ],
+      },
     },
     p5: {
       tit: "Combined Lighting Tuning",
@@ -777,7 +781,7 @@ export default {
     car: {
       banner: "/customerCase/banner/car.webp",
       title: "Automotive Industry Solutions",
-      txt: "Industrial Barcode Reader are used throughout all aspects of automotive manufacturing, from incoming raw materials, tracking parts on the production line, to factory inspection and logistics management of finished products. Through automated 1D/2D barcode reading, automotive manufacturers can monitor production progress in real time, accurately manage inventory, optimize the supply chain, and effectively prevent quality problems from occurring 1D/2D 码信息读取，汽车制造商能够实时监控生产进度、精准管理库存、优化供应链，并有效防止质量问题的发生。",
+      txt: "Industrial Barcode Reader are used throughout all aspects of automotive manufacturing, from incoming raw materials, tracking parts on the production line, to factory inspection and logistics management of finished products. Through automated 1D/2D barcode reading, automotive manufacturers can monitor production progress in real time, accurately manage inventory, optimize the supply chain, and effectively prevent quality problems from occurring",
       ysList: [
         "Increase productivity, reduce manual errors, and increase equipment availability",
         "Full process traceability to ensure that each component meets quality standards",
@@ -800,7 +804,7 @@ export default {
     gf: {
       banner: "/customerCase/banner/gf.webp",
       title: "Photovoltaic New Energy Industry Solutions",
-      txt: "The photovoltaic new energy industry is in a critical period of industry development, and the barcode reader, as an efficient and accurate machine vision device, is increasingly becoming an indispensable part of the photovoltaic power generation system. By reading the 1D/2D barcode on the PV panels, the barcode reader can realize the rapid identification and data collection of the PV panels in various aspects such as production, transportation, installation, etc., which provides a strong support for the intelligent and automated digital management of the PV new energy industry 1D/2D 码，读码器能够实现对光伏板生产、运输、安装等各个环节的快速识别和数据采集，为光伏新能源行业的智能化、自动化数字管理提供有力支持。",
+      txt: "The photovoltaic new energy industry is in a critical period of industry development, and the barcode reader, as an efficient and accurate machine vision device, is increasingly becoming an indispensable part of the photovoltaic power generation system. By reading the 1D/2D barcode on the PV panels, the barcode reader can realize the rapid identification and data collection of the PV panels in various aspects such as production, transportation, installation, etc., which provides a strong support for the intelligent and automated digital management of the PV new energy industry",
       ysTit: "Application Advantages",
       ysList: [
         "Increase productivity and shorten cycle time",
@@ -1014,7 +1018,7 @@ export default {
         },
         {
           key: "Financing amount",
-          name: "Over 100 million yuan",
+          name: "100+ million",
           icon: "/aboutUs/icon-svg2.svg",
         },
         {
@@ -1073,7 +1077,7 @@ export default {
     },
   },
   news: {
-    tit: "新闻资讯",
+    tit: "NEWS",
     list: [
       {
         img: "",
@@ -1246,11 +1250,11 @@ export default {
     contact: [
       {
         name: "Business consulting",
-        txt: "lvml@xs-trinity.com",
+        txt: "lvml{'@'}xs-trinity.com",
       },
       {
         name: "Join us",
-        txt: "hrfxy@xs-trinity.com",
+        txt: "hrfxy{'@'}xs-trinity.com",
       },
       {
         name: "Contact number",

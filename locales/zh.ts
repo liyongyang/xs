@@ -8,10 +8,13 @@ export default {
       menu4: "客户案例",
       menu5: "公司信息",
     },
+    childMenu: ["关于新算", "新闻资讯", "展会动态"],
     btn: {
       more: "了解更多",
+      more2: "查看更多",
       try: "试用",
       read_more: "阅读更多",
+      video: "观看视频",
     },
     headLink: {
       t1: "产品参数",
@@ -21,14 +24,17 @@ export default {
     },
     form: {
       t1: "姓名",
-      t2: "企业名称",
+      t2: "公司",
       t3: "电话",
       t4: "邮箱",
       t5: "职务",
       t6: "所在城市",
+      t7: "提交",
     },
+    back: "返回",
     user: "账号",
     pwd: "密码",
+    login: "登录",
     footer: {
       info1: {
         tit: "联系我们获取更多产品信息与合作细节",
@@ -40,7 +46,7 @@ export default {
         txt1: "专注工业机器视觉，以读码产品开启智能制造",
         txt2: "隐私政策",
         txt3: "Cookies政策",
-        txt4: "备案信息",
+        txt4: "浙ICP备2023017780号-1",
         txt5: "关注我们",
       },
     },
@@ -208,6 +214,7 @@ export default {
     ],
   },
   A275A_INFO: {
+    name: "A275-A",
     detailInfo: {
       title: "设计细节",
       slider: [
@@ -554,32 +561,26 @@ export default {
       tip: "不止是调光，更是自适应算法调参，达到最优解码",
       card1: [
         {
-          img: "/technical/icons/card-icon0.png",
           txt: "自适应光源",
           txt2: "灵活组合光源以自适应性、高可配置性应对不同场景需求",
         },
         {
-          img: "/technical/icons/card-icon1.png",
           txt: "自动调参",
           txt2: "最高达192万种参数配置1，自 动优化曝光、增益、滤波等 参数，应对挑战性读码情况",
         },
         {
-          img: "/technical/icons/card-icon2.png",
           txt: "自适应算法",
           txt2: "自动匹配机器视觉算法引擎TM的CV算法、AI 算法",
         },
         {
-          img: "/technical/icons/card-icon3.png",
           txt: "自动对焦",
           txt2: "自动适应各种条码尺寸和工作距离",
         },
         {
-          img: "/technical/icons/card-icon4.png",
           txt: "自识别条码类型",
           txt2: "自动检测1D码/2D码，根据条码类型调取预定义条码模版库，提高读取速度",
         },
         {
-          img: "/technical/icons/card-icon5.png",
           txt: "无限光源组合技术",
           txt2: "自主根据读码样本、工况， 智能选择最优光源强度及光源类型，极大提升解码性能",
         },
@@ -603,37 +604,34 @@ export default {
     p4: {
       tit: "全新光学系统",
       tip: "多种镜头规格、光源颜色及光源类型，灵活组合以高可配置性应对不同场景需求",
-      card: [
-        {
-          tit: "灵活配置",
-          tip: "多种镜头焦段、光源颜色、光源类型，满足多样化需求",
-          tit_r: "3 × 3 × 3 灵活配置",
-          list: [
-            {
-              tit: "镜头焦段",
-              opts: ["6mm", "12mm", "16mm"],
-            },
-            {
-              tit: "光源颜色",
-              opts: [
-                {
-                  name: "红色",
-                  key: "red",
-                },
-                {
-                  name: "蓝色",
-                  key: "blue",
-                },
-              ],
-            },
-            {
-              title: "光源类型",
-              opts: ["直射光", "偏振光", "均匀光"],
-            },
-          ],
-        },
-        {},
-      ],
+      card: {
+        tit: "灵活配置",
+        tip: "多种镜头焦段、光源颜色、光源类型，满足多样化需求",
+        tit_r: "3 × 3 × 3 灵活配置",
+        list: [
+          {
+            tit: "镜头焦段",
+            opts: ["6mm", "12mm", "16mm"],
+          },
+          {
+            tit: "光源颜色",
+            opts: [
+              {
+                name: "红色",
+                key: "red",
+              },
+              {
+                name: "蓝色",
+                key: "blue",
+              },
+            ],
+          },
+          {
+            tit: "光源类型",
+            opts: ["直射光", "偏振光", "均匀光"],
+          },
+        ],
+      },
     },
     p5: {
       tit: "无限组合光源技术",
@@ -1209,11 +1207,11 @@ export default {
     contact: [
       {
         name: "商务咨询",
-        txt: "lvml@xs-trinity.com",
+        txt: "lvml{'@'}xs-trinity.com",
       },
       {
         name: "加入我们",
-        txt: "hrfxy@xs-trinity.com",
+        txt: "hrfxy{'@'}xs-trinity.com",
       },
       {
         name: "联系电话",

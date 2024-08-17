@@ -4,6 +4,9 @@ import imgProductParams from "@/assets/productParams/rs275_product_prams.svg";
 import imgProductSize from "@/assets/productParams/rs275_product_size.png";
 
 import SubHeader from "@/components/head/subHeader.vue";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
 </script>
 
 <template>

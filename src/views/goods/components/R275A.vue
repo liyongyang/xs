@@ -455,20 +455,20 @@ onBeforeUnmount(() => {
             :to="{ path: '/goods/R275A/product-params' }"
             class="py-2 px-3 mr-4 cursor-pointer"
           >
-            产品参数
+            {{ t("common.headLink.t1") }}
           </router-link>
           <router-link
             :to="{ path: '/goods/R275A/download' }"
             class="py-2 px-3 mr-4 cursor-pointer"
-            >下载
+            >{{ t("common.headLink.t2") }}
           </router-link>
           <router-link
             :to="{ path: '/goods/R275A/qa' }"
             class="py-2 px-3 mr-4 cursor-pointer"
-            >常见问题
+            >{{ t("common.headLink.t3") }}
           </router-link>
           <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
-            联系我们
+            {{ t("common.headLink.t4") }}
           </li>
         </div>
       </div>
@@ -487,13 +487,15 @@ onBeforeUnmount(() => {
           <el-icon>
             <ArrowLeftBold />
           </el-icon>
-          <span class="text-3.5 px-3">返回</span>
+          <span class="text-3.5 px-3">{{ t("common.back") }}</span>
         </li>
         <div class="text-wrapper animate__animated animate__fadeInUp z-10">
-          <li class="gd-type">R275-A</li>
-          <h2 class="gd-name">紧凑型R系列读码器</h2>
-          <li class="gd-ts">强大稳定解码力 · 一键调试 · 超小尺寸</li>
-          <el-button class="btn-white" @click="openDialog()">试用</el-button>
+          <li class="gd-type">{{ t("home.sec1[0].name") }}</li>
+          <h2 class="gd-name">{{ t("home.sec1[0].type") }}</h2>
+          <li class="gd-ts">{{ t("home.sec1[0].feat") }}</li>
+          <el-button class="btn-white" @click="openDialog()">{{
+            t("common.btn.try")
+          }}</el-button>
           <el-button class="btn-black">观看视频</el-button>
         </div>
       </div>
@@ -520,17 +522,19 @@ onBeforeUnmount(() => {
           <el-icon>
             <ArrowLeftBold />
           </el-icon>
-          <span class="text-3.5 px-3">返回</span>
+          <span class="text-3.5 px-3">{{ t("common.back") }}</span>
         </li>
         <div
           class="pg1_frame-text-wrapper animate__animated animate__fadeInUp z-10"
           v-show="showGd"
         >
-          <li class="gd-type">R275-A</li>
-          <h2 class="gd-name">紧凑型R系列读码器</h2>
-          <li class="gd-ts">强大稳定解码力 · 一键调试 · 超小尺寸</li>
-          <el-button class="btn-white" @click="openDialog()">试用</el-button>
-          <el-button class="btn-black">观看视频</el-button>
+          <li class="gd-type">{{ t("home.sec1[0].name") }}</li>
+          <h2 class="gd-name">{{ t("home.sec1[0].type") }}</h2>
+          <li class="gd-ts">{{ t("home.sec1[0].feat") }}</li>
+          <el-button class="btn-white" @click="openDialog()">{{
+            t("common.btn.try")
+          }}</el-button>
+          <el-button class="btn-black">{{ t("common.btn.video") }}</el-button>
         </div>
       </div>
     </section>
@@ -596,7 +600,7 @@ onBeforeUnmount(() => {
         <el-carousel
           :interval="3000"
           arrow="always"
-          :height="isSmallSize ? '240px' : '480px'"
+          :height="isSmallSize ? '240px' : '500px'"
           class="yy-slider"
         >
           <el-carousel-item
@@ -779,14 +783,16 @@ onBeforeUnmount(() => {
       padding: 128px 0;
 
       .detail-slider {
-        padding-bottom: 20px;
+        padding-bottom: 40px;
         width: 100%;
 
         .slider-item {
           flex: 0 0 auto;
           width: 450px;
           margin-right: 6px;
-
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
           img {
             width: 100%;
           }
@@ -802,7 +808,9 @@ onBeforeUnmount(() => {
           flex: 0 0 auto;
           width: 686px;
           margin-right: 6px;
-
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
           img {
             width: 100%;
           }

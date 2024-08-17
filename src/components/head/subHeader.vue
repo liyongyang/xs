@@ -2,17 +2,48 @@
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
+const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const isSmallSize = ref(window.innerWidth < 576);
-
 const goodType: string = route.params.goodType as string;
-
-import usePageStore from "@/store/modules/page";
-const { pageStore } = usePageStore();
-
+const pageStore = {
+  rs100: {
+    name: t("rs100.name"),
+    navs: [
+      { key: "product-params", value: t("common.headLink.t1") },
+      { key: "download", value: t("common.headLink.t2") },
+      { key: "qa", value: t("common.headLink.t3") },
+    ],
+  },
+  r17: {
+    name: t("r17.name"),
+    navs: [
+      { key: "product-params", value: t("common.headLink.t1") },
+      { key: "download", value: t("common.headLink.t2") },
+      { key: "qa", value: t("common.headLink.t3") },
+    ],
+  },
+  r275a: {
+    name: t("A275A_INFO.name"),
+    navs: [
+      { key: "product-params", value: t("common.headLink.t1") },
+      { key: "download", value: t("common.headLink.t2") },
+      { key: "qa", value: t("common.headLink.t3") },
+    ],
+  },
+  h920: {
+    name: t("h920.name"),
+    navs: [
+      { key: "product-params", value: t("common.headLink.t1") },
+      { key: "download", value: t("common.headLink.t2") },
+      { key: "qa", value: t("common.headLink.t3") },
+    ],
+  },
+};
 // todo 后续可能得考虑规划下产品系列的大小写问题，如 r275a 和 R275A
 const routePathProductName = goodType.toLowerCase();
 const page = pageStore[routePathProductName];
@@ -59,9 +90,10 @@ const openDialog = () => {
           class="nv-item cursor-pointer"
         >
           {{ nav.value }}
+          <!-- {{ t("common.headLink.t1") }} -->
         </router-link>
         <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
-          联系我们
+          {{ t("common.headLink.t4") }}
         </li>
       </div>
     </div>

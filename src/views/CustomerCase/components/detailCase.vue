@@ -10,11 +10,11 @@
           <el-icon>
             <ArrowLeftBold />
           </el-icon>
-          <span class="px-3" @click="goBack()">返回</span>
+          <span class="px-3" @click="goBack()">{{ t("common.back") }}</span>
         </li>
       </div>
       <div class="text-wrapper">
-        <div class="content">
+        <div :class="locale === 'en' ? 'content-en' : 'content'">
           <li class="banner-title wow animate__animated animate__fadeInUp">
             {{ actInfo.title }}
           </li>
@@ -366,26 +366,34 @@ onMounted(() => {
       word-wrap: break-word;
       white-space: normal;
       // z-index: 9;
+      .content-en {
+        width: 1100px;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
+        padding-bottom: 64px;
+      }
       .content {
         width: 800px;
         text-wrap: wrap;
         word-wrap: break-word;
         white-space: normal;
         padding-bottom: 64px;
-        .banner-title {
-          font-size: 56px;
-          font-weight: 600;
-          line-height: 78.4px;
-          letter-spacing: 0.08em;
-          margin-bottom: 24px;
-        }
+      }
+      .banner-title {
+        width: 1384px;
+        font-size: 56px;
+        font-weight: 600;
+        line-height: 60px;
+        letter-spacing: 0.08em;
+        margin-bottom: 24px;
+      }
 
-        .banner-txt {
-          font-size: 20px;
-          font-weight: 400;
-          line-height: 28px;
-          text-align: justify;
-        }
+      .banner-txt {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        text-align: justify;
       }
     }
   }
@@ -427,6 +435,9 @@ onMounted(() => {
           font-size: 20px;
           font-weight: 400;
           line-height: 28px;
+          text-wrap: wrap;
+          word-wrap: break-word;
+          white-space: normal;
         }
       }
     }

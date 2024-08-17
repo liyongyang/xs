@@ -115,7 +115,6 @@ const carouselAct = ref();
 
 const onSlideChange = (swiper) => {
   const v = swiper.realIndex; //slides[2].swiperSlideIndex;
-  console.log(swiper.realIndex);
   carouselAct.value = carouselInfo[v];
 };
 
@@ -183,10 +182,12 @@ onUnmounted(() => {});
           <li class="gd-type">{{ sec1[0].name }}</li>
           <h2 class="gd-name">{{ sec1[0].type }}</h2>
           <li class="gd-ts">{{ sec1[0].feat }}</li>
-          <el-button class="btn-white" @click="toGd('R275A')"
-            >了解更多</el-button
-          >
-          <el-button class="btn-black" @click="openDialog()">试用</el-button>
+          <el-button class="btn-white" @click="toGd('R275A')">{{
+            t("common.btn.more")
+          }}</el-button>
+          <el-button class="btn-black" @click="openDialog()">{{
+            t("common.btn.try")
+          }}</el-button>
         </div>
       </div>
     </section>
@@ -202,10 +203,12 @@ onUnmounted(() => {});
             <span class="italic skew-x-6">X</span>
             {{ sec1[1].feat[1] }}
           </li>
-          <el-button class="btn-white" @click="toGd('RS100')"
-            >了解更多</el-button
-          >
-          <el-button class="btn-black" @click="openDialog()">试用</el-button>
+          <el-button class="btn-white" @click="toGd('RS100')">{{
+            t("common.btn.more")
+          }}</el-button>
+          <el-button class="btn-black" @click="openDialog()">{{
+            t("common.btn.try")
+          }}</el-button>
         </div>
       </div>
     </section>
@@ -217,10 +220,12 @@ onUnmounted(() => {});
           <li class="gd-type">{{ sec1[2].name }}</li>
           <h2 class="gd-name">{{ sec1[2].type }}</h2>
           <li class="gd-ts">{{ sec1[2].feat }}</li>
-          <el-button class="btn-white" @click="toGd('H920')"
-            >了解更多</el-button
-          >
-          <el-button class="btn-black" @click="openDialog()">试用</el-button>
+          <el-button class="btn-white" @click="toGd('H920')">{{
+            t("common.btn.more")
+          }}</el-button>
+          <el-button class="btn-black" @click="openDialog()">{{
+            t("common.btn.try")
+          }}</el-button>
         </div>
       </div>
     </section>
@@ -272,7 +277,7 @@ onUnmounted(() => {});
       <el-button
         class="btn-white wow animate__animated animate__fadeInUp"
         @click="toTechnical()"
-        >了解更多</el-button
+        >{{ t("common.btn.more") }}</el-button
       >
     </section>
     <section
@@ -335,7 +340,7 @@ onUnmounted(() => {});
         <el-button
           class="btn-black wow animate__animated animate__fadeInUp"
           @click="toDetail(carouselAct.type)"
-          >了解详情</el-button
+          >{{ t("common.btn.more") }}</el-button
         >
       </div>
     </section>
@@ -355,10 +360,14 @@ onUnmounted(() => {});
           <li class="title">
             {{ item.title }}
           </li>
-          <li class="txt more" @click="goDetail(item.link)">阅读更多</li>
+          <li class="txt more" @click="goDetail(item.link)">
+            {{ t("common.btn.read_more") }}
+          </li>
         </div>
       </div>
-      <router-link class="btn-white" to="/news">查看更多</router-link>
+      <router-link class="btn-white" to="/news">{{
+        t("common.btn.more2")
+      }}</router-link>
     </section>
   </div>
 </template>

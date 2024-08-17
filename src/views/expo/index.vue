@@ -77,14 +77,17 @@
     </section>
     <el-button
       class="flex justify-center more btn-white wow animate__animated animate__fadeInUp"
-      >查看更多</el-button
+      >{{ t("common.btn.more2") }}</el-button
     >
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+
+const { t, locale } = useI18n();
 const router = useRouter();
 const activeNames = ref([0]);
 const isSmallSize = ref(window.innerWidth < 576);

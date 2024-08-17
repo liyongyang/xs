@@ -5,13 +5,13 @@
         <el-icon>
           <ArrowLeftBold />
         </el-icon>
-        <span class="px-3" @click="goBack()">返回</span>
+        <span class="px-3" @click="goBack()">{{ t("common.back") }}</span>
       </div>
       <div class="back1" v-if="newDetail['banner']">
         <el-icon>
           <ArrowLeftBold />
         </el-icon>
-        <span class="px-3" @click="goBack()">返回</span>
+        <span class="px-3" @click="goBack()">{{ t("common.back") }}</span>
       </div>
       <div
         v-if="newDetail['banner']"
@@ -51,7 +51,7 @@
           <li class="title">
             {{ item.title }}
           </li>
-          <li class="txt more" @click="goDetail(item.link)">阅读更多</li>
+          <li class="txt more" @click="goDetail(item.link)">{{t('common.btn.read_more')}}</li>
         </div>
       </div>
     </section> -->

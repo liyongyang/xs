@@ -24,7 +24,10 @@
           v-for="(item, index) in section1.info"
           :key="index"
         >
-          <li class="card-name wow animate__animated animate__fadeInUp">
+          <li
+            class="wow animate__animated animate__fadeInUp"
+            :class="locale === 'en' ? 'card-name-en' : 'card-name'"
+          >
             {{ item.name }}
           </li>
           <li class="card-key wow animate__animated animate__fadeInUp">
@@ -171,7 +174,9 @@ const section2 = {
 const section3 = {
   title: t("aboutUs.p4.title"),
 };
-onMounted(() => {});
+onMounted(() => {
+  console.log(`output->locale.value`, locale.value);
+});
 </script>
 <style lang="scss" scoped>
 .pg-container {
@@ -287,7 +292,7 @@ onMounted(() => {});
         display: block;
         height: 2px;
         background-color: #000;
-        width: 2200px;
+        width: 220%;
       }
       .carousel-time {
         width: 100%;
@@ -347,6 +352,10 @@ onMounted(() => {});
 
       .card-name {
         font-size: 88px;
+        font-weight: 600;
+      }
+      .card-name-en {
+        font-size: 56px;
         font-weight: 600;
       }
 
@@ -464,6 +473,9 @@ onMounted(() => {});
         margin-bottom: 4px;
         .card-name {
           font-size: 32px;
+        }
+        .card-name {
+          font-size: 24px;
         }
       }
     }

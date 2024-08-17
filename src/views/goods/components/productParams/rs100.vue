@@ -5,7 +5,9 @@ import imgProductParams from "@/assets/productParams/rs100_product_params.svg";
 // import imgProductParams from '@/assets/productParams/rs100_product_params.jpg';
 import imgProductDetail from "@/assets/productParams/rs100_product_details.png";
 import SubHeader from "@/components/head/subHeader.vue";
+import { useI18n } from "vue-i18n";
 
+const { t, locale } = useI18n();
 const isSmallSize = ref(window.innerWidth < 576);
 </script>
 
@@ -14,7 +16,7 @@ const isSmallSize = ref(window.innerWidth < 576);
     <SubHeader></SubHeader>
 
     <div class="flex flex-col items-center">
-      <h2>产品参数</h2>
+      <h2>{{ t("common.headLink.t1") }}</h2>
       <div class="img-svg">
         <imgProductParams></imgProductParams>
       </div>

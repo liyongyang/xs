@@ -26,24 +26,9 @@ const app = createApp(App);
 
 app.use(i18n);
 
-// app.use(vue3SeamlessScroll);
-
-// app.use(ElementPlus, {
-//   // locale: zhCn,
-//   locale: localStorage.getItem("locale") === "zh_CN" ? zhCn : en,
-// });
-
-// app.use(createPinia());
-// app.use(ElementPlus, {
-//   locale: zhCn,
-// });
 /** 加载插件 */
 loadPlugins(app);
 /** 加载全局 SVG */
 loadSvg(app);
-
-// for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-//   app.component(key, component);
-// }
 
 app.use(store).use(router).mount("#app");

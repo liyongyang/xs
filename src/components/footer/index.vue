@@ -5,16 +5,18 @@
       class="contact"
     >
       <li class="title wow animate__animated animate__fadeInUp">
-        联系我们获取更多产品信息与合作细节
+        {{ t("common.footer.info1.tit") }}
       </li>
       <div class="items-center info">
         <el-button
           class="btn-black wow animate__animated animate__fadeInUp"
           @click="openDialog()"
-          >样机试用/演示</el-button
+          >{{ t("common.footer.info1.txt1") }}</el-button
         >
         <li class="call wow animate__animated animate__fadeInUp">
-          咨询热线：15381991195
+          {{ t("common.footer.info1.txt2") }} ：{{
+            t("common.footer.info1.txt3")
+          }}
         </li>
       </div>
     </div>
@@ -26,11 +28,11 @@
             <li
               class="text-l text-color wow animate__animated animate__fadeInUp"
             >
-              专注工业机器视觉，以读码产品开启智能制造
+              {{ t("common.footer.info2.txt1") }}
             </li>
           </div>
           <div class="conf goods-box flex flex-wrap justify-between">
-            <div v-for="(items, index) in goodMenus" :key="index">
+            <div class="mb-4" v-for="(items, index) in goodMenus" :key="index">
               <li class="type wow animate__animated animate__fadeInUp">
                 {{ items.name }}
               </li>
@@ -47,7 +49,7 @@
             </div>
           </div>
           <div class="conf space-y-6">
-            <li>关注我们</li>
+            <li>{{ t("common.footer.info2.txt5") }}</li>
             <div class="flex space-x-6">
               <div class="icon-item">
                 <icon0 class="cursor-pointer"></icon0>
@@ -93,9 +95,9 @@
           </div>
         </div>
         <div class="zc flex justify-start space-x-8">
-          <li>隐私政策</li>
-          <li>Cookies政策</li>
-          <li>备案信息</li>
+          <li>{{ t("common.footer.info2.txt2") }}</li>
+          <li>{{ t("common.footer.info2.txt3") }}</li>
+          <li>{{ t("common.footer.info2.txt4") }}</li>
         </div>
       </div>
     </div>
@@ -112,7 +114,10 @@ import logo from "@/assets/logo2.svg";
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+
+const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
 
@@ -120,7 +125,7 @@ const isSmallSize = ref(window.innerWidth < 900);
 
 const goodMenus = [
   {
-    name: "紧凑型R系列",
+    name: t("gdList.card[1]"),
     child: [
       {
         name: "R275-A",
@@ -141,7 +146,7 @@ const goodMenus = [
     ],
   },
   {
-    name: "双航插RS系列",
+    name: t("gdList.card[2]"),
     child: [
       {
         name: "RS100",
@@ -158,7 +163,7 @@ const goodMenus = [
     ],
   },
   {
-    name: "手持式H系列",
+    name: t("gdList.card[3]"),
     child: [
       {
         name: "H920 无线/有线",
@@ -290,9 +295,11 @@ onMounted(() => {});
       }
 
       .text-l {
+        max-width: 400px;
         font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
       }
 
       .conf {
