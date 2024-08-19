@@ -5,7 +5,7 @@ export const pageStore = {
     navs: [
       { key: "product-params", value: "产品参数" },
       { key: "download", value: "下载" },
-      { key: "qa", value: "常见问题" },
+      // { key: "qa", value: "常见问题" },
     ],
   },
   r17: {
@@ -13,7 +13,7 @@ export const pageStore = {
     navs: [
       { key: "product-params", value: "产品参数" },
       { key: "download", value: "下载" },
-      { key: "qa", value: "常见问题" },
+      // { key: "qa", value: "常见问题" },
     ],
   },
   r275a: {
@@ -29,7 +29,7 @@ export const pageStore = {
     navs: [
       { key: "product-params", value: "产品参数" },
       { key: "download", value: "下载" },
-      { key: "qa", value: "常见问题" },
+      // { key: "qa", value: "常见问题" },
     ],
   },
 };

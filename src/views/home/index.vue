@@ -96,9 +96,9 @@ const carouselInfo = [
 ];
 const dtList = [
   {
-    time: "2024-04-15",
-    title: t("newsList[0].title"),
-    link: "/detail/1",
+    time: "2024-06-19",
+    title: t("newsList[2].title"),
+    link: "/detail/3",
   },
   {
     time: "2024-04-23",
@@ -106,9 +106,9 @@ const dtList = [
     link: "/detail/2",
   },
   {
-    time: "2024-06-19",
-    title: t("newsList[2].title"),
-    link: "/detail/3",
+    time: "2024-04-15",
+    title: t("newsList[0].title"),
+    link: "/detail/1",
   },
 ];
 const carouselAct = ref();
@@ -175,7 +175,7 @@ onUnmounted(() => {});
 <template>
   <div class="pg-container">
     <section class="section-wrapper banner1">
-      <div class="pg1_frame-wrapper pt-30 center">
+      <div class="pg1_frame-wrapper pt-10 center">
         <div
           class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
         >
@@ -397,7 +397,7 @@ onUnmounted(() => {});
       .pg1_frame-text-wrapper {
         color: #fff;
         margin: 0 auto;
-        margin-top: 64px;
+        padding-top: 128px;
         text-align: center;
 
         .gd-type {
@@ -689,14 +689,14 @@ onUnmounted(() => {});
   .pg-container {
     overflow-x: auto;
     .section-wrapper {
-      background-size: cover;
-      background-position: center center;
+      background-size: 260%;
+      background-position: center bottom;
       .pg1_frame-wrapper {
         .pg1_frame-text-wrapper {
           text-wrap: wrap;
           word-wrap: break-word;
           white-space: normal;
-          padding-top: 50px;
+          padding-top: 50%;
           .gd-type {
             font-size: 24px;
           }

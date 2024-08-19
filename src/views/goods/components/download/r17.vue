@@ -129,7 +129,7 @@ import SubHeader from "@/components/head/subHeader.vue";
     <SubHeader></SubHeader>
 
     <div class="content">
-      <h2>{{ t("common.headLink.t2") }}</h2>
+      <!-- <h2>{{ t("common.headLink.t2") }}</h2> -->
 
       <div>
         <el-collapse v-model="activeNames">

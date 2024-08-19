@@ -15,7 +15,7 @@
             <el-option label="English" value="en" />
           </el-select>
         </div>
-        <menuSvg class="mx-2" @click="openMenu()"></menuSvg>
+        <menuSvg class="mx-2 z-999" @click="openMenu()"></menuSvg>
       </div>
     </div>
     <!-- pc -->
@@ -56,7 +56,7 @@
                   :label="t.name"
                 >
                   <li
-                    :class="v.path === 'R275A' ? 'newLi' : ''"
+                    :class="v.name === 'R275-A' ? 'newLi' : ''"
                     class="hover:font-500"
                     v-for="(v, i) in t.child"
                     :key="i"
@@ -97,9 +97,13 @@
       </div>
     </div>
   </div>
+  <!-- <SubHeader></SubHeader> -->
   <el-dialog v-model="openMenus" class="modal-comp" :fullscreen="true">
     <div class="menu-list">
-      <div class="menus wow animate__animated animate__fadeInDown">
+      <div class="menus">
+        <div class="close z-999" @click="openMenus = false">
+          <el-icon><CloseBold /></el-icon>
+        </div>
         <div v-for="(item, index) in menus" :key="index">
           <li
             :class="activeRoute === item.path ? 'active-menu' : 'default-menu'"
@@ -115,7 +119,7 @@
             >
               <li class="my-2">{{ item.name }}</li>
               <li
-                :class="v.path === 'R275A' ? 'newLi' : ''"
+                :class="v.name === 'R275-A' ? 'newLi' : ''"
                 class="mb-2 hover:font-500"
                 v-for="(v, i) in item.child"
                 :key="i"
@@ -136,18 +140,22 @@
             </li>
           </div>
         </div>
-        <div class="bb-li">
+        <div class="bb-li flex justify-around mt-4">
           <li
             :class="activeRoute === '-1' ? 'active-bg' : 'default-bg'"
-            class="w30 btn-black cursor-pointer"
+            class="btn-black cursor-pointer"
             @click="loginCheck()"
           >
             {{ t("Email") }}
           </li>
+          <li
+            :class="activeRoute === '-1' ? 'active-bg' : 'default-bg'"
+            class="btn-black cursor-pointer"
+            @click="openDialog()"
+          >
+            {{ t("common.footer.info1.txt1") }}
+          </li>
         </div>
-      </div>
-      <div class="close" @click="openMenus = false">
-        <el-icon><CloseBold /></el-icon>
       </div>
     </div>
   </el-dialog>
@@ -192,6 +200,8 @@
 import { sys } from "@/api/sys";
 import logo from "@/assets/logo1.svg";
 import menuSvg from "@/assets/menu.svg";
+import { addDialog } from "@/components/Dialog/index";
+import * as popModules from "@/components/Dialog/modulesIdex";
 import { useUserStoreHook } from "@/store/modules/user";
 import { onMounted, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -331,7 +341,7 @@ const goodMenus = [
     name: t("gdList.card[3]"),
     child: [
       {
-        name: "H920",
+        name: "H920(无线/有线)",
         path: "H920",
       },
     ],
@@ -426,6 +436,21 @@ const loginCheck = () => {
   });
 };
 
+const openDialog = () => {
+  addDialog({
+    title: "",
+    width: isSmallSize.value ? "358px" : "480px",
+    props: {},
+    footer: false,
+    component: popModules.SY,
+    callBack: (config) => {
+      //当弹窗任务结束后，调用父页面的回掉函数。（比如	我新增完成了需要刷新列表页面）
+      if (config) {
+      }
+    },
+  });
+};
+
 const submitForm = () => {
   showDialog.value = false;
   activeRoute.value = "report";
@@ -446,7 +471,9 @@ const changePage = (item: any) => {
   });
 };
 
-onMounted(() => {});
+onMounted(() => {
+  console.log(`output->route.params`, route.params);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -710,7 +737,8 @@ onMounted(() => {});
 @media (max-width: 576px) {
   .head-container {
     .head {
-      padding: 28px 16px 12px 16px;
+      padding: 28px 20px;
+      padding-bottom: 16px;
     }
   }
   .el-dialog__body {
@@ -726,6 +754,9 @@ onMounted(() => {});
     left: 0;
     background-color: #fff;
     .menus {
+      position: relative;
+      width: 358px;
+      margin: 0 auto;
       color: #1d1c23;
       display: flex;
       flex-direction: column;
@@ -766,7 +797,6 @@ onMounted(() => {});
         border-bottom: #c6c6cd 1px solid;
       }
       .bb-li {
-        height: 48px;
         width: 358px;
         font-size: 16px;
         font-weight: 600;
@@ -774,8 +804,8 @@ onMounted(() => {});
     }
     .close {
       position: absolute;
-      top: 24px;
-      right: 24px;
+      top: 0;
+      right: 0;
       display: flex;
       justify-content: center;
       align-items: center;

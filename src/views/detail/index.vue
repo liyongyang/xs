@@ -39,22 +39,25 @@
         </template>
       </div>
     </section>
-    <!-- <section class="about-news">
+    <section class="about-news">
       <div class="title">相关新闻</div>
-      <div class="card-news flex justify-center flex-wrap">
+      <div class="card-news flex justify-start flex-wrap">
         <div
           class="card-new-item wow animate__animated animate__fadeInUp"
           v-for="(item, index) in dt"
           :key="index"
+          @click="goDetail(item.link)"
         >
           <li class="txt">{{ item.time }}</li>
           <li class="title">
             {{ item.title }}
           </li>
-          <li class="txt more" @click="goDetail(item.link)">{{t('common.btn.read_more')}}</li>
+          <li class="txt more">
+            {{ t("common.btn.read_more") }}
+          </li>
         </div>
       </div>
-    </section> -->
+    </section>
   </div>
 </template>
 
@@ -76,19 +79,6 @@ const dtList = [
         "「新算科技」获数千万元天使轮融资，由红杉中国种子基金独家投资 | 早起看早期",
       link: "/detail/2",
     },
-    {
-      time: "2024-06-19",
-      title: "VSDC Innovators Awards 2024 创新奖揭晓！新算技术获行业权威认可",
-      link: "/detail/3",
-    },
-    {
-      time: "2024-04-15",
-      title: "待补充",
-    },
-    {
-      time: "2024-04-15",
-      title: "待补充",
-    },
   ],
   [
     {
@@ -96,41 +86,8 @@ const dtList = [
       title: "专注先进工业传感器，「宁波新算」完成Pre-A轮融资｜早起看早期",
       link: "/detail/1",
     },
-    {
-      time: "2024-06-19",
-      title: "VSDC Innovators Awards 2024 创新奖揭晓！新算技术获行业权威认可",
-      link: "/detail/3",
-    },
-    {
-      time: "2024-04-15",
-      title: "待补充",
-    },
-    {
-      time: "2024-04-15",
-      title: "待补充",
-    },
   ],
-  [
-    {
-      time: "2022-07-22 ",
-      title:
-        "「新算科技」获数千万元天使轮融资，由红杉中国种子基金独家投资 | 早起看早期",
-      link: "/detail/2",
-    },
-    {
-      time: "2023-07-10 08:18",
-      title: "专注先进工业传感器，「宁波新算」完成Pre-A轮融资｜早起看早期",
-      link: "/detail/1",
-    },
-    {
-      time: "2024-04-15",
-      title: "待补充",
-    },
-    {
-      time: "2024-04-15",
-      title: "待补充",
-    },
-  ],
+  [],
 ];
 const newsList = [
   {
@@ -411,8 +368,8 @@ onMounted(() => {
 
     .card-new-item {
       text-align: left;
-      flex: 1;
-      // width: 424px;
+      flex: 0 0 auto;
+      width: 424px;
       margin: 0 4px;
       height: 244px;
       padding: 24px 16px;

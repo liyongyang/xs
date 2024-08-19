@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import imgProductDetail from "@/assets/productParams/r17_product_details.png";
 import imgProductParams from "@/assets/productParams/r17_product_prams.svg";
 
 import SubHeader from "@/components/head/subHeader.vue";
@@ -17,8 +16,6 @@ const { t, locale } = useI18n();
       <div class="img-svg">
         <imgProductParams></imgProductParams>
       </div>
-      <h2>尺寸规格 & 线缆</h2>
-      <el-image :src="imgProductDetail" class="gd-img" />
     </div>
   </div>
 </template>
@@ -87,23 +84,6 @@ const { t, locale } = useI18n();
 @media (max-width: 576px) {
   .good-container {
     margin-top: 72px;
-    .content {
-      width: 358px;
-      margin: 0 auto;
-      h2 {
-        font-size: 18px;
-        margin-top: 32px;
-        margin-bottom: 32px;
-      }
-      .img-svg {
-        width: 358px;
-        overflow-x: scroll;
-      }
-      .gd-img {
-        margin-bottom: 32px;
-        width: 358px;
-      }
-    }
   }
 }
 </style>

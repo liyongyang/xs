@@ -1,33 +1,35 @@
 <template>
   <div class="good-container mx-auto">
-    <div class="header wow animate__animated animate__fadeInDown">
-      <div class="head flex justify-between items-center mx-auto">
-        <li v-if="!isSmallSize" class="good-name">
-          {{ h920.name }}
-        </li>
-        <div class="flex justify-between items-center">
-          <router-link
-            :to="{ path: '/goods/H920/product-params' }"
-            class="py-2 px-3 mr-4 cursor-pointer"
-          >
-            {{ t("common.headLink.t1") }}
-          </router-link>
-          <router-link
-            :to="{ path: '/goods/H920/download' }"
-            class="py-2 px-3 mr-4 cursor-pointer"
-            >{{ t("common.headLink.t2") }}
-          </router-link>
-          <router-link
+    <el-affix :offset="offset">
+      <div class="header wow animate__animated animate__fadeInDown">
+        <div class="head flex justify-between items-center mx-auto">
+          <li v-if="!isSmallSize" class="good-name">
+            {{ h920.name }}
+          </li>
+          <div class="flex justify-between items-center">
+            <router-link
+              :to="{ path: '/goods/H920/product-params' }"
+              class="py-2 px-3 mr-4 cursor-pointer"
+            >
+              {{ t("common.headLink.t1") }}
+            </router-link>
+            <router-link
+              :to="{ path: '/goods/H920/download' }"
+              class="py-2 px-3 mr-4 cursor-pointer"
+              >{{ t("common.headLink.t2") }}
+            </router-link>
+            <!-- <router-link
             :to="{ path: '/goods/H920/qa' }"
             class="py-2 px-3 mr-4 cursor-pointer"
             >{{ t("common.headLink.t3") }}
-          </router-link>
-          <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
-            {{ t("common.headLink.t4") }}
-          </li>
+          </router-link> -->
+            <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
+              {{ t("common.headLink.t4") }}
+            </li>
+          </div>
         </div>
       </div>
-    </div>
+    </el-affix>
     <section class="good-wrapper mx-auto">
       <div class="content">
         <li
@@ -248,7 +250,7 @@
 <script setup lang="ts">
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 const { t, locale } = useI18n();
@@ -256,10 +258,9 @@ const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const isSmallSize = ref(window.innerWidth < 576);
-
 const actImg = ref(0);
-
 const activeNames = ref([]);
+const offset = ref(88);
 const h920 = {
   name: t("h920.name"),
   type: t("h920.type"),
@@ -397,12 +398,21 @@ const goBack = () => {
   router.push({ path: "/goods", query: { type: "H" } });
 };
 
-onMounted(() => {});
+const headerShow = () => {
+  nextTick(() => {
+    const temp = window.scrollY || document.documentElement.scrollTop;
+    offset.value = temp < 88 ? 88 - temp : 0.5;
+    console.log(`output->headRef`, temp, offset.value);
+  });
+};
+onMounted(() => {
+  window.addEventListener("scroll", headerShow);
+});
 </script>
 <style lang="scss" scoped>
 .good-container {
   width: 100vw;
-  margin-top: 89px;
+  height: auto;
 
   .header {
     background-color: #f4f4f4;
@@ -428,6 +438,7 @@ onMounted(() => {});
     padding: 0;
 
     .content {
+      margin-top: 88px;
       padding: 32px 0;
 
       .title {
@@ -652,7 +663,9 @@ onMounted(() => {});
         }
       }
       .info-title {
-        font-size: 24px;
+        font-size: 18px;
+        height: 32px;
+        line-height: 32px;
       }
 
       .info-txt {

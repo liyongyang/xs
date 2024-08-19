@@ -3,7 +3,6 @@ import { ref } from "vue";
 
 import imgProductParams from "@/assets/productParams/rs100_product_params.svg";
 // import imgProductParams from '@/assets/productParams/rs100_product_params.jpg';
-import imgProductDetail from "@/assets/productParams/rs100_product_details.png";
 import SubHeader from "@/components/head/subHeader.vue";
 import { useI18n } from "vue-i18n";
 
@@ -20,11 +19,8 @@ const isSmallSize = ref(window.innerWidth < 576);
       <div class="img-svg">
         <imgProductParams></imgProductParams>
       </div>
-
-      <!-- <el-image :src="imgProductParams" style="margin-bottom: 64px;width: 1384px" /> -->
-
-      <h2>尺寸规格 & 线缆</h2>
-      <el-image class="gd-img" :src="imgProductDetail" />
+      <!-- <h2>尺寸规格 & 线缆</h2> -->
+      <!-- <el-image class="gd-img" :src="imgProductDetail" /> -->
     </div>
   </div>
 </template>

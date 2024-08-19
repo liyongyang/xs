@@ -12,7 +12,7 @@ export default {
     btn: {
       more: "Learn more",
       more2: "Learn more",
-      try: "Try out",
+      try: "Try&Contact us",
       read_more: "Read more",
       video: "Video",
     },
@@ -483,7 +483,7 @@ export default {
     ],
   },
   h920: {
-    name: "H920 Wireless/Wired High Performance Barcode Reader",
+    name: "H920 Wireless/Wired Barcode Reader",
     type: "H920 Wireless/Wired",
     tip: "Patented Handheld Algorithm Engine × On-axis aiming × Training function",
     b1: "Patented Handheld Algorithm Engine ",

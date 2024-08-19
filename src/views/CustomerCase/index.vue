@@ -9,7 +9,7 @@
       <li class="title wow animate__animated animate__fadeInUp">
         {{ info.p1 }}
       </li>
-      <div class="flex justify-between flex-wrap space-y-1">
+      <div class="flex justify-between flex-wrap gap-2">
         <div
           @click="toCase(item.key)"
           class="card cursor-pointer flex justify-center items-center"
@@ -50,8 +50,9 @@
             v-if="items.case[0].length"
             :interval="3000"
             :autoplay="false"
+            arrow="always"
             class="carousel-imgs"
-            height="302px"
+            height="380px"
           >
             <el-carousel-item v-for="(item, index) in items.case" :key="index">
               <div class="case-list flex">
@@ -373,7 +374,7 @@ onMounted(() => {});
       padding-bottom: 0;
 
       .case-box {
-        padding-bottom: 64px;
+        // padding-bottom: 64px;
 
         .name {
           font-size: 24px;
@@ -383,6 +384,7 @@ onMounted(() => {});
         }
 
         .case-list {
+          padding-bottom: 64px;
           &::-webkit-scrollbar {
             display: none;
           }
@@ -421,6 +423,36 @@ onMounted(() => {});
         }
       }
     }
+  }
+  :deep(.el-collapse-item__header) {
+    height: 108px;
+    padding: 32px 0;
+    padding-right: 32px;
+    background-color: inherit;
+  }
+  :deep(.el-collapse-item__content) {
+    background-color: #fff;
+  }
+  :deep(.el-carousel__arrow) {
+    top: 90%;
+    background-color: #292929;
+    color: #ffffff;
+    border: 1px solid #868686;
+    &:hover {
+      background-color: #868686;
+    }
+  }
+  :deep(.el-carousel__arrow--left) {
+    position: absolute;
+    right: 60px;
+    left: auto;
+    bottom: 20px;
+  }
+
+  :deep(.el-carousel__arrow--right) {
+    position: absolute;
+    right: 0;
+    bottom: 20px;
   }
 }
 @media (max-width: 576px) {

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import imgProductDetail from "@/assets/productParams/rs275_product_details.png";
 import imgProductParams from "@/assets/productParams/rs275_product_prams.svg";
-import imgProductSize from "@/assets/productParams/rs275_product_size.png";
 
 import SubHeader from "@/components/head/subHeader.vue";
 import { useI18n } from "vue-i18n";
@@ -13,15 +11,16 @@ const { t, locale } = useI18n();
   <div class="good-container mx-auto">
     <SubHeader></SubHeader>
 
-    <div class="content flex flex-col items-center">
+    <div class="flex flex-col items-center">
+      <h2>{{ t("common.headLink.t1") }}</h2>
       <div class="img-svg">
         <imgProductParams></imgProductParams>
       </div>
-      <h2>读取范围</h2>
-      <el-image class="gd-img" :src="imgProductSize" />
+      <!-- <h2>读取范围</h2> -->
+      <!-- <el-image class="gd-img" :src="imgProductSize" /> -->
 
-      <h2>尺寸规格 & 安装</h2>
-      <el-image class="gd-img" :src="imgProductDetail" />
+      <!-- <h2>尺寸规格 & 安装</h2> -->
+      <!-- <el-image class="gd-img" :src="imgProductDetail" /> -->
     </div>
   </div>
 </template>
@@ -30,11 +29,6 @@ const { t, locale } = useI18n();
 .good-container {
   width: 100vw;
   margin-top: 89px;
-  .content {
-    margin-top: 128px;
-    text-align: center;
-    margin-bottom: 64px;
-  }
 
   .header {
     background-color: #f4f4f4;

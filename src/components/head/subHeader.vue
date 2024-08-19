@@ -16,7 +16,7 @@ const pageStore = {
     navs: [
       { key: "product-params", value: t("common.headLink.t1") },
       { key: "download", value: t("common.headLink.t2") },
-      { key: "qa", value: t("common.headLink.t3") },
+      // { key: "qa", value: t("common.headLink.t3") },
     ],
   },
   r17: {
@@ -24,7 +24,7 @@ const pageStore = {
     navs: [
       { key: "product-params", value: t("common.headLink.t1") },
       { key: "download", value: t("common.headLink.t2") },
-      { key: "qa", value: t("common.headLink.t3") },
+      // { key: "qa", value: t("common.headLink.t3") },
     ],
   },
   r275a: {
@@ -32,7 +32,7 @@ const pageStore = {
     navs: [
       { key: "product-params", value: t("common.headLink.t1") },
       { key: "download", value: t("common.headLink.t2") },
-      { key: "qa", value: t("common.headLink.t3") },
+      // { key: "qa", value: t("common.headLink.t3") },
     ],
   },
   h920: {
@@ -40,7 +40,7 @@ const pageStore = {
     navs: [
       { key: "product-params", value: t("common.headLink.t1") },
       { key: "download", value: t("common.headLink.t2") },
-      { key: "qa", value: t("common.headLink.t3") },
+      // { key: "qa", value: t("common.headLink.t3") },
     ],
   },
 };
@@ -77,7 +77,7 @@ const openDialog = () => {
     <div class="head flex justify-between items-center mx-auto">
       <section
         v-if="!isSmallSize"
-        class="good-name cursor-pointer"
+        class="good-name cursor-pointer font-500"
         @click="goback()"
       >
         {{ page.name }}

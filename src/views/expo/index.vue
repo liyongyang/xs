@@ -39,7 +39,7 @@
           <el-carousel
             :autoplay="false"
             class="carousel-imgs"
-            :height="isSmallSize ? '300px' : '620px'"
+            :height="isSmallSize ? '300px' : '790px'"
             arrow="always"
           >
             <el-carousel-item>
@@ -56,7 +56,7 @@
             <el-carousel-item>
               <div class="flex cursor-pointer space-x-2 overflow-x-scroll">
                 <img
-                  v-for="(i, index) in 2"
+                  v-for="(i, index) in 4"
                   :key="index"
                   class="news-item hover:shadow-lg hvr-bob wow animate__animated animate__fadeInUp"
                   :src="'/expo/VCSH2024/' + (index + 4) + '.png'"
@@ -192,7 +192,10 @@ onMounted(() => {});
       padding: 12px 20px;
       color: #1d1c23cc;
       .head-tit {
+        height: 32px;
+        line-height: 32px;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         .title {
           color: #1d1c23;
@@ -204,6 +207,8 @@ onMounted(() => {});
       .head-info {
         display: flex;
         justify-content: start;
+        height: 32px;
+        line-height: 32px;
         gap: 64px;
       }
     }
@@ -211,12 +216,43 @@ onMounted(() => {});
     .news-item {
       flex: 0 0 auto;
       width: 340px;
-      height: 600px;
+      height: 100%;
     }
 
     :deep(.el-collapse-item__header) {
       padding: 12px 0;
       height: auto;
+    }
+    //   :deep(.el-collapse-item__header) {
+    //   height: 108px;
+    //   padding: 32px 0;
+    //   padding-right: 32px;
+    //   background-color: inherit;
+    // }
+    :deep(.el-collapse-item__content) {
+      background-color: #fff;
+      padding-bottom: 0;
+    }
+    :deep(.el-carousel__arrow) {
+      top: 96%;
+      background-color: #292929;
+      color: #ffffff;
+      border: 1px solid #868686;
+      &:hover {
+        background-color: #868686;
+      }
+    }
+    :deep(.el-carousel__arrow--left) {
+      position: absolute;
+      right: 60px;
+      left: auto;
+      bottom: 20px;
+    }
+
+    :deep(.el-carousel__arrow--right) {
+      position: absolute;
+      right: 0;
+      bottom: 20px;
     }
   }
 

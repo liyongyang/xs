@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import imgProductDetail from "@/assets/productParams/h920_product_details.png";
 import imgProductParams from "@/assets/productParams/h920_product_prams.svg";
 import SubHeader from "@/components/head/subHeader.vue";
 
@@ -17,8 +16,8 @@ const { t, locale } = useI18n();
       <div class="img-svg">
         <imgProductParams></imgProductParams>
       </div>
-      <h2>尺寸规格 & 线缆</h2>
-      <el-image class="gd-img" :src="imgProductDetail" />
+      <!-- <h2>尺寸规格 & 线缆</h2> -->
+      <!-- <el-image class="gd-img" :src="imgProductDetail" /> -->
     </div>
   </div>
 </template>

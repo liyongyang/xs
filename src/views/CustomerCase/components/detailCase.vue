@@ -357,15 +357,8 @@ onMounted(() => {
     .text-wrapper {
       width: 1384px;
       margin: 0 auto;
-
-      // position: absolute;
-      // left: 112px;
-      // bottom: 48px;
-      // width: 800px;
-      //     text-wrap: wrap;
       word-wrap: break-word;
       white-space: normal;
-      // z-index: 9;
       .content-en {
         width: 1100px;
         text-wrap: wrap;

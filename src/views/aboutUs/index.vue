@@ -471,11 +471,18 @@ onMounted(() => {
       .card {
         width: 168px;
         margin-bottom: 4px;
+        border: none;
+        padding: 12px;
         .card-name {
-          font-size: 32px;
+          font-size: 20px;
         }
-        .card-name {
-          font-size: 24px;
+        .card-key {
+          margin-bottom: 8px;
+        }
+        .card-icon {
+          img {
+            width: 32px;
+          }
         }
       }
     }

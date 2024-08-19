@@ -88,6 +88,18 @@
             </template>
             <el-input v-model="ruleForm.email" />
           </el-form-item>
+          <el-form-item prop="zw">
+            <template #label>
+              <div class="">{{ t("common.form.t5") }}</div>
+            </template>
+            <el-input v-model="ruleForm.zw" />
+          </el-form-item>
+          <el-form-item prop="city">
+            <template #label>
+              <div class="">{{ t("common.form.t6") }}</div>
+            </template>
+            <el-input v-model="ruleForm.city" />
+          </el-form-item>
           <div class="text-center mt-8 wow animate__animated animate__fadeInUp">
             <el-button
               class="btn-black"
@@ -191,6 +203,8 @@ const ruleForm = reactive({
   company: "",
   phone: "",
   email: "",
+  zw: "",
+  city: "",
 });
 interface RuleForm {
   name: string;
@@ -265,7 +279,7 @@ onMounted(() => {});
       .banner-title {
         font-size: 56px;
         font-weight: 600;
-        line-height: 78.4px;
+        line-height: 78px;
         letter-spacing: 0.08em;
         margin-bottom: 24px;
       }
@@ -282,23 +296,23 @@ onMounted(() => {});
     display: flex;
     justify-content: space-between;
     width: 1384px;
-    padding-top: 128px;
+    padding-top: 64px;
     margin: 0 auto;
     margin-bottom: 64px;
     color: #1d1c23;
 
     .contact {
       width: 660px;
-      height: 575px;
+      height: 680px;
 
       .contact-item {
-        padding: 16px 0;
+        padding: 20px 0;
         border-bottom: 1px solid #dfe1e2;
 
         .name {
           font-size: 20px;
           font-weight: 400;
-          line-height: 28px;
+          line-height: 40px;
         }
 
         .txt {
@@ -325,12 +339,13 @@ onMounted(() => {});
       :deep(.el-form-item) {
         display: block;
         text-align: left;
+        margin-bottom: 12px;
 
         .el-form-item__label {
           color: #1d1c23;
           font-size: 14px;
           line-height: 40px;
-          margin-bottom: 12px;
+          margin-bottom: 8px;
         }
       }
     }

@@ -14,12 +14,11 @@
         :key="index"
         @click="goDetail(items.link)"
       >
-        <img
-          class="wow animate__animated animate__fadeInUp"
+        <div
           v-if="items.img"
-          :src="items.img"
-          alt=""
-        />
+          class="img wow animate__animated animate__fadeInUp"
+          :style="'background-image: url(' + items['img'] + ');'"
+        ></div>
         <div>
           <li class="title wow animate__animated animate__fadeInUp">
             {{ items.title }}
@@ -57,7 +56,7 @@ const bannerInfo1 = {
 };
 const newsList = [
   {
-    img: "",
+    img: "/detail/vsdc.png",
     title: t("news.list[0].title"),
     tip: [t("news.list[0].tip[0]")],
     time: t("news.list[0].time"),
@@ -154,7 +153,13 @@ onMounted(() => {});
       align-items: flex-start;
       background-color: #f4f4f4;
       transition: all 0.5s;
-
+      .img {
+        height: 178px;
+        width: 100%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-image: url("/detail/vsdc.png");
+      }
       .title {
         font-size: 28px;
         font-weight: 600;
@@ -220,6 +225,7 @@ onMounted(() => {});
         padding: 24px 16px;
         margin: 0;
         margin-bottom: 12px;
+        text-align: justify;
         .title {
           font-size: 16px;
           line-height: 22px;

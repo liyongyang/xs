@@ -50,7 +50,10 @@
           </div>
           <div class="conf space-y-6">
             <li>{{ t("common.footer.info2.txt5") }}</li>
-            <div class="flex space-x-6">
+            <div
+              class="flex space-x-6"
+              :class="isSmallSize ? 'justify-center' : ''"
+            >
               <div class="icon-item">
                 <icon0 class="cursor-pointer"></icon0>
                 <img
@@ -94,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="zc flex justify-start space-x-8">
+        <div class="zc flex justify-start gap-8">
           <li>{{ t("common.footer.info2.txt2") }}</li>
           <li>{{ t("common.footer.info2.txt3") }}</li>
           <li>{{ t("common.footer.info2.txt4") }}</li>
@@ -399,6 +402,31 @@ onMounted(() => {});
             margin-bottom: 32px;
           }
         }
+        .conf {
+          .icon-item {
+            position: relative;
+            &:hover {
+              .icon-hover {
+                width: 100px;
+                opacity: 1;
+                transform: scale(1.3);
+                transition: all 0.8s;
+                top: -120px;
+              }
+            }
+            .icon-hover {
+              width: 100px;
+              opacity: 0;
+              position: absolute;
+              top: -105px;
+              left: -40px;
+              z-index: 999;
+            }
+          }
+        }
+      }
+      .zc {
+        font-size: 12px;
       }
     }
   }

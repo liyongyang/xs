@@ -203,7 +203,8 @@
       </li>
       <div class="table-box">
         <img
-          class="table wow animate__animated animate__fadeInUp"
+          class="table"
+          :class="!isSmallSize ? 'wow animate__animated animate__fadeInUp' : ''"
           src="/technical/table.webp"
           alt=""
         />

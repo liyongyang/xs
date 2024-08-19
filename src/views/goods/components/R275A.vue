@@ -433,8 +433,10 @@ onMounted(() => {
   for (let index = 0; index < 190; index++) {
     imgUrls.value.push(`/R275A/webp2/${index}.webp`);
   }
-  preloadImages();
-  videoRef2.value.style.display = "none";
+  if (!isSmallSize.value) {
+    preloadImages();
+    videoRef2.value.style.display = "none";
+  }
 });
 
 onBeforeUnmount(() => {
@@ -462,11 +464,11 @@ onBeforeUnmount(() => {
             class="py-2 px-3 mr-4 cursor-pointer"
             >{{ t("common.headLink.t2") }}
           </router-link>
-          <router-link
+          <!-- <router-link
             :to="{ path: '/goods/R275A/qa' }"
             class="py-2 px-3 mr-4 cursor-pointer"
             >{{ t("common.headLink.t3") }}
-          </router-link>
+          </router-link> -->
           <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
             {{ t("common.headLink.t4") }}
           </li>
@@ -534,7 +536,9 @@ onBeforeUnmount(() => {
           <el-button class="btn-white" @click="openDialog()">{{
             t("common.btn.try")
           }}</el-button>
-          <el-button class="btn-black">{{ t("common.btn.video") }}</el-button>
+          <el-button disabled class="btn-black">{{
+            t("common.btn.video")
+          }}</el-button>
         </div>
       </div>
     </section>
@@ -922,7 +926,7 @@ onBeforeUnmount(() => {
 @media (max-width: 576px) {
   .pg-container {
     .section-banner {
-      padding-top: 72px;
+      padding-top: 88px;
       position: relative;
     }
 
@@ -931,8 +935,8 @@ onBeforeUnmount(() => {
       width: 100vw;
       height: auto;
       background-image: url("/home/r275a.webp");
-      background-size: 150%;
-      background-position: center;
+      background-size: 160%;
+      background-position: center bottom;
       background-repeat: no-repeat;
       .text-wrapper {
         padding-top: 32px;
@@ -966,10 +970,10 @@ onBeforeUnmount(() => {
         background-attachment: local;
       }
       .go-back {
+        width: 358px;
+        margin: 12px auto;
         color: #fff;
-        position: absolute;
-        top: 24px;
-        left: 10px;
+        z-index: 999;
       }
       .pg1_frame-text-wrapper {
         .gd-type {
@@ -987,7 +991,7 @@ onBeforeUnmount(() => {
       }
     }
     .banner-wapper1 {
-      height: 400px;
+      height: 460px;
     }
     .pg {
       .content {
@@ -1026,7 +1030,8 @@ onBeforeUnmount(() => {
     }
   }
   :deep(.el-carousel__arrow) {
-    top: 90%;
+    top: 85%;
+    transform: scale(0.8);
   }
 }
 </style>

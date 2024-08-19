@@ -1,30 +1,33 @@
 <template>
   <div class="good-container mx-auto">
-    <div class="header wow animate__animated animate__fadeInDown">
-      <div class="head flex justify-between items-center mx-auto">
-        <li v-if="!isSmallSize" class="good-name">{{ rs100.name }}</li>
-        <div class="flex justify-between items-center">
-          <router-link
-            :to="{ path: '/goods/RS100/product-params' }"
-            class="py-2 px-3 mr-4 cursor-pointer"
-            >{{ t("common.headLink.t1") }}</router-link
-          >
-          <router-link
-            :to="{ path: '/goods/RS100/download' }"
-            class="py-2 px-3 mr-4 cursor-pointer"
-            >{{ t("common.headLink.t2") }}</router-link
-          >
-          <router-link
+    <el-affix :offset="offset">
+      <div class="header wow animate__animated animate__fadeInDown">
+        <div class="head flex justify-between items-center mx-auto">
+          <li v-if="!isSmallSize" class="good-name">{{ rs100.name }}</li>
+          <div class="flex justify-between items-center">
+            <router-link
+              :to="{ path: '/goods/RS100/product-params' }"
+              class="py-2 px-3 mr-4 cursor-pointer"
+              >{{ t("common.headLink.t1") }}</router-link
+            >
+            <router-link
+              :to="{ path: '/goods/RS100/download' }"
+              class="py-2 px-3 mr-4 cursor-pointer"
+              >{{ t("common.headLink.t2") }}</router-link
+            >
+            <!-- <router-link
             :to="{ path: '/goods/RS100/qa' }"
             class="py-2 px-3 mr-4 cursor-pointer"
             >{{ t("common.headLink.t3") }}</router-link
-          >
-          <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
-            {{ t("common.headLink.t4") }}
-          </li>
+          > -->
+            <li class="btn-black mr-4 cursor-pointer" @click="openDialog()">
+              {{ t("common.headLink.t4") }}
+            </li>
+          </div>
         </div>
       </div>
-    </div>
+    </el-affix>
+
     <section class="good-wrapper mx-auto">
       <div class="content">
         <li
@@ -67,8 +70,9 @@
                 >{{ t("common.footer.info1.txt1") }}</el-button
               >
               <el-button
+                disabled
                 class="btn-black more wow animate__animated animate__fadeInUp"
-                >观看视频</el-button
+                >{{ t("common.btn.video") }}</el-button
               >
             </div>
           </div>
@@ -118,8 +122,9 @@
               >{{ t("common.footer.info1.txt1") }}</el-button
             >
             <el-button
+              disabled
               class="btn-black more wow animate__animated animate__fadeInUp"
-              >观看视频</el-button
+              >{{ t("common.btn.video") }}</el-button
             >
           </div>
         </div>
@@ -315,7 +320,7 @@
 <script setup lang="ts">
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
@@ -323,6 +328,7 @@ const { t, locale } = useI18n();
 const router = useRouter();
 const actImg = ref(0);
 const isSmallSize = ref(window.innerWidth < 576);
+const offset = ref(88);
 
 const activeNames = ref([]);
 const gdList = ["RS100-M6", "RS100-M12", "RS100-M16"];
@@ -393,13 +399,13 @@ const rs100 = {
   info4: [
     {
       img: `/rs100/tj0.png`,
-      title: t("rs100.info4[0][0].title"),
-      info: t("rs100.info4[0][0].info"),
+      title: t("rs100.info4[0].title"),
+      info: t("rs100.info4[0].info"),
     },
     {
       img: `/rs100/tj1.png`,
-      title: t("rs100.info4[0][1].title"),
-      info: t("rs100.info4[0][1].info"),
+      title: t("rs100.info4[1].title"),
+      info: t("rs100.info4[1].info"),
     },
   ],
   b5: t("rs100.b5"),
@@ -497,16 +503,26 @@ const goBack = () => {
   router.push({ path: "/goods", query: { type: "RS" } });
 };
 
-onMounted(() => {});
+const headerShow = () => {
+  nextTick(() => {
+    const temp = window.scrollY || document.documentElement.scrollTop;
+    offset.value = temp < 88 ? 88 - temp : 0.5;
+    console.log(`output->headRef`, temp, offset.value);
+  });
+};
+onMounted(() => {
+  window.addEventListener("scroll", headerShow);
+});
 </script>
 <style lang="scss" scoped>
 .good-container {
   width: 100vw;
-  margin-top: 89px;
+  height: auto;
 
   .header {
     background-color: #f4f4f4;
     text-align: center;
+    z-index: 999;
 
     .head {
       max-width: 1384px;
@@ -525,9 +541,9 @@ onMounted(() => {});
 
   .good-wrapper {
     max-width: 1384px;
-    // padding: 0 64px;
 
     .content {
+      margin-top: 88px;
       padding: 32px 0;
 
       .title {

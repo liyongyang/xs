@@ -2,14 +2,14 @@
   <div class="slider-container slider">
     <img
       class="hvr-wobble-horizontal cursor-pointer"
-      src="/common/affix-icon1.png"
+      src="/common/affix-icon1.svg"
       alt=""
       srcset=""
       @click="openSy()"
     />
     <img
       class="hvr-wobble-horizontal cursor-pointer"
-      src="/common/affix-icon2.png"
+      src="/common/affix-icon2.svg"
       alt=""
       srcset=""
       @click="openCall()"
@@ -17,7 +17,7 @@
     <img
       @click="toTop()"
       class="hvr-wobble-horizontal cursor-pointer"
-      src="/common/affix-icon3.png"
+      src="/common/affix-icon3.svg"
       alt=""
       srcset=""
     />

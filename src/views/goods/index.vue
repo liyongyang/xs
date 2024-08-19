@@ -578,11 +578,9 @@ onUnmounted(() => {});
     .section-wrapper {
       width: 358px;
       padding: 0;
-      // padding-top: 88px;
+      padding-top: 88px;
       padding-bottom: 32px;
       .back {
-        // position: absolute;
-        padding-top: 88px;
         z-index: 99;
       }
       .card {
@@ -592,30 +590,40 @@ onUnmounted(() => {});
       }
       .card2 {
         display: flex;
+        flex-direction: column;
         width: 358px;
         margin: 0 auto;
         overflow: scroll;
       }
       .cl {
         flex: 0 0 auto;
-        width: 228px;
-        height: 400px;
+        width: auto;
         margin-top: 32px;
       }
     }
     .gd-wrapper {
       .banner-slider {
         width: 358px;
-        height: 424px;
-        margin-top: 88px;
+        height: 440px;
         .sliders {
           line-height: 48px;
+          .slider-img {
+            width: 185px;
+            height: auto;
+          }
         }
-        .slider {
+      }
+      .banner-info {
+        width: 358px;
+        height: auto;
+        .feat-img {
+          width: 358px;
+          height: 170px;
+          background-size: cover;
+          background-position: top center;
         }
-        .slider-img {
-          width: 185px;
-          height: 280px;
+        .feat-info {
+          width: 358px;
         }
       }
     }

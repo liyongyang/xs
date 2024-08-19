@@ -12,29 +12,17 @@
       >
         <CloseBold />
       </el-icon>
-      <el-form-item prop="name">
-        <template #label>
-          <div class="">{{ t("common.form.t1") }}</div>
-        </template>
-        <el-input v-model="ruleForm.name" />
-      </el-form-item>
       <el-form-item prop="company">
         <template #label>
           <div class="">{{ t("common.form.t2") }}</div>
         </template>
         <el-input v-model="ruleForm.company" />
       </el-form-item>
-      <el-form-item prop="phone">
+      <el-form-item prop="name">
         <template #label>
-          <div class="">{{ t("common.form.t3") }}</div>
+          <div class="">{{ t("common.form.t1") }}</div>
         </template>
-        <el-input v-model="ruleForm.phone" />
-      </el-form-item>
-      <el-form-item prop="email">
-        <template #label>
-          <div class="">{{ t("common.form.t4") }}</div>
-        </template>
-        <el-input v-model="ruleForm.email" />
+        <el-input v-model="ruleForm.name" />
       </el-form-item>
       <el-form-item prop="zw">
         <template #label>
@@ -42,6 +30,18 @@
         </template>
         <el-input v-model="ruleForm.zw" />
       </el-form-item>
+      <el-form-item prop="phone">
+        <template #label>
+          <div class="">{{ t("common.form.t3") }}</div>
+        </template>
+        <el-input v-model="ruleForm.phone" />
+      </el-form-item>
+      <!-- <el-form-item prop="email">
+        <template #label>
+          <div class="">{{ t("common.form.t4") }}</div>
+        </template>
+        <el-input v-model="ruleForm.email" />
+      </el-form-item> -->
       <el-form-item prop="city">
         <template #label>
           <div class="">{{ t("common.form.t6") }}</div>
@@ -81,14 +81,14 @@ const ruleForm = reactive({
   city: "",
 });
 interface RuleForm {
-  name: string;
+  company: string;
   phone: number;
 }
 
 const rules = reactive<FormRules<RuleForm>>({
-  name: [
-    { required: true, message: "请填写姓名后提交", trigger: "blur" },
-    { min: 1, max: 12, message: "请填写正确姓名后提交", trigger: "blur" },
+  company: [
+    { required: true, message: "请填写公司信息后提交", trigger: "blur" },
+    { min: 1, max: 32, message: "请填写正确公司信息后提交", trigger: "blur" },
   ],
   phone: [
     { required: true, message: "请输入手机号", trigger: "blur" },
