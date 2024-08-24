@@ -82,7 +82,7 @@
             </el-carousel> -->
             <img
               class="act-img w-auto mx-auto text-center"
-              :src="`/h920/slider/slider${actImg}.png`"
+              :src="`/h920/slider/slider${actImg}.webp`"
               alt=""
             />
             <div
@@ -92,13 +92,13 @@
                 <div
                   class="img-item w30 flex-initial text-center mx-1"
                   :class="actImg === index ? 'act-img-item bg-gray-200' : ''"
-                  v-for="(item, index) in 6"
+                  v-for="(item, index) in 9"
                   :key="item"
                   @click="actImg = index"
                 >
                   <img
                     class="h18"
-                    :src="`/h920/slider/slider${index}.png`"
+                    :src="`/h920/slider/slider${index}.webp`"
                     alt=""
                     srcset=""
                   />
@@ -123,7 +123,22 @@
             <li>{{ h920.tip1 }}</li>
             <li>{{ h920.tip1_2 }}</li>
           </div>
+          <div v-if="isSmallSize">
+            <div v-for="(items, index) in h920.info1" :key="index">
+              <div
+                class="card jm-card wow animate__animated animate__fadeInUp"
+                v-for="(item, i) in items"
+                :key="i"
+              >
+                <img class="jm-img" :src="item.img" alt="" />
+                <div class="msg">
+                  <li class="title">{{ item.title }}</li>
+                </div>
+              </div>
+            </div>
+          </div>
           <el-carousel
+            v-else
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
@@ -156,7 +171,10 @@
             <li>{{ h920.tip2 }}</li>
             <li>{{ h920.tip2_2 }}</li>
           </div>
-          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
+          <div
+            class="flex justify-between overflow-x-scroll overflow-y-hidden"
+            :class="isSmallSize ? 'flex-col' : ''"
+          >
             <div
               class="card wow animate__animated animate__fadeInUp"
               v-for="(item, i) in h920.info2"
@@ -229,7 +247,10 @@
               {{ h920.b5 }}
             </li>
           </template>
-          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
+          <div
+            class="flex justify-between overflow-x-scroll overflow-y-hidden"
+            :class="isSmallSize ? 'flex-col' : ''"
+          >
             <div
               class="card wow animate__animated animate__fadeInUp"
               v-for="(item, i) in h920.info5"
@@ -469,8 +490,7 @@ onMounted(() => {
         height: 440px;
 
         .act-img {
-          height: 300px;
-          transform: scale(1.25);
+          width: 563px;
         }
         .img-box {
           .img-item {
@@ -486,7 +506,6 @@ onMounted(() => {
             border: #dfe1e2 solid 1px;
 
             img {
-              transform: scale(1.2);
               transition: all 0.3s ease-in-out;
               border: #dfe1e200 solid 1px;
             }
@@ -652,7 +671,7 @@ onMounted(() => {
         }
         .banner-img {
           width: 358px;
-          height: 365px;
+          height: 320px;
           .act-img {
             width: 358px;
             transform: scale(1);

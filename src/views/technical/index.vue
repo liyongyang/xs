@@ -32,7 +32,8 @@
         <div class="card">
           <div class="left text-wrap text-left">
             <li
-              class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+              class="leading-10 font-500 mb-4 wow animate__animated animate__fadeInUp"
+              :class="locale === 'en' ? 'title-en' : 'title'"
             >
               {{ technical.p1.card[0].tit }}
             </li>
@@ -44,7 +45,7 @@
         </div>
         <div class="card">
           <div v-if="isSmallSize" class="left text-wrap text-left">
-            <li class="title leading-10 font-600 mb-4">
+            <li class="title leading-10 font-500 mb-4">
               {{ technical.p1.card[1].tit }}
             </li>
             <li class="txt">
@@ -54,7 +55,8 @@
           <div class="card3-img"></div>
           <div v-if="!isSmallSize" class="left text-wrap text-left">
             <li
-              class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+              class="leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+              :class="locale === 'en' ? 'title-en' : 'title'"
             >
               {{ technical.p1.card[1].tit }}
             </li>
@@ -66,10 +68,11 @@
         <div class="card">
           <div class="left text-wrap text-left">
             <li
-              class="title leading-10 font-600 mb-4"
-              :class="
-                !isSmallSize ? 'wow animate__animated animate__fadeInUp' : ''
-              "
+              class="leading-10 font-600 mb-4"
+              :class="[
+                !isSmallSize ? 'wow animate__animated animate__fadeInUp' : '',
+                locale === 'en' ? 'title-en' : 'title',
+              ]"
             >
               {{ technical.p1.card[2].tit }}
             </li>
@@ -128,7 +131,8 @@
       <div class="card">
         <div class="left text-wrap text-left">
           <li
-            class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            class="leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            :class="locale === 'en' ? 'title-en' : 'title'"
           >
             {{ technical.p2.card2[0].tit }}
           </li>
@@ -184,7 +188,8 @@
         </el-carousel>
         <div v-if="!isSmallSize" class="left text-wrap text-left">
           <li
-            class="title leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            class="leading-10 font-600 mb-4 wow animate__animated animate__fadeInUp"
+            :class="locale === 'en' ? 'title-en' : 'title'"
           >
             {{ technical.p2.card2[1].tit }}
           </li>
@@ -831,7 +836,7 @@ onMounted(() => {
       .se4-info {
         width: 352px;
         .se4-tit {
-          font-size: 1.75rem;
+          font-size: 28px;
           line-height: 40px;
           margin-bottom: 16px;
         }
@@ -850,6 +855,8 @@ onMounted(() => {
       }
 
       .light-txt {
+        width: 300px;
+        text-wrap: wrap;
         position: absolute;
         font-size: 1.75rem;
         line-height: 40px;
@@ -937,6 +944,10 @@ onMounted(() => {
         width: 368px;
         .title {
           font-size: 40px;
+          font-weight: 600;
+        }
+        .title-en {
+          font-size: 24px;
           font-weight: 600;
         }
         .txt {

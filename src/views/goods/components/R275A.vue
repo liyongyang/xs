@@ -11,6 +11,7 @@ const route = useRoute();
 const isSmallSize = ref(window.innerWidth < 900);
 
 const showGd = ref(true);
+const showVedio = ref(false);
 const chilMenu = ref(false);
 const gdRef = ref();
 const videoRef2 = ref();
@@ -358,6 +359,10 @@ const player6 = (key) => {
 };
 
 const handleScroll = (event) => {
+  // if (showVedio) {
+  //   event.preventDefault();
+  //   return;
+  // }
   console.log(`===`, pg1Act.value);
   if (event.deltaY > 0) {
     // 向下滚动
@@ -498,7 +503,7 @@ onBeforeUnmount(() => {
           <el-button class="btn-white" @click="openDialog()">{{
             t("common.btn.try")
           }}</el-button>
-          <el-button class="btn-black">观看视频</el-button>
+          <el-button class="btn-black">{{ t("common.btn.video") }}</el-button>
         </div>
       </div>
       <div
@@ -536,7 +541,7 @@ onBeforeUnmount(() => {
           <el-button class="btn-white" @click="openDialog()">{{
             t("common.btn.try")
           }}</el-button>
-          <el-button disabled class="btn-black">{{
+          <el-button class="btn-black" @click="showVedio = !showVedio">{{
             t("common.btn.video")
           }}</el-button>
         </div>
@@ -550,16 +555,27 @@ onBeforeUnmount(() => {
       </div>
     </section>
     <section v-if="isSmallSize" class="banner-wapper">
-      <img class="banner-item" src="/R275A/webp2/33.webp" alt="" />
-      <img class="banner-item" src="/R275A/webp2/55.webp" alt="" />
+      <!-- <div class="banner-item1"></div> -->
+      <video class="video-item" muted loop autoplay>
+        <source src="/R275A/m-v1.mp4" />
+      </video>
+      <video class="video-item" muted loop autoplay>
+        <source src="/R275A/m-v2.mp4" />
+      </video>
+      <video class="video-item" muted loop autoplay>
+        <source src="/R275A/m-v3.mp4" />
+      </video>
+      <!-- <img class="banner-item1" src="/R275A/webp2/80.webp" alt="" /> -->
+      <!-- <img class="banner-item" src="/R275A/webp2/33.webp" alt="" /> -->
+      <!-- <img class="banner-item" src="/R275A/webp2/55.webp" alt="" />
       <img class="banner-item" src="/R275A/webp2/108.webp" alt="" />
       <img class="banner-item" src="/R275A/webp2/124.webp" alt="" />
       <img class="banner-item" src="/R275A/webp2/130.webp" alt="" />
       <img class="banner-item" src="/R275A/webp2/148.webp" alt="" />
-      <img class="banner-item" src="/R275A/webp2/175.webp" alt="" />
-      <video class="banner-item" muted loop autoplay>
+      <img class="banner-item" src="/R275A/webp2/175.webp" alt="" /> -->
+      <!-- <video class="video-item" muted loop autoplay>
         <source src="/R275A/video2.mp4" />
-      </video>
+      </video> -->
     </section>
     <section class="pg bg-black">
       <div class="content">
@@ -628,28 +644,26 @@ onBeforeUnmount(() => {
         </el-carousel>
       </div>
     </section>
-    <!-- <section class="pg bg-white">
-      <div class="content text-slate-900">
-        <li class="title text-center wow animate__animated animate__fadeInUp">
-          {{ A275A_INFO.dbInfo.title }}
-        </li>
-        <div class="yy-slider wow animate__animated animate__fadeInUp">
-          <tableSvg></tableSvg>
-        </div>
-        <div class="text-center more wow animate__animated animate__fadeInUp">
-          <router-link
-            :to="{ path: '/goods/R275A/product-params' }"
-            class="btn-white more-btn cursor-pointer"
-          >
-            {{ A275A_INFO.dbInfo.more }}
-          </router-link>
-        </div>
-      </div>
-    </section> -->
+  </div>
+  <div class="vedio-comp" v-show="showVedio">
+    <div class="gd-vedio animate__animated animate__fadeIn">
+      <el-icon
+        class="absolute top--30 right--32 font-600 text-12 text-gray cursor-pointer hover:text-white"
+        @click="showVedio = !showVedio"
+      >
+        <CircleCloseFilled />
+      </el-icon>
+      <video class="my-video" controls muted>
+        <source
+          :src="locale === 'zh' ? '/video/r275a-zh.mp4' : '/video/r275a-en.mp4'"
+        />
+      </video>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
 .pg-container {
+  position: relative;
   color: #fff;
   position: relative;
   width: 100vw;
@@ -902,6 +916,28 @@ onBeforeUnmount(() => {
     object-fit: cover;
   }
 }
+.vedio-comp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000e4;
+  z-index: 999;
+  .gd-vedio {
+    position: relative;
+    width: 1200px;
+    .my-video {
+      width: 1200px;
+    }
+  }
+}
+:deep(.el-dialog__body) {
+  padding: 0 !important;
+}
 :deep(.el-carousel__arrow) {
   top: 95%;
   background-color: #292929;
@@ -926,7 +962,7 @@ onBeforeUnmount(() => {
 @media (max-width: 576px) {
   .pg-container {
     .section-banner {
-      padding-top: 88px;
+      padding-top: 80px;
       position: relative;
     }
 
@@ -934,13 +970,18 @@ onBeforeUnmount(() => {
       position: relative;
       width: 100vw;
       height: auto;
-      background-image: url("/home/r275a.webp");
-      background-size: 160%;
+      background-image: url("/R275A/webp2/1.webp");
+      background-size: cover;
       background-position: center bottom;
       background-repeat: no-repeat;
       .text-wrapper {
+        width: 100vw;
+        padding: 0 12px;
         padding-top: 32px;
         text-align: center;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        white-space: normal;
         .gd-type {
           color: #ffffff;
           font-size: 18px;
@@ -957,7 +998,16 @@ onBeforeUnmount(() => {
           margin: 0 0 16px 0;
         }
       }
-      .banner-item {
+      .banner-item1 {
+        height: 640px;
+        width: 100vw;
+        display: block;
+        // background-image: url("/R275A/webp2/68.webp");
+        background-size: cover;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+      }
+      .video-item {
         width: 100vw;
         height: auto;
         display: block;
@@ -991,7 +1041,19 @@ onBeforeUnmount(() => {
       }
     }
     .banner-wapper1 {
-      height: 460px;
+      // height: 640px;
+      height: calc(100vh - 40px);
+      &::before {
+        content: "";
+        position: absolute;
+        height: calc(100vh - 40px);
+        width: 100vw;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0) 90%,
+          #000000e8 98%
+        );
+      }
     }
     .pg {
       .content {

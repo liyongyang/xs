@@ -53,6 +53,7 @@
             arrow="always"
             class="carousel-imgs"
             height="380px"
+            indicator-position="outside"
           >
             <el-carousel-item v-for="(item, index) in items.case" :key="index">
               <div class="case-list flex">

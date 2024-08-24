@@ -266,11 +266,12 @@ onMounted(() => {
       top: 50px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 1;
+      z-index: 99;
       width: 1384px;
       font-size: 14px;
       margin: 0 auto;
-
+      color: #fff;
+      cursor: pointer;
       span {
         position: relative;
         top: -2px;

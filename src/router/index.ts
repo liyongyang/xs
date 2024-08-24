@@ -144,19 +144,6 @@ export const defaultRoutes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/service",
-    component: () => import("@/views/myService/index.vue"),
-    meta: {
-      title: "service",
-      hidden: true,
-      content: {
-        keywords: "宁波新算技术有限公司,工业机器视觉行业,解码识读算法",
-        description:
-          "新算集团主营工业机器视觉传感器类产品的研发、设计和销售。新算核心研发团队已深耕工业机器视觉领域多年，具备完全独立自主知识产权的解码识读算法并已推出上市R275-A等一系列工业高性能固定式读码器产品。公司近年来深耕新能源电池及汽车制造...",
-      },
-    },
-  },
-  {
     path: "/technical",
     component: () => import("@/views/technical/index.vue"),
     meta: {
@@ -278,6 +265,32 @@ export const defaultRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/detail/index.vue"),
     meta: {
       title: "aboutUs",
+      hidden: true,
+      content: {
+        keywords: "宁波新算技术有限公司,工业机器视觉行业,解码识读算法",
+        description:
+          "新算集团主营工业机器视觉传感器类产品的研发、设计和销售。新算核心研发团队已深耕工业机器视觉领域多年，具备完全独立自主知识产权的解码识读算法并已推出上市R275-A等一系列工业高性能固定式读码器产品。公司近年来深耕新能源电池及汽车制造...",
+      },
+    },
+  },
+  {
+    path: "/privacy-policy",
+    component: () => import("@/views/privacy-policy/index.vue"),
+    meta: {
+      title: "privacy-policy",
+      hidden: true,
+      content: {
+        keywords: "宁波新算技术有限公司,工业机器视觉行业,解码识读算法",
+        description:
+          "新算集团主营工业机器视觉传感器类产品的研发、设计和销售。新算核心研发团队已深耕工业机器视觉领域多年，具备完全独立自主知识产权的解码识读算法并已推出上市R275-A等一系列工业高性能固定式读码器产品。公司近年来深耕新能源电池及汽车制造...",
+      },
+    },
+  },
+  {
+    path: "/cookies-policy",
+    component: () => import("@/views/cookies-policy/index.vue"),
+    meta: {
+      title: "cookies-policy",
       hidden: true,
       content: {
         keywords: "宁波新算技术有限公司,工业机器视觉行业,解码识读算法",

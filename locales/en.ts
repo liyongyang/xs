@@ -44,8 +44,8 @@ export default {
       },
       info2: {
         txt1: "Focus on industrial machine vision and start smart manufacturing with code reading products",
-        txt2: "privacy policy",
-        txt3: "Cookies",
+        txt2: "Privacy Policy",
+        txt3: "Cookies Policy",
         txt4: "浙ICP备2023017780号-1",
         txt5: "Follow us",
       },

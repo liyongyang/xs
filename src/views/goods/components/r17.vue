@@ -30,7 +30,7 @@
     <section class="good-wrapper mx-auto">
       <div class="content">
         <li
-          class="back items-center cursor-pointer wow animate__animated animate__fadeInUp"
+          class="flex items-center cursor-pointer py-2 px-3 wow animate__animated animate__fadeInUp"
         >
           <el-icon>
             <ArrowLeftBold />
@@ -133,7 +133,10 @@
               {{ r17.b1 }}
             </li>
           </template>
-          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
+          <div
+            class="flex justify-between overflow-x-scroll overflow-y-hidden"
+            :class="isSmallSize ? 'flex-col' : ''"
+          >
             <div
               class="card wow animate__animated animate__fadeInUp"
               v-for="(item, i) in r17.info1"
@@ -200,8 +203,23 @@
               {{ r17.b4 }}
             </li>
           </template>
+          <div v-if="isSmallSize">
+            <div v-for="(items, index) in r17.info4" :key="index">
+              <div class="card" v-for="(item, i) in items" :key="i">
+                <img
+                  class="img wow animate__animated animate__fadeInUp"
+                  :src="item.img"
+                  alt=""
+                />
+                <div class="msg wow animate__animated animate__fadeInUp">
+                  <li class="title">{{ item.title }}</li>
+                </div>
+              </div>
+            </div>
+          </div>
           <el-carousel
             :autoplay="false"
+            v-else
             class="carousel-imgs"
             :height="isSmallSize ? '220px' : '548px'"
             arrow="always"
@@ -595,9 +613,9 @@ onMounted(() => {
       }
       .card {
         flex: 0 0 auto;
-        width: 342px;
+        width: 358px;
         .img {
-          width: 320px;
+          width: 348px;
         }
         .msg {
           margin: 0 16px;

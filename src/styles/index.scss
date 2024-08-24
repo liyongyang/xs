@@ -91,7 +91,6 @@ menu,
 nav,
 object,
 ol,
-p,
 pre,
 q,
 samp,
@@ -117,9 +116,17 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font-weight: 400;
   vertical-align: initial;
   background: transparent;
+}
+
+p {
+  margin: 0 0 24px 0;
+}
+
+stronger {
+  font-size: 30px;
+  font-size: 600;
 }
 
 *,

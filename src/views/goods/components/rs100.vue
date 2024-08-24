@@ -70,7 +70,7 @@
                 >{{ t("common.footer.info1.txt1") }}</el-button
               >
               <el-button
-                disabled
+                @click="showVedio = !showVedio"
                 class="btn-black more wow animate__animated animate__fadeInUp"
                 >{{ t("common.btn.video") }}</el-button
               >
@@ -157,12 +157,32 @@
               <span class="italic font-500 font- skew-x-6">X</span>-Tech™
             </li>
           </template>
+          <div v-if="isSmallSize">
+            <div v-for="(items, index) in rs100.info2" :key="index">
+              <div
+                class="card wow animate__animated animate__fadeInUp"
+                v-for="(item, i) in items"
+                :key="i"
+              >
+                <video class="img" autoplay loop muted>
+                  <source :src="item.src" />
+                </video>
+                <!-- <img class="img" :src="item.img" alt="" /> -->
+                <div class="msg">
+                  <li class="title">{{ item.title }}</li>
+                  <li class="txt">{{ item.info }}</li>
+                </div>
+              </div>
+            </div>
+          </div>
           <el-carousel
+            v-else
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
             :height="isSmallSize ? '400px' : '580px'"
             arrow="always"
+            indicator-position="outside"
           >
             <el-carousel-item
               v-for="(items, index) in rs100.info2"
@@ -173,10 +193,17 @@
                 v-for="(item, i) in items"
                 :key="i"
               >
-                <img class="img" :src="item.img" alt="" />
+                <video class="img" autoplay loop muted>
+                  <source :src="item.src" />
+                </video>
+                <!-- <img class="img" :src="item.img" alt="" /> -->
                 <div class="msg">
-                  <li class="title">{{ item.title }}</li>
-                  <li class="txt">{{ item.info }}</li>
+                  <li :class="locale === 'en' ? 'title-en' : 'title'">
+                    {{ item.title }}
+                  </li>
+                  <li :class="locale === 'en' ? 'txt-en' : 'txt'">
+                    {{ item.info }}
+                  </li>
                 </div>
               </div>
             </el-carousel-item>
@@ -193,12 +220,29 @@
               {{ rs100.tip3 }}
             </li>
           </div>
+          <div v-if="isSmallSize">
+            <div v-for="(items, index) in rs100.info3" :key="index">
+              <div
+                class="card wow animate__animated animate__fadeInUp"
+                v-for="(item, i) in items"
+                :key="i"
+              >
+                <img class="img" :src="item.img" alt="" />
+                <div class="msg">
+                  <li class="title">{{ item.title }}</li>
+                  <li class="txt">{{ item.info }}</li>
+                </div>
+              </div>
+            </div>
+          </div>
           <el-carousel
+            v-else
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
-            :height="isSmallSize ? '420px' : '580px'"
+            :height="isSmallSize ? '420px' : '600px'"
             arrow="always"
+            indicator-position="outside"
           >
             <el-carousel-item
               v-for="(items, index) in rs100.info3"
@@ -211,8 +255,12 @@
               >
                 <img class="img" :src="item.img" alt="" />
                 <div class="msg">
-                  <li class="title">{{ item.title }}</li>
-                  <li class="txt">{{ item.info }}</li>
+                  <li :class="locale === 'en' ? 'title-en' : 'title'">
+                    {{ item.title }}
+                  </li>
+                  <li :class="locale === 'en' ? 'txt-en' : 'txt'">
+                    {{ item.info }}
+                  </li>
                 </div>
               </div>
             </el-carousel-item>
@@ -229,16 +277,27 @@
               {{ rs100.tip4 }}
             </li>
           </div>
-          <div class="flex justify-between overflow-x-scroll overflow-y-hidden">
-            <div
-              class="card wow animate__animated animate__fadeInUp"
-              v-for="(item, i) in rs100.info4"
-              :key="i"
-            >
-              <img class="img" :src="item.img" alt="" />
+          <div
+            class="flex justify-between overflow-x-scroll overflow-y-hidden"
+            :class="isSmallSize ? 'flex-col' : ''"
+          >
+            <div class="card wow animate__animated animate__fadeInUp">
+              <video class="img" autoplay loop muted>
+                <source :src="rs100.info4[0].src" />
+              </video>
               <div class="msg">
-                <li class="title">{{ item.title }}</li>
-                <li class="txt">{{ item.info }}</li>
+                <li class="title">{{ rs100.info4[0].title }}</li>
+                <li class="txt">{{ rs100.info4[0].info }}</li>
+              </div>
+            </div>
+            <div class="card wow animate__animated animate__fadeInUp">
+              <img class="img" :src="rs100.info4[1].src" alt="" />
+              <!-- <video class="img" autoplay loop muted>
+                <source :src="rs100.info4[0].src" />
+              </video> -->
+              <div class="msg">
+                <li class="title">{{ rs100.info4[1].title }}</li>
+                <li class="txt">{{ rs100.info4[1].info }}</li>
               </div>
             </div>
           </div>
@@ -249,11 +308,29 @@
               {{ rs100.b5 }}
             </li>
           </template>
+          <div v-if="isSmallSize">
+            <div v-for="(items, index) in rs100.info5" :key="index">
+              <div
+                class="card wow animate__animated animate__fadeInUp"
+                v-for="(item, i) in items"
+                :key="i"
+              >
+                <img class="img" :src="item.img" alt="" />
+                <div class="msg">
+                  <li class="title">{{ item.title }}</li>
+                  <li class="txt">{{ item.info }}</li>
+                </div>
+              </div>
+            </div>
+          </div>
           <el-carousel
+            v-else
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
             :height="isSmallSize ? '268px' : '548px'"
+            arrow="always"
+            indicator-position="outside"
           >
             <el-carousel-item
               v-for="(items, index) in rs100.info5"
@@ -266,33 +343,46 @@
               >
                 <img class="img" :src="item.img" alt="" />
                 <div class="msg">
-                  <li class="title">{{ item.title }}</li>
-                  <li class="txt">{{ item.info }}</li>
+                  <li :class="locale === 'en' ? 'title-en' : 'title'">
+                    {{ item.title }}
+                  </li>
+                  <li :class="locale === 'en' ? 'txt-en' : 'txt'">
+                    {{ item.info }}
+                  </li>
                 </div>
               </div>
             </el-carousel-item>
           </el-carousel>
         </el-collapse-item>
-        <!-- <el-collapse-item name="6">
-          <template #title>
-            <li class="info-title wow animate__animated animate__fadeInUp">
-              型号对比
-            </li>
-          </template>
-          <tableSvg></tableSvg>
-        </el-collapse-item> -->
-        <el-collapse-item name="7">
+        <el-collapse-item name="6">
           <template #title>
             <li class="info-title wow animate__animated animate__fadeInUp">
               {{ rs100.b6 }}
             </li>
           </template>
+          <div v-if="isSmallSize">
+            <div v-for="(items, index) in rs100.info6" :key="index">
+              <div
+                class="card wow animate__animated animate__fadeInUp"
+                v-for="(item, i) in items"
+                :key="i"
+              >
+                <img class="img" :src="item.img" alt="" />
+                <div class="msg">
+                  <li class="title">{{ item.title }}</li>
+                  <li class="txt">{{ item.info }}</li>
+                </div>
+              </div>
+            </div>
+          </div>
           <el-carousel
+            v-else
             :interval="3000"
             :autoplay="false"
             class="carousel-imgs"
             :height="isSmallSize ? '340px' : '548px'"
             arrow="always"
+            indicator-position="outside"
           >
             <el-carousel-item
               v-for="(items, index) in rs100.info6"
@@ -305,8 +395,12 @@
               >
                 <img class="img" :src="item.img" alt="" />
                 <div class="msg">
-                  <li class="title">{{ item.title }}</li>
-                  <li class="txt">{{ item.info }}</li>
+                  <li :class="locale === 'en' ? 'title-en' : 'title'">
+                    {{ item.title }}
+                  </li>
+                  <li :class="locale === 'en' ? 'txt-en' : 'txt'">
+                    {{ item.info }}
+                  </li>
                 </div>
               </div>
             </el-carousel-item>
@@ -314,6 +408,21 @@
         </el-collapse-item>
       </el-collapse>
     </section>
+  </div>
+  <div class="vedio-comp" v-show="showVedio">
+    <div class="gd-vedio animate__animated animate__fadeIn">
+      <el-icon
+        class="absolute top--30 right--32 font-600 text-12 text-gray cursor-pointer hover:text-white"
+        @click="showVedio = !showVedio"
+      >
+        <CircleCloseFilled />
+      </el-icon>
+      <video class="my-video" controls muted>
+        <source
+          :src="locale === 'zh' ? '/video/rs100-zh.m4v' : '/video/rs100-en.mp4'"
+        />
+      </video>
+    </div>
   </div>
 </template>
 
@@ -329,7 +438,7 @@ const router = useRouter();
 const actImg = ref(0);
 const isSmallSize = ref(window.innerWidth < 576);
 const offset = ref(88);
-
+const showVedio = ref(false);
 const activeNames = ref([]);
 const gdList = ["RS100-M6", "RS100-M12", "RS100-M16"];
 const rs100 = {
@@ -341,19 +450,19 @@ const rs100 = {
   info2: [
     [
       {
-        img: `/rs100/xt0.png`,
+        src: `/video/rs100-x1.mp4`,
         title: t("rs100.info2[0][0].title"),
         info: t("rs100.info2[0][0].info"),
       },
       {
-        img: `/rs100/xt1.png`,
+        src: `/video/rs100-x2.mp4`,
         title: t("rs100.info2[0][1].title"),
         info: t("rs100.info2[0][1].info"),
       },
     ],
     [
       {
-        img: `/rs100/xt2.png`,
+        src: `/video/rs100-x3.mp4`,
         title: t("rs100.info2[1][0].title"),
         info: t("rs100.info2[1][0].info"),
       },
@@ -398,12 +507,12 @@ const rs100 = {
   tip4: t("rs100.tip4"),
   info4: [
     {
-      img: `/rs100/tj0.png`,
+      src: `/video/rs100-x4.mp4`,
       title: t("rs100.info4[0].title"),
       info: t("rs100.info4[0].info"),
     },
     {
-      img: `/rs100/tj1.png`,
+      src: `/rs100/tj1.png`,
       title: t("rs100.info4[1].title"),
       info: t("rs100.info4[1].info"),
     },
@@ -641,6 +750,7 @@ onMounted(() => {
 
       .img {
         width: 687px;
+        height: 386px;
       }
 
       .msg {
@@ -653,6 +763,13 @@ onMounted(() => {
           line-height: 32px;
           margin-bottom: 12px;
         }
+        .title-en {
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 28px;
+          margin-bottom: 12px;
+        }
 
         .txt {
           font-size: 20px;
@@ -661,7 +778,33 @@ onMounted(() => {
           line-height: 28px;
           text-align: justify;
         }
+        .txt-en {
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 20px;
+          text-align: justify;
+        }
       }
+    }
+  }
+}
+.vedio-comp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000e4;
+  z-index: 999;
+  .gd-vedio {
+    position: relative;
+    width: 1200px;
+    .my-video {
+      width: 1200px;
     }
   }
 }
@@ -780,14 +923,14 @@ onMounted(() => {
       }
       .card {
         flex: 0 0 auto;
-        width: 320px;
-        margin-right: 8px;
+        width: 360px;
+        margin-bottom: 20px;
 
         .jm-img {
           width: 280px;
         }
         .img {
-          width: 320px;
+          width: 348px;
         }
         .msg {
           margin: 0 16px;

@@ -49,11 +49,12 @@
           </div>
           <div class="head-child">
             <div class="good-tabs" v-show="activeRoute === 'goods'">
-              <el-tabs tabPosition="left">
+              <el-tabs tabPosition="left" @tab-click="togd">
                 <el-tab-pane
                   v-for="(t, index) in goodMenus"
                   :key="index"
                   :label="t.name"
+                  :name="t.type"
                 >
                   <li
                     :class="v.name === 'R275-A' ? 'newLi' : ''"
@@ -117,7 +118,7 @@
               v-for="(item, index) in goodMenus"
               :key="index"
             >
-              <li class="my-2">{{ item.name }}</li>
+              <li class="my-2" @click="togd1(item.type)">{{ item.name }}</li>
               <li
                 :class="v.name === 'R275-A' ? 'newLi' : ''"
                 class="mb-2 hover:font-500"
@@ -309,6 +310,7 @@ const menus = [
 const goodMenus = [
   {
     name: t("gdList.card[1]"),
+    type: "R",
     child: [
       {
         name: "R275-A",
@@ -330,6 +332,7 @@ const goodMenus = [
   },
   {
     name: t("gdList.card[2]"),
+    type: "RS",
     child: [
       {
         name: "RS100",
@@ -339,6 +342,7 @@ const goodMenus = [
   },
   {
     name: t("gdList.card[3]"),
+    type: "H",
     child: [
       {
         name: "H920(无线/有线)",
@@ -410,6 +414,23 @@ const toPage = (item: any) => {
   openMenus.value = false;
   router.push({
     path: `/goods/${item.path}`,
+  });
+};
+const togd = (v: any) => {
+  router.push({
+    path: "/goods",
+    query: {
+      type: v.props.name,
+    },
+  });
+};
+const togd1 = (v: any) => {
+  openMenus.value = false;
+  router.push({
+    path: "/goods",
+    query: {
+      type: v,
+    },
   });
 };
 const toPage1 = (v: any) => {

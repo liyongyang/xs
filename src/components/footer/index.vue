@@ -33,7 +33,10 @@
           </div>
           <div class="conf goods-box flex flex-wrap justify-between">
             <div class="mb-4" v-for="(items, index) in goodMenus" :key="index">
-              <li class="type wow animate__animated animate__fadeInUp">
+              <li
+                class="type cursor-pointer wow animate__animated animate__fadeInUp"
+                @click="togd(items.type)"
+              >
                 {{ items.name }}
               </li>
               <div class="space-y-4 wow animate__animated animate__fadeInUp">
@@ -98,8 +101,12 @@
           </div>
         </div>
         <div class="zc flex justify-start gap-8">
-          <li>{{ t("common.footer.info2.txt2") }}</li>
-          <li>{{ t("common.footer.info2.txt3") }}</li>
+          <li class="cursor-pointer" @click="toPolicy('privacy-policy')">
+            {{ t("common.footer.info2.txt2") }}
+          </li>
+          <li class="cursor-pointer" @click="toPolicy('cookies-policy')">
+            {{ t("common.footer.info2.txt3") }}
+          </li>
           <li>{{ t("common.footer.info2.txt4") }}</li>
         </div>
       </div>
@@ -129,6 +136,7 @@ const isSmallSize = ref(window.innerWidth < 900);
 const goodMenus = [
   {
     name: t("gdList.card[1]"),
+    type: "R",
     child: [
       {
         name: "R275-A",
@@ -150,6 +158,7 @@ const goodMenus = [
   },
   {
     name: t("gdList.card[2]"),
+    type: "RS",
     child: [
       {
         name: "RS100",
@@ -167,6 +176,7 @@ const goodMenus = [
   },
   {
     name: t("gdList.card[3]"),
+    type: "H",
     child: [
       {
         name: "H920 无线/有线",
@@ -199,9 +209,24 @@ const openDialog = () => {
   });
 };
 
+const togd = (v: string) => {
+  router.push({
+    path: "/goods",
+    query: {
+      type: v,
+    },
+  });
+};
+
 const toPage = (item: any) => {
   router.push({
     path: `/goods/${item.path}`,
+  });
+};
+
+const toPolicy = (v: string) => {
+  router.push({
+    path: `/${v}`,
   });
 };
 onMounted(() => {});
@@ -274,7 +299,7 @@ onMounted(() => {});
 .footer {
   color: #fff;
   width: 100%;
-  padding: 64px;
+  padding: 64px 0;
   background: #111212;
 
   .main {
@@ -285,8 +310,8 @@ onMounted(() => {});
       height: 100%;
       margin: 0 auto;
       display: flex;
-      justify-content: space-between;
-
+      gap: 120px;
+      justify-content: start;
       .logo-img {
         height: 28px;
         width: 134px;
@@ -363,7 +388,8 @@ onMounted(() => {});
       padding: 64px 0;
     }
     .title {
-      width: 290px;
+      width: 100vw;
+      padding: 0 12px;
       margin: 0 auto;
       font-size: 28px;
       font-weight: 500;
