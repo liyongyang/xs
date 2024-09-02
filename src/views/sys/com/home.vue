@@ -172,7 +172,6 @@ const dialogVisible = ref(false);
 const getHomeFn = () => {
   sys.getHomeList().subscribe((res) => {
     oldForm.value = res;
-    console.log(`output->oldForm`, oldForm.value);
   });
 };
 
