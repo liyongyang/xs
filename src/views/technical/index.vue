@@ -208,6 +208,14 @@
       </li>
       <div class="table-box">
         <img
+          v-if="locale === 'en'"
+          class="table"
+          :class="!isSmallSize ? 'wow animate__animated animate__fadeInUp' : ''"
+          src="/technical/table.svg"
+          alt=""
+        />
+        <img
+          v-else
           class="table"
           :class="!isSmallSize ? 'wow animate__animated animate__fadeInUp' : ''"
           src="/technical/table.webp"
@@ -1067,15 +1075,18 @@ onMounted(() => {
 }
 @media (max-width: 576px) {
   .pg-container {
+    text-wrap: wrap;
+    word-wrap: break-word;
+    white-space: normal;
     .banner {
       max-height: 400px;
       .title {
-        width: 195px;
+        width: 358px;
         text-align: center;
         text-wrap: wrap;
         word-wrap: break-word;
         white-space: normal;
-        font-size: 24px;
+        font-size: 20px;
         letter-spacing: normal;
       }
     }
@@ -1125,8 +1136,12 @@ onMounted(() => {
           .title {
             font-size: 16px;
           }
+          .title-en {
+            font-size: 16px;
+          }
           .txt {
             font-size: 14px;
+            line-height: 20px;
           }
         }
         .card1-img {
@@ -1178,7 +1193,7 @@ onMounted(() => {
           width: 320px;
           margin: 0 auto;
           margin-bottom: 40px;
-          z-index: 999;
+          z-index: 99;
         }
         .checked {
           margin-bottom: 24px;
@@ -1186,7 +1201,7 @@ onMounted(() => {
       }
       .se4-bg {
         width: 358px;
-        height: 420px;
+        height: 500px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1216,9 +1231,9 @@ onMounted(() => {
         .light-txt {
           width: 320px;
           position: absolute;
-          font-size: 18px;
-          line-height: 40px;
-          bottom: 0;
+          font-size: 14px;
+          line-height: 20px;
+          bottom: 20px;
           left: 50%;
           transform: translateX(-50%);
         }
@@ -1233,7 +1248,7 @@ onMounted(() => {
         align-items: center;
         background-size: 100%;
         background-repeat: no-repeat;
-        background-position: 0 120px;
+        background-position: 0 150px;
         .se5-info {
           width: 320px;
           text-wrap: wrap;
@@ -1269,7 +1284,8 @@ onMounted(() => {
         white-space: normal;
       }
       .title {
-        font-size: 24px;
+        font-size: 20px;
+        padding-bottom: 12px;
         letter-spacing: normal;
       }
       .title2 {
@@ -1282,7 +1298,8 @@ onMounted(() => {
         text-wrap: wrap;
         word-wrap: break-word;
         white-space: normal;
-        font-size: 16px;
+        font-size: 14px;
+        line-height: 20px;
       }
     }
   }

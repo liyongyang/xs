@@ -53,7 +53,83 @@
         </li>
       </div>
     </section>
-    <section class="his-wrapper bg-white text-center">
+    <section v-if="isSmallSize" class="his-wrapper bg-white text-center">
+      <li class="title wow animate__animated animate__fadeInUp">
+        {{ section2.title }}
+      </li>
+      <el-carousel
+        :autoplay="false"
+        class="his-wrapper"
+        height="268px"
+        arrow="always"
+      >
+        <el-carousel-item
+          class="time-info-item2"
+          v-for="(item, index) in section2.timeList"
+          :key="index"
+        >
+          <div class="item-item">
+            <li class="txt wow animate__animated animate__fadeInUp">
+              {{ item.time }}
+            </li>
+            <li
+              class="txt-t wow animate__animated animate__fadeInUp"
+              v-for="(t, index) in item.child"
+              :key="index"
+            >
+              {{ t }}
+            </li>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+    </section>
+    <section v-else class="his-wrapper bg-white text-center">
+      <li class="title wow animate__animated animate__fadeInUp">
+        {{ section2.title }}
+      </li>
+      <div class="time-info">
+        <el-carousel
+          :autoplay="false"
+          height="440px"
+          arrow="always"
+          indicator-position="outside"
+        >
+          <el-carousel-item>
+            <div class="time-info-item">
+              <div class="info-item" v-for="(i, index) in 3" :key="index">
+                <li class="txt wow animate__animated animate__fadeInUp">
+                  {{ section2.timeList[index].time }}
+                </li>
+                <li
+                  class="txt-t wow animate__animated animate__fadeInUp"
+                  v-for="(t, i) in section2.timeList[index].child"
+                  :key="i"
+                >
+                  {{ t }}
+                </li>
+              </div>
+            </div>
+          </el-carousel-item>
+          <el-carousel-item>
+            <div class="time-info-item">
+              <div class="info-item" v-for="(i, index) in 3" :key="index">
+                <li class="txt wow animate__animated animate__fadeInUp">
+                  {{ section2.timeList[index + 3].time }}
+                </li>
+                <li
+                  class="txt-t wow animate__animated animate__fadeInUp"
+                  v-for="(t, i) in section2.timeList[index + 3].child"
+                  :key="i"
+                >
+                  {{ t }}
+                </li>
+              </div>
+            </div>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+    </section>
+    <!-- <section v-else class="his-wrapper bg-white text-center">
       <li class="title wow animate__animated animate__fadeInUp">
         {{ section2.title }}
       </li>
@@ -68,7 +144,7 @@
               {{ item.time }}
             </li>
             <li
-              class="wow animate__animated animate__fadeInUp"
+              class="txt-t wow animate__animated animate__fadeInUp"
               v-for="(t, index) in item.child"
               :key="index"
             >
@@ -77,7 +153,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
     <section class="section-wrapper bg2 bg-white text-center">
       <li class="title wow animate__animated animate__fadeInUp">
         {{ section3.title }}
@@ -141,13 +217,20 @@ const section2 = {
   timeList: [
     {
       time: t("aboutUs.p3.timeList[0].time"),
-      child: [t("aboutUs.p3.timeList[0].child[0]")],
+      child: [
+        t("aboutUs.p3.timeList[0].child[0]"),
+        t("aboutUs.p3.timeList[0].child[1]"),
+      ],
     },
     {
       time: t("aboutUs.p3.timeList[1].time"),
       child: [
         t("aboutUs.p3.timeList[1].child[0]"),
         t("aboutUs.p3.timeList[1].child[1]"),
+        t("aboutUs.p3.timeList[1].child[2]"),
+        t("aboutUs.p3.timeList[1].child[3]"),
+        t("aboutUs.p3.timeList[1].child[4]"),
+        t("aboutUs.p3.timeList[1].child[5]"),
       ],
     },
     {
@@ -155,11 +238,17 @@ const section2 = {
       child: [
         t("aboutUs.p3.timeList[2].child[0]"),
         t("aboutUs.p3.timeList[2].child[1]"),
+        t("aboutUs.p3.timeList[2].child[2]"),
+        t("aboutUs.p3.timeList[2].child[3]"),
+        t("aboutUs.p3.timeList[2].child[4]"),
       ],
     },
     {
       time: t("aboutUs.p3.timeList[3].time"),
-      child: [t("aboutUs.p3.timeList[3].child[0]")],
+      child: [
+        t("aboutUs.p3.timeList[3].child[0]"),
+        t("aboutUs.p3.timeList[3].child[1]"),
+      ],
     },
     {
       time: t("aboutUs.p3.timeList[4].time"),
@@ -272,18 +361,31 @@ onMounted(() => {
 
   .his-wrapper {
     width: 100vw;
-    height: 790px;
-    padding-top: 128px;
-    padding-bottom: 64px;
+    height: 800px;
+    padding: 128px 0;
     margin: 0 auto;
     color: #1d1c23;
     background-color: #fff;
 
     .time-info {
-      width: 1680px;
+      width: 1380px;
       overflow-x: scroll;
       margin: 0 auto;
+      .carousel-time {
+        width: 100%;
+      }
+    }
 
+    .time-info-item {
+      position: relative;
+      display: flex;
+      width: auto;
+      text-align: left;
+      padding: 0 48px;
+      color: #1d1c23;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
       &::before {
         content: "";
         position: absolute;
@@ -294,37 +396,29 @@ onMounted(() => {
         background-color: #000;
         width: 220%;
       }
-      .carousel-time {
-        width: 100%;
-      }
-    }
-
-    .time-info-item {
-      position: relative;
-      width: auto;
-      padding: 0 48px;
-      color: #1d1c23;
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 28px;
-
-      &::before {
-        position: absolute;
-        top: 56px;
-        display: block;
-        content: "";
-        width: 12px;
-        height: 12px;
-        border-radius: 100%;
-        background-color: #000;
-      }
-      .item-item {
-        line-height: 48px;
+      .info-item {
+        position: relative;
+        flex: 1 1 auto;
+        &::before {
+          position: absolute;
+          top: 56px;
+          display: block;
+          content: "";
+          width: 12px;
+          height: 12px;
+          border-radius: 100%;
+          background-color: #000;
+        }
       }
       .txt {
         font-size: 32px;
+        line-height: 48px;
         font-weight: 600;
         padding: 0 24px 24px 10px;
+      }
+      .txt-t {
+        margin-top: 12px;
+        line-height: 32px;
       }
     }
   }
@@ -378,9 +472,42 @@ onMounted(() => {
     letter-spacing: 3.84px;
     margin-bottom: 128px;
   }
+  :deep(.el-collapse-item__header) {
+    height: 108px;
+    padding: 32px 0;
+    padding-right: 32px;
+    background-color: inherit;
+  }
+  :deep(.el-collapse-item__content) {
+    background-color: #fff;
+  }
+  :deep(.el-carousel__arrow) {
+    top: 80%;
+    background-color: #292929;
+    color: #ffffff;
+    border: 1px solid #868686;
+    &:hover {
+      background-color: #868686;
+    }
+  }
+  :deep(.el-carousel__arrow--left) {
+    position: absolute;
+    right: 80px;
+    left: auto;
+    bottom: 20px;
+  }
+
+  :deep(.el-carousel__arrow--right) {
+    position: absolute;
+    right: 12px;
+    bottom: 20px;
+  }
 }
 @media (max-width: 576px) {
   .pg-container {
+    text-wrap: wrap;
+    word-wrap: break-word;
+    white-space: normal;
     .title {
       font-size: 24px;
       line-height: 32px;
@@ -394,6 +521,7 @@ onMounted(() => {
       }
       .text-wrapper {
         width: 320px;
+        text-align: justify;
         .banner-title {
           font-size: 24px;
           line-height: 32px;
@@ -426,33 +554,50 @@ onMounted(() => {
       }
     }
     .his-wrapper {
-      padding-top: 32px;
-      padding-bottom: 32px;
-      height: 260px;
-      .time-info {
-        width: 358px;
-        &::before {
-          top: 40px;
-          left: 0;
-          width: 1560px;
-        }
+      padding-top: 24px;
+      padding-bottom: 0;
+      height: auto;
+      background-color: #fff;
+      .title {
+        margin-bottom: 0;
       }
-      .time-info-item {
-        padding: 0;
-        padding-right: 32px;
-        font-size: 16px;
-        line-height: 20px;
+      .time-info-item2 {
+        text-align: left;
+        padding-left: 40px;
         &::before {
-          top: 37px;
-          width: 8px;
-          height: 8px;
+          content: "";
+          position: absolute;
+          top: 32px;
+          left: 32px;
+          display: block;
+          height: 1px;
+          width: 100%;
+          background-color: #000;
         }
         .item-item {
+          position: relative;
           line-height: 28px;
+          &::before {
+            content: "";
+            position: absolute;
+            top: 30px;
+            left: -8px;
+            display: block;
+            height: 6px;
+            width: 6px;
+            border-radius: 6px;
+            background-color: #000;
+          }
         }
         .txt {
-          font-size: 16px;
-          padding: 0 0 28px 0;
+          line-height: 24px;
+          font-size: 14px;
+          padding: 0 0 12px 0;
+        }
+        .txt-t {
+          font-size: 14px;
+          margin-top: 12px;
+          line-height: 18px;
         }
       }
     }
@@ -476,7 +621,11 @@ onMounted(() => {
         .card-name {
           font-size: 20px;
         }
+        .card-name-en {
+          font-size: 20px;
+        }
         .card-key {
+          font-size: 14px;
           margin-bottom: 8px;
         }
         .card-icon {
@@ -486,6 +635,37 @@ onMounted(() => {
         }
       }
     }
+  }
+  :deep(.el-collapse-item__header) {
+    height: 108px;
+    padding: 32px 0;
+    padding-right: 32px;
+    background-color: inherit;
+  }
+  :deep(.el-collapse-item__content) {
+    background-color: #fff;
+  }
+  :deep(.el-carousel__arrow) {
+    top: 80%;
+    transform: scale(0.8);
+    background-color: #292929;
+    color: #ffffff;
+    border: 1px solid #868686;
+    &:hover {
+      background-color: #868686;
+    }
+  }
+  :deep(.el-carousel__arrow--left) {
+    position: absolute;
+    right: 66px;
+    left: auto;
+    bottom: 20px;
+  }
+
+  :deep(.el-carousel__arrow--right) {
+    position: absolute;
+    right: 12px;
+    bottom: 20px;
   }
 }
 </style>

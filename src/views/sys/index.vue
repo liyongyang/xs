@@ -3,7 +3,7 @@
     <div
       class="fixed head z-999 flex justify-center py-4 wow animate__animated animate__fadeInDown"
     >
-      <p class="text-white text-5 font-500">数据管理系统</p>
+      <li class="text-white text-5 font-500">数据管理系统</li>
     </div>
     <section
       v-if="showSys"
@@ -20,9 +20,7 @@
           {{ item.name }}
         </li>
       </div>
-      <Msg v-if="actTab === 'msg'"></Msg>
-      <Report v-if="actTab === 'report'"></Report>
-      <User v-if="actTab === 'user'"></User>
+      <component :is="actTab" />
     </section>
     <section
       v-else
@@ -65,82 +63,104 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { sys } from "@/api/sys";
-import logo1 from "@/assets/logo1.svg";
-import { useUserStoreHook } from "@/store/modules/user";
 import { ElMessage } from "element-plus";
-import { onMounted, reactive, ref } from "vue";
+import { Options, Vue } from "vue-property-decorator";
+
+import { useUserStoreHook } from "@/store/modules/user";
+import H920 from "./com/H920.vue";
+import home from "./com/home.vue";
 import Msg from "./com/msg.vue";
+import R17 from "./com/R17.vue";
+import R275A from "./com/R275A.vue";
 import Report from "./com/report.vue";
+import RS100 from "./com/rs100.vue";
 import User from "./com/user.vue";
-
-const userStore = useUserStoreHook();
-
-const actTab = ref("msg");
-const tabs = [
-  { name: "试用申请", key: "msg" },
-  { name: "客户报备", key: "report" },
-  { name: "客户管理", key: "user" },
-];
-const showSys = ref(false);
-const ruleForm = reactive({
-  userName: "",
-  password: "",
-});
-
-const submitForm = () => {
-  // showSys.value = true;
-  userStore.getLogin(ruleForm).then((res) => {
-    if (res.code === 200) {
-      if (res.data.username === "admin") {
-        showSys.value = true;
-      } else {
-        ElMessage({
-          message: "抱歉，您无权限进入,请联系管理员",
-          center: true,
-          offset: 80,
-          type: "error",
-        });
-      }
-    } else {
-      ElMessage({
-        message: "请输入正确的账号或密码",
-        center: true,
-        offset: 80,
-        type: "error",
+@Options({
+  components: {
+    Msg,
+    Report,
+    User,
+    home,
+    R275A,
+    R17,
+    RS100,
+    H920,
+  },
+})
+export default class Sys extends Vue {
+  userStore = useUserStoreHook();
+  actTab = "Msg";
+  tabs = [
+    { name: "试用申请", key: "Msg" },
+    { name: "客户报备", key: "Report" },
+    { name: "客户管理", key: "User" },
+    { name: "首页", key: "home" },
+    { name: "R275A", key: "R275A" },
+    { name: "R17", key: "R17" },
+    { name: "RS100", key: "RS100" },
+    { name: "H920", key: "H920" },
+  ];
+  showSys = false;
+  ruleForm = {
+    userName: "",
+    password: "",
+  };
+  created() {}
+  mounted() {
+    this.loginCheck();
+  }
+  submitForm() {
+    // showSys.value = true;
+    useUserStoreHook()
+      .getLogin(this.ruleForm)
+      .then((res: any) => {
+        console.log(`output->res`, res);
+        if (res.code === 200) {
+          if (res.data.username === "admin") {
+            this.showSys = true;
+          } else {
+            ElMessage({
+              message: "抱歉，您无权限进入,请联系管理员",
+              center: true,
+              offset: 80,
+              type: "error",
+            });
+          }
+        } else {
+          ElMessage({
+            message: "请输入正确的账号或密码",
+            center: true,
+            offset: 80,
+            type: "error",
+          });
+        }
       });
-    }
-  });
-};
-
-const loginCheck = () => {
-  sys.loginCheck().subscribe((res) => {
-    if (res && res.username === "admin") {
-      showSys.value = true;
-    }
-  });
-};
-
-onMounted(() => {
-  loginCheck();
-});
+  }
+  loginCheck() {
+    sys.loginCheck().subscribe((res) => {
+      if (res && res.username === "admin") {
+        this.showSys = true;
+      }
+    });
+  }
+}
 </script>
 <style lang="scss" scoped>
 .sys-wapper {
   width: 100vw;
-  height: 100vh;
   .head {
     width: 100vw;
     background-color: #111212;
   }
   .login-container,
   .sys-container {
-    height: 100vh;
-    overflow: scroll;
+    min-height: 100vh;
   }
   .sys-p {
     padding: 64px;
+    padding-top: 88px;
     .tabs {
       margin-bottom: 14px;
       .tab {

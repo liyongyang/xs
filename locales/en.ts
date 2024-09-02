@@ -1041,26 +1041,34 @@ export default {
         {
           time: "2024",
           child: [
-            "Launched Dual Aviation plugs RS-Series Flagship Model RS300",
+            "Launched Dual Aviation plugs RS-Series",
+            "Flagship Model RS300",
           ],
         },
         {
           time: "2023",
           child: [
-            "Ningbo XinSuan HQ Officially Established",
-            "Angel Round Financing Top Venture Capitalists Sequoia China",
+            "Ningbo XinSuan HQ",
+            "Officially Established",
+            "-",
+            "Angel Round Financing",
+            "Top Venture",
+            "Capitalists Sequoia China",
           ],
         },
         {
           time: "2022",
           child: [
-            "Pre-A Round Financing Shunwei Capital, Huafang Capital, Sequoia China",
-            "Launched the high-performance handheld H9X series",
+            "Pre-A Round Financing",
+            "Shunwei Capital, Huafang Capital, Sequoia China",
+            "-",
+            "Launched",
+            "The high-performance handheld H9X series",
           ],
         },
         {
           time: "2021",
-          child: ["Launched Compact R-Series Flagship Model R275-A"],
+          child: ["Launched Compact R-Series", "Flagship Model R275-A"],
         },
         {
           time: "2019",

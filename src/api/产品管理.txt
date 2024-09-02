@@ -1,0 +1,177 @@
+
+上传接口
+https://xs-code.com/api/sys-user/upload
+post请求 form-data提交
+请求参数：
+file
+type 类型：home;R27X;R17X;RS100;H920
+返回示例：
+{
+    "code": 200,
+    "msg": "ok",
+    "data": "https://xs-code.com/file/picture/home/20240829042705843_晚霞鱼.jpg"
+}
+
+新增首页
+http://47.121.114.133:19057/t-home-info/addHome
+post请求
+请求参数：
+{
+    "title":"测试新算",				//标题
+    "subtitle":"新算",			//子标题
+    "description":"非常棒",	//描述说明
+    "picUrl":"https://xs-code.com/file/picture/home/20240829042705843_晚霞鱼.jpg"	//图片地址
+}
+
+修改首页
+
+http://47.121.114.133:19057/t-home-info/updateHome
+post请求
+请求参数：
+{
+    "id":1,
+    "title":"测试新算112",				
+    "subtitle":"新算1",			
+    "description":"非常棒",	
+    "picUrl":"https://xs-code.com/file/picture/home/20240829042705843_晚霞鱼.jpg"	
+}
+
+列表展示
+get请求
+http://47.121.114.133:19057/t-home-info/getHomeList
+
+新算各个产品接口
+
+新增 post请求
+http://47.121.114.133:19057/t-product-publicity/addProductPublicity
+请求参数：json
+{
+    "productPublicity":{
+        "name":"",				//产品名称
+        "engName":"",			//英文产品名称
+        "subtitle":"",			//副标题
+        "engSubtitle":"",		//英文副标题
+        "description":"",		//描述
+        "engDescription":"",	//英文描述
+        "bigType":"",			//产品大类型 R27X;R17X;RS100;H920
+        "productType":"",		//具体产品类型:R275-A;R270-A;R172-E/S;R170-E/S;RS100;H9200
+        "typeLable":""			//产品类型标签,多个逗号分隔
+    },
+    "productPicList":[
+        {
+        "picUrl":""				//图片地址
+    },
+     {
+        "picUrl":""				//图片地址
+    }
+    ],
+    "subProductList":[{
+        "tSubProduct":{
+            "title":"",			//标题
+            "engTitle":"",		//英文标题
+            "subtitle":"",		//副标题
+            "engSubtitle":""	//英文副标题
+        },
+        "subLabelList":[{
+            "label":"",			//标签
+            "engLabel":"",		//英文标签
+            "labelDescription":"",	//标签描述
+            "engLabelDescription":"",	//英文标签描述
+            "picUrl":""			//图片地址
+        }]
+    }]
+
+}
+
+列表get请求
+请求参数：
+bigType	产品大类型 R27X;R17X;RS100;H920
+productType	具体产品类型:R275-A;R270-A;R172-E/S;R170-E/S;RS100;H9200
+
+返回示例：
+{
+    "productPublicity":{
+		"id":					//产品id
+        "name":"",				//产品名称
+        "engName":"",			//英文产品名称
+        "subtitle":"",			//副标题
+        "engSubtitle":"",		//英文副标题
+        "description":"",		//描述
+        "engDescription":"",	//英文描述
+        "bigType":"",			//产品大类型 R27X;R17X;RS100;H920
+        "productType":"",		//具体产品类型:R275-A;R270-A;R172-E/S;R170-E/S;RS100;H9200
+        "typeLable":""			//产品类型标签,多个逗号分隔
+    },
+    "productPicList":[
+        {
+        "picUrl":""				//图片地址
+    },
+     {
+        "picUrl":""				//图片地址
+    }
+    ],
+    "subProductList":[{
+        "tSubProduct":{
+            "title":"",			//标题
+            "engTitle":"",		//英文标题
+            "subtitle":"",		//副标题
+            "engSubtitle":""	//英文副标题
+        },
+        "subLabelList":[{
+            "label":"",			//标签
+            "engLabel":"",		//英文标签
+            "labelDescription":"",	//标签描述
+            "engLabelDescription":"",	//英文标签描述
+            "picUrl":""			//图片地址
+        }]
+    }]
+
+}
+
+
+修改 put请求
+http://47.121.114.133:19057/t-product-publicity/updateProductPublicity
+请求参数：json
+{
+    "productPublicity":{
+		"id":					//产品id
+        "name":"",				//产品名称
+        "engName":"",			//英文产品名称
+        "subtitle":"",			//副标题
+        "engSubtitle":"",		//英文副标题
+        "description":"",		//描述
+        "engDescription":"",	//英文描述
+        "bigType":"",			//产品大类型 R27X;R17X;RS100;H920
+        "productType":"",		//具体产品类型:R275-A;R270-A;R172-E/S;R170-E/S;RS100;H9200
+        "typeLable":""			//产品类型标签,多个逗号分隔
+    },
+    "productPicList":[
+        {
+        "picUrl":""				//图片地址
+    },
+     {
+        "picUrl":""				//图片地址
+    }
+    ],
+    "subProductList":[{
+        "tSubProduct":{
+            "title":"",			//标题
+            "engTitle":"",		//英文标题
+            "subtitle":"",		//副标题
+            "engSubtitle":""	//英文副标题
+        },
+        "subLabelList":[{
+            "label":"",			//标签
+            "engLabel":"",		//英文标签
+            "labelDescription":"",	//标签描述
+            "engLabelDescription":"",	//英文标签描述
+            "picUrl":""			//图片地址
+        }]
+    }]
+
+}
+
+删除首页展示 delete请求
+http://47.121.114.133:19057/t-product-publicity/delByIds
+请求参数：
+[2,3]

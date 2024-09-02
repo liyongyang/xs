@@ -56,7 +56,7 @@
             <el-carousel-item>
               <div class="flex cursor-pointer space-x-2 overflow-x-scroll">
                 <img
-                  v-for="(i, index) in 4"
+                  v-for="(i, index) in 2"
                   :key="index"
                   class="news-item hover:shadow-lg hvr-bob wow animate__animated animate__fadeInUp"
                   :src="'/expo/VCSH2024/' + (index + 4) + '.png'"
@@ -216,7 +216,7 @@ onMounted(() => {});
     .news-item {
       flex: 0 0 auto;
       width: 340px;
-      height: 100%;
+      height: 736px;
     }
 
     :deep(.el-collapse-item__header) {

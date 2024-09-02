@@ -450,6 +450,7 @@ const loginCheck = () => {
   openMenus.value = false;
   sys.loginCheck().subscribe((res) => {
     if (res) {
+      localStorage.setItem("userInfo", JSON.stringify(res));
       router.push("/report");
     } else {
       toContact();

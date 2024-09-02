@@ -86,7 +86,38 @@
               :src="`/r17/slider/slider${actImg}.webp`"
               alt=""
             />
+            <el-carousel
+              v-if="isSmallSize"
+              :autoplay="false"
+              class="carousel-imgs"
+              height="200px"
+              arrow="always"
+            >
+              <el-carousel-item>
+                <img
+                  class="h16"
+                  @click="actImg = index"
+                  v-for="(i, index) in 3"
+                  :key="index"
+                  :src="`/r17/slider/slider${index}.webp`"
+                  alt=""
+                  srcset=""
+                />
+              </el-carousel-item>
+              <el-carousel-item>
+                <img
+                  class="h16"
+                  @click="actImg = index + 3"
+                  v-for="(i, index) in 2"
+                  :key="index"
+                  :src="`/r17/slider/slider${index + 3}.webp`"
+                  alt=""
+                  srcset=""
+                />
+              </el-carousel-item>
+            </el-carousel>
             <div
+              v-else
               class="overflow-x-scroll overflow-y-hidden wow animate__animated animate__fadeInUp"
             >
               <div class="img-box flex">
@@ -549,7 +580,7 @@ onMounted(() => {
     background-color: #fff;
   }
   :deep(.el-carousel__arrow) {
-    top: 85%;
+    top: 90%;
     background-color: #292929;
     color: #ffffff;
     border: 1px solid #868686;
@@ -628,6 +659,11 @@ onMounted(() => {
           }
         }
       }
+      :deep(.el-carousel__item) {
+        display: flex;
+        justify-content: start;
+        overflow-x: scroll;
+      }
     }
 
     :deep(.el-collapse-item__header) {
@@ -636,6 +672,16 @@ onMounted(() => {
       height: 64px;
       padding: 16px 0;
       background-color: inherit;
+    }
+    :deep(.el-carousel__arrow) {
+      transform: scale(0.8);
+      top: 70%;
+      background-color: #292929;
+      color: #ffffff;
+      border: 1px solid #868686;
+      &:hover {
+        background-color: #868686;
+      }
     }
   }
 }

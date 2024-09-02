@@ -61,6 +61,7 @@
                   class="case-item mx-2"
                   v-for="(t, index) in item"
                   :key="index"
+                  @click="toCase('car')"
                 >
                   <img class="case-img" :src="t.img" alt="" />
                   <li class="case-name">{{ t.name }}</li>

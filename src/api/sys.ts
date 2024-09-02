@@ -1,4 +1,4 @@
-import http,{downloadFile} from "@/utils/http";
+import http, { downloadFile } from "@/utils/http";
 
 const tansParams = (params) => {
   let result = "";
@@ -28,6 +28,11 @@ class Sys {
   }
   loginCheck() {
     return http.get<any>("/sys-user/checkToken");
+  }
+  upload(params: any) {
+    return http.post<any>("/sys-user/upload", params, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   }
   /**
    *
@@ -78,10 +83,14 @@ class Sys {
   deletUser(params: any) {
     return http.delete<any>("/sys-user/delByIds", { data: params });
   }
-    // 导出账号
-    exportUser(params, filename) {
-      return downloadFile("/lgd-modules-system/logininfor/export", params, filename);
-    }
+  // 导出账号
+  exportUser(params, filename) {
+    return downloadFile(
+      "/lgd-modules-system/logininfor/export",
+      params,
+      filename
+    );
+  }
   /**
    *  报备列表
    */
@@ -105,6 +114,18 @@ class Sys {
    */
   deletReport(params: any) {
     return http.delete<any>("/t-customer-report/delByIds", { data: params });
+  }
+  getHomeList() {
+    return http.get<any>("/t-home-info/getHomeList");
+  }
+  addHome(params: any) {
+    return http.post<any>("/t-home-info/addHome", params);
+  }
+  updateHome(params: any) {
+    return http.put<any>("/t-home-info/updateHome", params);
+  }
+  deletHome(params: any) {
+    return http.delete<any>("/t-home-info/delByIds", { data: params });
   }
 }
 

@@ -107,7 +107,9 @@
           <li class="cursor-pointer" @click="toPolicy('cookies-policy')">
             {{ t("common.footer.info2.txt3") }}
           </li>
-          <li>{{ t("common.footer.info2.txt4") }}</li>
+          <a href="https://beian.miit.gov.cn/?site=brandsite&from=footer">{{
+            t("common.footer.info2.txt4")
+          }}</a>
         </div>
       </div>
     </div>

@@ -65,12 +65,14 @@ const A275A_INFO = {
     slider: [
       [
         {
-          img: "/R275A/yy/slider0.webp",
+          img: "/video/r275a-x1.mp4",
+          type: "video",
           tit: t("A275A_INFO.yyInfo.slider[0][0].tit"),
           txt: t("A275A_INFO.yyInfo.slider[0][0].txt"),
         },
         {
-          img: "/R275A/yy/slider1.webp",
+          img: "/video/r275a-x2.mp4",
+          type: "video",
           tit: t("A275A_INFO.yyInfo.slider[0][1].tit"),
           txt: t("A275A_INFO.yyInfo.slider[0][1].txt"),
         },
@@ -78,11 +80,13 @@ const A275A_INFO = {
       [
         {
           img: "/R275A/yy/slider2.webp",
+          type: "img",
           tit: t("A275A_INFO.yyInfo.slider[1][0].tit"),
           txt: t("A275A_INFO.yyInfo.slider[1][0].txt"),
         },
         {
           img: "/R275A/yy/slider3.webp",
+          type: "img",
           tit: t("A275A_INFO.yyInfo.slider[1][1].tit"),
           txt: t("A275A_INFO.yyInfo.slider[1][1].txt"),
         },
@@ -90,11 +94,13 @@ const A275A_INFO = {
       [
         {
           img: "/R275A/yy/slider4.webp",
+          type: "img",
           tit: t("A275A_INFO.yyInfo.slider[2][0].tit"),
           txt: t("A275A_INFO.yyInfo.slider[2][0].txt"),
         },
         {
           img: "/R275A/yy/slider5.webp",
+          type: "img",
           tit: t("A275A_INFO.yyInfo.slider[2][1].tit"),
           txt: t("A275A_INFO.yyInfo.slider[2][1].txt"),
         },
@@ -503,7 +509,9 @@ onBeforeUnmount(() => {
           <el-button class="btn-white" @click="openDialog()">{{
             t("common.btn.try")
           }}</el-button>
-          <el-button class="btn-black">{{ t("common.btn.video") }}</el-button>
+          <el-button class="btn-black" @click="showVedio = !showVedio">{{
+            t("common.btn.video")
+          }}</el-button>
         </div>
       </div>
       <div
@@ -619,6 +627,7 @@ onBeforeUnmount(() => {
         </li> -->
         <el-carousel
           :interval="3000"
+          :autoplay="false"
           arrow="always"
           :height="isSmallSize ? '240px' : '500px'"
           class="yy-slider"
@@ -629,10 +638,20 @@ onBeforeUnmount(() => {
           >
             <div class="slider-item" v-for="(item, i) in items" :key="i">
               <img
+                v-if="item.type === 'img'"
                 class="wow animate__animated animate__fadeIn"
                 :src="item.img"
                 alt=""
               />
+              <video
+                v-if="item.type === 'video'"
+                class="yy-video"
+                autoplay
+                loop
+                muted
+              >
+                <source :src="item.img" />
+              </video>
               <li class="tit wow animate__animated animate__fadeInUp">
                 {{ item.tit }}
               </li>
@@ -648,7 +667,7 @@ onBeforeUnmount(() => {
   <div class="vedio-comp" v-show="showVedio">
     <div class="gd-vedio animate__animated animate__fadeIn">
       <el-icon
-        class="absolute top--30 right--32 font-600 text-12 text-gray cursor-pointer hover:text-white"
+        class="close-video font-600 text-12 text-gray cursor-pointer hover:text-white"
         @click="showVedio = !showVedio"
       >
         <CircleCloseFilled />
@@ -829,8 +848,9 @@ onBeforeUnmount(() => {
           text-wrap: wrap;
           word-wrap: break-word;
           white-space: normal;
-          img {
-            width: 100%;
+          img,
+          .yy-video {
+            width: 686px;
           }
         }
       }
@@ -932,6 +952,11 @@ onBeforeUnmount(() => {
     width: 1200px;
     .my-video {
       width: 1200px;
+    }
+    .close-video {
+      position: absolute;
+      top: -120px;
+      right: -128px;
     }
   }
 }
@@ -1088,6 +1113,31 @@ onBeforeUnmount(() => {
         text-wrap: wrap;
         word-wrap: break-word;
         white-space: normal;
+      }
+    }
+  }
+  .vedio-comp {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000e4;
+    z-index: 999;
+    .gd-vedio {
+      position: relative;
+      width: 358px;
+      .my-video {
+        width: 358px;
+      }
+      .close-video {
+        position: absolute;
+        top: 280px;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
   }

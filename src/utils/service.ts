@@ -142,7 +142,7 @@ function createRequestFunction(service: AxiosInstance) {
         "Content-Type": get(config, "headers.Content-Type", "application/json"),
       },
       timeout: 20000,
-      baseURL: import.meta.env.VITE_BASE_API,
+      baseURL: import.meta.env.VITE_PROXY_URL,
       data: {},
     };
     return service(Object.assign(configDefault, config));

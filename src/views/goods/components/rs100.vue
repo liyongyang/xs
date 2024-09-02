@@ -7,7 +7,8 @@
           <div class="flex justify-between items-center">
             <router-link
               :to="{ path: '/goods/RS100/product-params' }"
-              class="py-2 px-3 mr-4 cursor-pointer"
+              :class="isSmallSize ? '' : 'px-3'"
+              class="py-2 mr-4 cursor-pointer"
               >{{ t("common.headLink.t1") }}</router-link
             >
             <router-link
@@ -57,7 +58,10 @@
                   {{ item }}
                 </li>
               </div>
-              <li class="leading-10 wow animate__animated animate__fadeInUp">
+              <li
+                class="wow animate__animated animate__fadeInUp"
+                :class="isSmallSize ? 'leading-6 mt-4' : 'leading-10'"
+              >
                 {{ rs100.tip }}
               </li>
               <!-- 产品介绍 -->
@@ -94,7 +98,38 @@
               :src="`/rs100/slider/slider${actImg}.webp`"
               alt=""
             />
+            <el-carousel
+              v-if="isSmallSize"
+              :autoplay="false"
+              class="carousel-imgs"
+              height="90px"
+              arrow="always"
+            >
+              <el-carousel-item>
+                <img
+                  class="h16"
+                  @click="actImg = index"
+                  v-for="(i, index) in 3"
+                  :key="index"
+                  :src="`/rs100/slider/slider${index}.webp`"
+                  alt=""
+                  srcset=""
+                />
+              </el-carousel-item>
+              <el-carousel-item>
+                <img
+                  class="h16"
+                  @click="actImg = index + 3"
+                  v-for="(i, index) in 3"
+                  :key="index"
+                  :src="`/rs100/slider/slider${index + 3}.webp`"
+                  alt=""
+                  srcset=""
+                />
+              </el-carousel-item>
+            </el-carousel>
             <div
+              v-else
               class="overflow-x-scroll overflow-y-hidden wow animate__animated animate__fadeInUp"
             >
               <div class="img-box flex flex">
@@ -122,8 +157,8 @@
               >{{ t("common.footer.info1.txt1") }}</el-button
             >
             <el-button
-              disabled
               class="btn-black more wow animate__animated animate__fadeInUp"
+              @click="showVedio = !showVedio"
               >{{ t("common.btn.video") }}</el-button
             >
           </div>
@@ -412,7 +447,7 @@
   <div class="vedio-comp" v-show="showVedio">
     <div class="gd-vedio animate__animated animate__fadeIn">
       <el-icon
-        class="absolute top--30 right--32 font-600 text-12 text-gray cursor-pointer hover:text-white"
+        class="close-video absolute top--30 right--32 font-600 text-12 text-gray cursor-pointer hover:text-white"
         @click="showVedio = !showVedio"
       >
         <CircleCloseFilled />
@@ -807,6 +842,11 @@ onMounted(() => {
       width: 1200px;
     }
   }
+  .close-video {
+    position: absolute;
+    top: -120px;
+    right: -128px;
+  }
 }
 
 .btn-white {
@@ -870,6 +910,7 @@ onMounted(() => {
     .header {
       font-size: 14px;
       .head {
+        font-size: 14px;
         width: 358px;
         padding: 16px 0;
       }
@@ -879,17 +920,20 @@ onMounted(() => {
       .content {
         padding: 0;
         padding-bottom: 32px;
+        font-size: 14px;
         .back {
           display: flex;
           padding: 12px 0;
         }
         .title {
-          font-size: 24px;
+          font-size: 20px;
+          margin-bottom: 12px;
         }
         .banner-info {
           width: 358px;
           height: auto;
           border-bottom: none;
+          padding: 12px 0;
           .more {
             width: 128px;
             padding: 10px;
@@ -897,7 +941,7 @@ onMounted(() => {
         }
         .banner-img {
           width: 358px;
-          height: 280px;
+          height: 300px;
 
           .act-img {
             width: 358px;
@@ -931,6 +975,7 @@ onMounted(() => {
         }
         .img {
           width: 348px;
+          height: 100%;
         }
         .msg {
           margin: 0 16px;
@@ -942,6 +987,31 @@ onMounted(() => {
             font-size: 14px;
           }
         }
+      }
+    }
+  }
+  .vedio-comp {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000e4;
+    z-index: 999;
+    .gd-vedio {
+      position: relative;
+      width: 358px;
+      .my-video {
+        width: 358px;
+      }
+      .close-video {
+        position: absolute;
+        top: 280px;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
   }
@@ -970,7 +1040,11 @@ onMounted(() => {
     padding-bottom: 12px;
   }
   :deep(.el-carousel__arrow) {
-    top: 90%;
+    transform: scale(0.8);
+    top: 70%;
+  }
+  .el-carousel.el-carousel--horizontal.carousel-imgs {
+    height: 120px;
   }
 }
 </style>

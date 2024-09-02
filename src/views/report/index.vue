@@ -9,6 +9,13 @@
           @click="showFrom = false"
           >我的报备
         </el-badge>
+        <div
+          v-if="!isSmallSize"
+          class="update-key cursor-pointer btn-black"
+          @click="showUpdateKey = !showUpdateKey"
+        >
+          修改密码
+        </div>
         <el-form
           ref="ruleFormRef"
           label-position="right"
@@ -170,9 +177,7 @@
             <el-icon>
               <ArrowLeftBold />
             </el-icon>
-            <span class="px-3" @click="showFrom = true">{{
-              t("common.back")
-            }}</span>
+            <span class="px-3" @click="showFrom = true">返回</span>
           </li>
         </div>
 
@@ -277,17 +282,80 @@
       </section>
     </div>
   </div>
+  <el-dialog
+    class="modal-comp"
+    v-model="showUpdateKey"
+    title="Warning"
+    width="490"
+    align-center
+  >
+    <div class="update-form text-center">
+      <el-icon
+        class="absolute top-4 right-4 font-600 text-4 text-black cursor-pointer"
+        @click="showUpdateKey = !showUpdateKey"
+      >
+        <CloseBold />
+      </el-icon>
+      <li class="title text-black">修改密码</li>
+      <el-form ref="ruleFormRef" label-width="left">
+        <el-form-item prop="userName">
+          <template #label>
+            <div class="">账号</div>
+          </template>
+          <el-input v-model="userForm.userName" />
+        </el-form-item>
+        <el-form-item prop="password">
+          <template #label>
+            <div class="">旧密码</div>
+          </template>
+          <el-input v-model="userForm.oldPwd" type="password" show-password />
+        </el-form-item>
+        <el-form-item prop="company">
+          <template #label>
+            <div class="">新密码</div>
+          </template>
+          <el-input v-model="userForm.password" type="password" show-password />
+        </el-form-item>
+        <el-form-item prop="company">
+          <template #label>
+            <div class="">再次输入</div>
+          </template>
+          <el-input
+            v-model="userForm.password2"
+            type="password"
+            show-password
+          />
+        </el-form-item>
+        <div class="text-center mt-12">
+          <el-button class="btn-black2" type="primary" @click="commit()">
+            提交
+          </el-button>
+        </div>
+      </el-form>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { sys } from "@/api/sys";
+import { useUserStoreHook } from "@/store/modules/user";
 import type { ElInput, FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
 
 import { nextTick, onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+
+const userStore = useUserStoreHook();
 const router = useRouter();
 const showFrom = ref(true);
+const showUpdateKey = ref(false);
+const userForm = reactive({
+  id: "",
+  userName: "",
+  oldPwd: "",
+  password: "",
+  password2: "",
+});
 const isSmallSize = ref(window.innerWidth < 576);
 
 const fkOpt = {
@@ -402,10 +470,48 @@ const loginCheck = () => {
   sys.loginCheck().subscribe((res) => {
     if (res) {
       localStorage.setItem("userInfo", JSON.stringify(res));
+      const temp = JSON.parse(localStorage.getItem("userInfo"));
+      userForm.id = temp.userid;
+      userForm.userName = temp.username;
+      console.log(`output->temp`, temp);
       getList();
     } else {
       router.push("/");
     }
+  });
+};
+const commit = () => {
+  console.log(`output->userForm.password`, userForm.password);
+  if (userForm.password === "" || userForm.password != userForm.password2) {
+    ElMessage({
+      message: "新密码验证错误，请重新输入",
+      center: true,
+      offset: 80,
+      type: "info",
+    });
+    return;
+  }
+  const ruleForm = {
+    userName: userForm.userName,
+    password: userForm.oldPwd,
+  };
+  userStore.getLogin(ruleForm).then((res) => {
+    const params = {
+      userId: userForm.id,
+      userName: userForm.userName,
+      password: userForm.password,
+    };
+    sys.editUser(params).subscribe((res) => {
+      ElMessage({
+        message: "已成功修改密码，请重新登录",
+        center: true,
+        offset: 80,
+        type: "success",
+      });
+      router.push("/");
+      localStorage.removeItem("userInfo");
+      userStore.logout();
+    });
   });
 };
 onMounted(() => {
@@ -433,6 +539,11 @@ onMounted(() => {
       position: absolute;
       right: 10rem;
       top: 0;
+    }
+    .update-key {
+      position: absolute;
+      right: 10rem;
+      top: 64px;
     }
     :deep(.el-form-item) {
       min-width: 368px;
@@ -521,6 +632,61 @@ onMounted(() => {
     }
     .status_4 {
       color: rgb(233, 65, 65);
+    }
+  }
+}
+.update-form {
+  .title {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  :deep(.el-form-item) {
+    margin: 0 auto;
+    display: block;
+    text-align: left;
+    margin-bottom: 24px;
+
+    .el-form-item__label {
+      color: #1d1c23;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 4px;
+    }
+
+    .el-form-item__content {
+      width: 100%;
+    }
+    .el-input__wrapper {
+      font-size: 14px;
+      height: 44px;
+      line-height: 44px;
+      font-weight: 500;
+    }
+    .el-input__inner {
+      text-align: center;
+      padding: 0 16px;
+    }
+    .el-input .el-input__icon {
+      font-size: 18px;
+    }
+  }
+
+  .btn-black2 {
+    width: 314px;
+    height: auto;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 10px 32px;
+    border-radius: 99px;
+    color: #fff;
+    background-color: #111112;
+    border: 1px solid #111112;
+    &:hover {
+      color: #fff;
+      background-color: #414344;
+      border: 1px solid #414344;
     }
   }
 }

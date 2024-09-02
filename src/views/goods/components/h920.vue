@@ -9,7 +9,8 @@
           <div class="flex justify-between items-center">
             <router-link
               :to="{ path: '/goods/H920/product-params' }"
-              class="py-2 px-3 mr-4 cursor-pointer"
+              :class="isSmallSize ? '' : 'px-3'"
+              class="py-2 mr-4 cursor-pointer"
             >
               {{ t("common.headLink.t1") }}
             </router-link>
@@ -55,7 +56,10 @@
                   {{ h920.type }}
                 </li>
               </div>
-              <li class="leading-10 wow animate__animated animate__fadeInUp">
+              <li
+                class="wow animate__animated animate__fadeInUp"
+                :class="isSmallSize ? 'leading-6 mt-4' : 'leading-10'"
+              >
                 {{ h920.tip }}
               </li>
               <!-- 产品介绍 -->
@@ -85,7 +89,49 @@
               :src="`/h920/slider/slider${actImg}.webp`"
               alt=""
             />
+            <el-carousel
+              v-if="isSmallSize"
+              :autoplay="false"
+              class="carousel-imgs"
+              height="90px"
+              arrow="always"
+            >
+              <el-carousel-item>
+                <img
+                  class="h16"
+                  @click="actImg = index"
+                  v-for="(i, index) in 3"
+                  :key="index"
+                  :src="`/h920/slider/slider${index}.webp`"
+                  alt=""
+                  srcset=""
+                />
+              </el-carousel-item>
+              <el-carousel-item>
+                <img
+                  class="h16"
+                  @click="actImg = index + 3"
+                  v-for="(i, index) in 3"
+                  :key="index"
+                  :src="`/h920/slider/slider${index + 3}.webp`"
+                  alt=""
+                  srcset=""
+                />
+              </el-carousel-item>
+              <el-carousel-item>
+                <img
+                  class="h16"
+                  @click="actImg = index + 3"
+                  v-for="(i, index) in 3"
+                  :key="index"
+                  :src="`/h920/slider/slider${index + 6}.webp`"
+                  alt=""
+                  srcset=""
+                />
+              </el-carousel-item>
+            </el-carousel>
             <div
+              v-else
               class="overflow-x-scroll overflow-y-hidden wow animate__animated animate__fadeInUp"
             >
               <div class="img-box flex flex mx-1">
@@ -657,12 +703,14 @@ onMounted(() => {
       .content {
         padding: 0;
         padding-bottom: 32px;
+        font-size: 14px;
         .back {
           display: flex;
           padding: 12px 0;
         }
         .title {
-          font-size: 24px;
+          font-size: 20px;
+          margin-bottom: 12px;
         }
         .banner-info {
           width: 358px;
@@ -736,6 +784,17 @@ onMounted(() => {
     &:hover {
       background-color: #414344;
     }
+  }
+  :deep(.el-collapse-item__content) {
+    background-color: #fff;
+    padding-bottom: 12px;
+  }
+  :deep(.el-carousel__arrow) {
+    transform: scale(0.8);
+    top: 70%;
+  }
+  .el-carousel.el-carousel--horizontal.carousel-imgs {
+    height: 120px;
   }
 }
 </style>
