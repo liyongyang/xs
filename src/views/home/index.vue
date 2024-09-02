@@ -1,4 +1,5 @@
 <script setup>
+import { sys } from "@/api/sys";
 import { addDialog } from "@/components/Dialog/index";
 import * as popModules from "@/components/Dialog/modulesIdex";
 import router from "@/router";
@@ -112,6 +113,20 @@ const dtList = [
   },
 ];
 const carouselAct = ref();
+const gdConfig = ref();
+
+const getHomeFn = () => {
+  sys.getHomeList().subscribe((res) => {
+    gdConfig.value = res.map((l) => {
+      return {
+        title: locale.value === "zh" ? l.title : l.engTitle,
+        subtitle: locale.value === "zh" ? l.subtitle : l.engSubtitle,
+        description: locale.value === "zh" ? l.description : l.engDescription,
+        picUrl: l.picUrl,
+      };
+    });
+  });
+};
 
 const onSlideChange = (swiper) => {
   const v = swiper.realIndex; //slides[2].swiperSlideIndex;
@@ -155,6 +170,7 @@ const goDetail = (value) => {
   router.push({ path: value });
 };
 onMounted(() => {
+  getHomeFn();
   carouselAct.value = carouselInfo[0];
   sliderNum.value = isSmallSize.value ? 1 : 3;
 
@@ -174,14 +190,18 @@ onUnmounted(() => {});
 
 <template>
   <div class="pg-container">
-    <section class="section-wrapper banner1">
+    <section
+      v-if="gdConfig"
+      class="section-wrapper"
+      :style="{ 'background-image': 'url(' + gdConfig[0].picUrl + ')' }"
+    >
       <div class="pg1_frame-wrapper pt-10 center">
         <div
           class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
         >
-          <li class="gd-type">{{ sec1[0].name }}</li>
-          <h2 class="gd-name">{{ sec1[0].type }}</h2>
-          <li class="gd-ts">{{ sec1[0].feat }}</li>
+          <li class="gd-type">{{ gdConfig[0].title }}</li>
+          <h2 class="gd-name">{{ gdConfig[0].subtitle }}</h2>
+          <li class="gd-ts">{{ gdConfig[0].description }}</li>
           <el-button class="btn-white" @click="toGd('R275A')">{{
             t("common.btn.more")
           }}</el-button>
@@ -191,18 +211,25 @@ onUnmounted(() => {});
         </div>
       </div>
     </section>
-    <section class="section-wrapper banner2">
+    <section
+      v-if="gdConfig"
+      class="section-wrapper"
+      :style="{ 'background-image': 'url(' + gdConfig[1].picUrl + ')' }"
+    >
       <div class="pg1_frame-wrapper center">
         <div
           class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
         >
-          <li class="gd-type">{{ sec1[1].name }}</li>
+          <li class="gd-type">{{ gdConfig[1].title }}</li>
+          <h2 class="gd-name">{{ gdConfig[1].subtitle }}</h2>
+          <li class="gd-ts">{{ gdConfig[1].description }}</li>
+          <!-- <li class="gd-type">{{ sec1[1].name }}</li>
           <h2 class="gd-name">{{ sec1[1].type }}</h2>
           <li class="gd-ts">
             {{ sec1[1].feat[0] }}
             <span class="italic skew-x-6">X</span>
             {{ sec1[1].feat[1] }}
-          </li>
+          </li> -->
           <el-button class="btn-white" @click="toGd('RS100')">{{
             t("common.btn.more")
           }}</el-button>
@@ -212,14 +239,18 @@ onUnmounted(() => {});
         </div>
       </div>
     </section>
-    <section class="section-wrapper banner3">
+    <section
+      v-if="gdConfig"
+      class="section-wrapper"
+      :style="{ 'background-image': 'url(' + gdConfig[2].picUrl + ')' }"
+    >
       <div class="pg1_frame-wrapper center">
         <div
           class="pg1_frame-text-wrapper wow animate__animated animate__fadeInUp"
         >
-          <li class="gd-type">{{ sec1[2].name }}</li>
-          <h2 class="gd-name">{{ sec1[2].type }}</h2>
-          <li class="gd-ts">{{ sec1[2].feat }}</li>
+          <li class="gd-type">{{ gdConfig[2].title }}</li>
+          <h2 class="gd-name">{{ gdConfig[2].subtitle }}</h2>
+          <li class="gd-ts">{{ gdConfig[2].description }}</li>
           <el-button class="btn-white" @click="toGd('H920')">{{
             t("common.btn.more")
           }}</el-button>

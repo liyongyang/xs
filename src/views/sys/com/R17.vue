@@ -149,7 +149,18 @@
                 "
                 :before-upload="beforeAvatarUpload"
               >
-                <img v-if="t.picUrl" :src="t.picUrl" class="avatar mx-auto" />
+                <div v-if="t.picUrl">
+                  <video
+                    v-if="srcType(t.picUrl) === 'video'"
+                    autoplay
+                    loop
+                    muted
+                    class="avatar mx-auto"
+                  >
+                    <source :src="t.picUrl" />
+                  </video>
+                  <img v-else :src="t.picUrl" class="avatar mx-auto" />
+                </div>
                 <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
               </el-upload>
             </el-form-item>
@@ -159,7 +170,7 @@
             <el-form-item label="标题(英文):">
               <el-input type="textarea" :rows="4" v-model="t.engLabel" />
             </el-form-item>
-            <el-form-item label="描述(英文):">
+            <el-form-item label="描述(中文):">
               <el-input
                 type="textarea"
                 :rows="4"
@@ -338,6 +349,17 @@ const deleteSubCard = (index: number, i: number) => {
     index
   ].subLabelList.filter((l, k) => k !== i);
   console.log(`output->temp`, subProductList.value);
+};
+const srcType = (it: string) => {
+  const type =
+    it.endsWith(".png") ||
+    it.endsWith(".webp") ||
+    it.endsWith(".jpeg") ||
+    it.endsWith(".gif") ||
+    it.endsWith(".bmp")
+      ? "image"
+      : "video";
+  return type;
 };
 const handleAvatarSuccess = (res, file, fileList, k) => {
   subProductList.value[k[0]].subLabelList[k[1]].picUrl = res.data;
